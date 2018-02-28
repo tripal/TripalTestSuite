@@ -1,9 +1,9 @@
 <?php
 
-namespace Statonlab\TripalTestSuite;
+namespace StatonLab\TripalTestSuite;
 
 use PHPUnit\Framework\TestCase;
-use Statonlab\TripalTestSuite\Exceptions\TripalTestSuiteException;
+use StatonLab\TripalTestSuite\Exceptions\TripalTestSuiteException;
 
 class TripalTestCase extends TestCase
 {
@@ -19,6 +19,8 @@ class TripalTestCase extends TestCase
     {
         parent::setUp();
 
+        $this->_bootstrapDrupal();
+        
         $traits = class_uses($this);
 
         if (in_array('DBTransaction', $traits)) {

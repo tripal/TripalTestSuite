@@ -24,7 +24,7 @@ Drupal and reading your `.env` file is done automatically when the first test is
 ```php
 namespace Tests;
 
-use Statonlab\TripalTestSuite;
+use StatonLab\TripalTestSuite\TripalTestCase;
 
 class MyTest extends TripalTestCase {
 }
@@ -39,7 +39,8 @@ To activate DB Transactions, simply add the DBTransaction trait to your test cla
 ```php
 namespace Tests;
 
-use Statonlab\TripalTestSuite;
+use StatonLab\TripalTestSuite\TripalTestCase;
+use StatonLab\TripalTestSuite\DBTransaction;
 
 class MyTest extends TripalTestCase {
 	use DBTransaction;
