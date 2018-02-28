@@ -1,5 +1,5 @@
 {
-    "name": "statoblab/TripalTestSuite",
+    "name": "statoblab/tripal-test-suite",
     "require": {
         "phpunit/phpunit": "^7.0"
     }
