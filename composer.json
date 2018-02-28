@@ -1,4 +1,5 @@
 {
+    "name": "TripalTestSuite",
     "require": {
         "phpunit/phpunit": "^7.0"
     }
