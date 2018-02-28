@@ -9,6 +9,7 @@ class BootstrapTest extends TestCase {
      * Verify that we can find drupal.
      *
      * @throws \ReflectionException
+     * @test
      */
     public function should_find_drupal_root() {
         $test_case = new TripalTestCase();
@@ -23,6 +24,7 @@ class BootstrapTest extends TestCase {
      * Should find the .env file that's normally in test/.env.
      *
      * @throws \ReflectionException
+     * @test
      */
     public function should_find_env_file_successfully() {
         $test_case = new TripalTestCase();
@@ -39,6 +41,7 @@ class BootstrapTest extends TestCase {
      * Should bootstrap Drupal successfully.
      *
      * @throws \ReflectionException
+     * @test
      */
     public function should_successfully_bootstrap_drupal() {
         $test_case = new TripalTestCase();
@@ -64,7 +67,11 @@ class BootstrapTest extends TestCase {
      * @return \ReflectionMethod
      * @throws \ReflectionException
      */
-    protected function getMethod($method_name, $class_name = 'TripalTestCase') {
+    protected function getMethod($method_name, $class_name = '') {
+        if(empty($class_name)) {
+            $class_name = TripalTestCase::class;
+        }
+
         $reflection = new \ReflectionClass($class_name);
         $method = $reflection->getMethod($method_name);
         $method->setAccessible(true);
