@@ -1,0 +1,25 @@
+<?php
+
+function test_module_schema()
+{
+    return [
+        'test_module' => [
+            'fields' => [
+                'name' => ['type' => 'varchar', 'length' => 255],
+                'value' => ['type' => 'varchar', 'length' => 255],
+            ],
+        ],
+    ];
+}
+
+/**
+ * Install the DB.
+ */
+function test_module_update_7200()
+{
+    $tables = test_module_schema();
+
+    foreach ($tables as $table_name => $schema) {
+        db_create_table($table_name, $schema);
+    }
+}

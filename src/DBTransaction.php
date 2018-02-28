@@ -18,14 +18,18 @@ trait DBTransaction
     /**
      * Start a Drupal DB Transaction.
      */
-    protected function DBTransactionSetUp() {
-        $this->_transaction = db_transaction();
+    protected function DBTransactionSetUp()
+    {
+        $this->_transaction = db_transaction(uniqid());
     }
 
     /**
      * Rollback the DB transaction.
      */
-    protected function DBTransactionTearDown() {
-        $this->_transaction->rollback();
+    protected function DBTransactionTearDown()
+    {
+        if ($this->_transaction) {
+            $this->_transaction->rollback();
+        }
     }
 }

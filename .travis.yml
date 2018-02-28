@@ -1,0 +1,20 @@
+language: php
+
+php:
+  - 7.1
+
+notifications:
+  slack: statonlab:pdwrAnplO9Fy6jWEMRHfwE75
+
+services:
+  - docker
+
+before_script:
+  - docker-compose up -d
+
+script:
+  - sleep 15
+  - docker-compose exec app drush en -y test_module
+  - docker-compose exec app bash -c "echo \"DRUPAL_ROOT=/var/www/html\" > /modules/test_module/tests/.env"
+  - docker-compose exec app bash -c "cd /modules/test_module && composer install && ./vendor/bin/phpunit"
+  - docker-compose exec app bash -c "cd /modules/test_module && ./vendor/bin/phpunit"
