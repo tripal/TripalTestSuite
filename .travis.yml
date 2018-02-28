@@ -12,4 +12,4 @@ script:
   - sleep 15
   - docker-compose exec app drush en -y test_module
   - docker-compose exec app bash -c "echo \"DRUPAL_ROOT=/var/www/html\" > /modules/test_module/tests/.env"
-  - docker-compose exec app bash -c "cd /modules/test_module/tests && composer install && ./vendor/bin/phpunit"
+  - docker-compose exec app bash -c "cd /modules/test_module && composer install && ./vendor/bin/phpunit"
