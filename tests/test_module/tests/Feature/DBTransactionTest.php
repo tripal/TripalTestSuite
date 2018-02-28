@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use PHPUnit\Framework\TestCase;
 use StatonLab\TripalTestSuite\DBTransaction;
 use StatonLab\TripalTestSuite\TripalTestCase;
-use TheSeer\Tokenizer\Exception;
 
 class DBTransactionTest extends TestCase
 {

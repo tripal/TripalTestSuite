@@ -1,6 +1,10 @@
 language: php
+
 php:
   - 7.1
+
+notifications:
+  slack: statonlab:pdwrAnplO9Fy6jWEMRHfwE75
 
 services:
   - docker
