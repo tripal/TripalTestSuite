@@ -1,5 +1,5 @@
 <?php
-namespace Statonlab\TripalTestSuite\Exceptions;
+namespace StatonLab\TripalTestSuite\Exceptions;
 
 class TripalTestSuiteException extends \Exception
 {

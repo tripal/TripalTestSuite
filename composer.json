@@ -2,5 +2,10 @@
     "name": "statoblab/tripal-test-suite",
     "require": {
         "phpunit/phpunit": "^7.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "StatonLab\\TripalTestSuite\\": "src/"
+        }
     }
 }

@@ -6,7 +6,7 @@
  * Time: 10:48 AM
  */
 
-namespace Statonlab\TripalTestSuite;
+namespace StatonLab\TripalTestSuite;
 
 trait DBTransaction
 {
