@@ -5,7 +5,7 @@ before running the tests.
 ### Installation
 Within your Drupal root path, run the following.
 ```bash
-composer require statonlab/TripalTestSuite
+composer require statonlab/tripal-test-suite
 ```
 
 In your `tests/bootstrap.php` file, include composer's autoload.php file. 
