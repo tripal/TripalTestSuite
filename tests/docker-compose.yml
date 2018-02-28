@@ -1,0 +1,8 @@
+version: '3'
+
+services:
+  app:
+    image: 'statonlab/drupal7'
+    volumes:
+      - ./test_module:/modules/test_module
+      - ../src:/modules/test_module/tests/TripalTestSuite

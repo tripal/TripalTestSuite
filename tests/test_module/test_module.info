@@ -1,0 +1,3 @@
+name = Test Module
+description = Tests TripalTestCase class
+core = 7.x

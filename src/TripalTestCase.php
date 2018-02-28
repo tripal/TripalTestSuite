@@ -14,16 +14,16 @@ class TripalTestCase extends TestCase
 
     /**
      * Set up the environment.
+     *
+     * @throws \StatonLab\TripalTestSuite\Exceptions\TripalTestSuiteException
      */
     protected function setUp()
     {
         parent::setUp();
 
         $this->_bootstrapDrupal();
-        
-        $traits = class_uses($this);
 
-        if (in_array('DBTransaction', $traits)) {
+        if (property_exists($this, 'DBTransactionSetUp')) {
             $this->DBTransactionSetUp();
         }
     }
@@ -35,9 +35,7 @@ class TripalTestCase extends TestCase
     {
         parent::tearDown();
 
-        $traits = class_uses($this);
-
-        if (in_array('DBTransaction', $traits)) {
+        if (property_exists($this, 'DBTransactionTearDown')) {
             $this->DBTransactionTearDown();
         }
     }
@@ -50,7 +48,7 @@ class TripalTestCase extends TestCase
     protected function _bootstrapDrupal()
     {
         // Don't bootstrap twice in runtime
-        if(static::$bootstrapped) {
+        if (static::$bootstrapped) {
             return;
         }
 
@@ -59,7 +57,7 @@ class TripalTestCase extends TestCase
             define('DRUPAL_ROOT', $this->_getDrupalRoot());
         }
 
-        if(empty(DRUPAL_ROOT)) {
+        if (empty(DRUPAL_ROOT)) {
             throw new TripalTestSuiteException('DRUPAL_ROOT is not configured correctly. Please use .env files to set DRUPAL_ROOT.');
         }
 
@@ -122,7 +120,7 @@ class TripalTestCase extends TestCase
         $env_file_path = $this->_getEnvironmentFilePath();
         if ($env_file_path) {
             $line_count = 0;
-            $file = fopen($env_file_path ,'r');
+            $file = fopen($env_file_path, 'r');
             while ($line = trim(rtrim(fgets($file), "\n"))) {
                 $line++;
                 if (empty($line)) {
