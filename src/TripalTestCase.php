@@ -13,6 +13,11 @@ class TripalTestCase extends TestCase
     public static $bootstrapped = false;
 
     /**
+     * @var array
+     */
+    protected $_includedTraits = [];
+
+    /**
      * Set up the environment.
      *
      * @throws \StatonLab\TripalTestSuite\Exceptions\TripalTestSuiteException
@@ -23,7 +28,8 @@ class TripalTestCase extends TestCase
 
         $this->_bootstrapDrupal();
 
-        if (property_exists($this, 'DBTransactionSetUp')) {
+        $this->_includedTraits = class_uses($this);
+        if (in_array(DBTransaction::class, $this->_includedTraits)) {
             $this->DBTransactionSetUp();
         }
     }
@@ -35,7 +41,7 @@ class TripalTestCase extends TestCase
     {
         parent::tearDown();
 
-        if (property_exists($this, 'DBTransactionTearDown')) {
+        if (in_array(DBTransaction::class, $this->_includedTraits)) {
             $this->DBTransactionTearDown();
         }
     }
