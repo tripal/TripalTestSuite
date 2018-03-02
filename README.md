@@ -12,7 +12,7 @@ In your `tests/bootstrap.php` file, include composer's autoload.php file.
 If the `tests/bootstrap.php` file does not exist, please create it.
 
 ```php
-require '../vendor/autoload.php';
+require __DIR__.'/../vendor/autoload.php';
 ```
 
 ### Usage
