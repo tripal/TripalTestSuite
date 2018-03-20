@@ -19,6 +19,17 @@ If the `tests/bootstrap.php` file does not exist, please create it.
 require __DIR__.'/../vendor/autoload.php';
 ```
 
+### Set Up
+
+From your modules root directory, execute `vendor/bin/tripaltest`.
+
+This will 
+* Set up the testing framework
+* Add a `.travis.yml` file
+
+You can now write tests in your `tests` folder.  To enable tests to run, push your module to github and [enable Travis CI](https://travis-ci.org/) 
+
+
 ### Usage
 
 #### TripalTestCase
