@@ -3,3 +3,5 @@
 vendor/
 tests/vendor/
 tests/.env
+tests/example.env
+tests/TripalExampleTest.php.test

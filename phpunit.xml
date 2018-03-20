@@ -1,0 +1,8 @@
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="phpunit.xsd" verbose="true" colors="true">
+  <testsuites>
+    <testsuite name="default">
+      <directory suffix="Test.php">./tests/</directory>
+      <exclude>./tests/test_module</exclude>
+    </testsuite>
+  </testsuites>
+</phpunit>

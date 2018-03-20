@@ -1,0 +1,19 @@
+language: php
+
+services:
+  - docker
+
+sudo: required
+
+env:
+  - DRUPAL_ROOT=/var/www/html
+  - MODULE_NAME=basename "$PWD"
+
+before_script:
+  - docker pull statonlab/tripal3
+
+script:
+  - docker run -it -d --rm --name tripal -v "$(pwd)":/var/www/html/sites/all/modules/custom/MODULE_NAME statonlab/tripal3
+  - sleep 30 #We pause here so drush won't fail
+  - docker exec -it tripal drush pm-enable -y MODULE_NAME
+  - docker exec -it tripal bash -c 'cd /var/www/html/sites/all/modules/custom/MODULE_NAME/ &&composer install && DRUPAL_ROOT="/var/www/html" ./vendor/bin/phpunit'
