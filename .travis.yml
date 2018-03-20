@@ -1,18 +1,19 @@
 language: php
 
+php:
+  - 7.1
+
+notifications:
+  slack: statonlab:pdwrAnplO9Fy6jWEMRHfwE75
+
 services:
   - docker
 
-sudo: required
-
-env:
-  - DRUPAL_ROOT=/var/www/html
-
 before_script:
-  - docker pull statonlab/tripal3
+  - docker-compose up -d
 
 script:
-  - docker run -it -d --rm --name tripal -v "$(pwd)":/var/www/html/sites/all/modules/custom//Users/chet/UTK/testsuite statonlab/tripal3
-  - sleep 30 #We pause here so drush won't fail
-  - docker exec -it tripal drush pm-enable -y /Users/chet/UTK/testsuite
-  - docker exec -it tripal bash -c 'cd /var/www/html/sites/all/modules/custom//Users/chet/UTK/testsuite/ &&composer install && DRUPAL_ROOT="/var/www/html" ./vendor/bin/phpunit'
+  - sleep 15
+  - docker-compose exec app drush en -y test_module
+  - docker-compose exec app bash -c "cd /modules/test_module && composer install && ./vendor/bin/phpunit"
+  - docker-compose exec app bash -c "cd /modules/test_module && ./vendor/bin/phpunit"
