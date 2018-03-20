@@ -26,7 +26,12 @@ class SetUp
         $root =  getcwd();
         $this->root = $root;
         $this->vendor_root = __DIR__ . '/../';
-        $this->module_name = dirname($root);
+
+        $position = strrpos($root,'/') + 1;
+        $module_name = substr($root,$position);
+
+        $this->module_name = $module_name;
+        print("\nmodule:  ". $module_name . " \n");
         $this->setUpTests();
         $this->addTravis();
 
@@ -74,6 +79,8 @@ class SetUp
             copy($vendor_root . "stubs/travis.yml", $root . "/.travis.yml");
             //Replace the MODULE_NAME variable with the module name
             $this->replace_string_in_file($root . "/.travis.yml", "MODULE_NAME", $this->module_name);
+
+
         }
     }
 
