@@ -1,17 +1,21 @@
 #!/usr/bin/env php
 <?php
- if (file_exists(__DIR__.'/vendor/autoload.php')) {
+
+// Include the autoloader
+if (file_exists(__DIR__.'/../../autoload.php')) {
+    require __DIR__.'/../../autoload.php';
+} elseif (file_exists(__DIR__.'/vendor/autoload.php')) {
     require __DIR__.'/vendor/autoload.php';
 } else {
-    require __DIR__.'/src/SetUp.php';
+    require __DIR__.'/src/bootstrap.php';
 }
+
 $app = new \StatonLab\TripalTestSuite\SetUp();
 
 // Run the Set Up
 try {
     $path = $app->run();
 } catch (Exception $exception) {
-  var_dump($exception);
   //print("error!")
     //exit(1);
 }
