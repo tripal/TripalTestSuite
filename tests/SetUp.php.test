@@ -31,7 +31,8 @@ $this->set_up = new StatonLab\TripalTestSuite\SetUp();
 
 /**
 * Tests that the setup method creates all expected folders and files exist.
-*
+* We also include a $cleanup variable to signal if the created file should be deleted after (the example env file)
+* Or if it shoul be left (The tests folder, where this test lives!)
 */
 
 public function testCreateTestDirectory() {
@@ -45,21 +46,15 @@ $tests = [
  [$dir . "/example.env", TRUE, "The example environment file was not created."],
 	[$dir . "/../.travis.yml", FALSE ,"The travis.yml file was not created"]];
 
-
 foreach ($tests as $file_to_check){
 	$file = $file_to_check[0];
 	$cleanup = $file_to_check[1];
 	$message = $file_to_check[2];
-	print($file . "\n");
-	print($cleanup . "\n");
-
 	$this->assertTrue(file_exists($file), $message);
 	if ($cleanup){
-
 		unlink($file);
 	}
 }
-
 
 }
 
