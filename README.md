@@ -12,14 +12,9 @@ Within your Drupal root path, run the following.
 composer require statonlab/tripal-test-suite
 ```
 
-In your `tests/bootstrap.php` file, include composer's autoload.php file.
-If the `tests/bootstrap.php` file does not exist, please create it.
 
-```php
-require __DIR__.'/../vendor/autoload.php';
-```
-
-### Set Up
+#### Automatic Set Up
+This module will automatically configure your tests directory, PHPUnit bootstrap files, and travis continuous integration file. 
 
 From your modules root directory, execute `vendor/bin/tripaltest`.
 
