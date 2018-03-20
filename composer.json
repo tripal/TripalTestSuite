@@ -20,6 +20,6 @@
         }
     },
     "bin" : [
-        "init"
+        "tripaltest"
     ]
 }
