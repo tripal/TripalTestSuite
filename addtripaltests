@@ -1,0 +1,24 @@
+#!/usr/bin/env php
+<?php
+ if (file_exists(__DIR__.'/vendor/autoload.php')) {
+    require __DIR__.'/vendor/autoload.php';
+} else {
+    require __DIR__.'/src/SetUp.php';
+}
+$app = new \StatonLab\TripalTestSuite\SetUp();
+
+// Run the Set Up
+try {
+    $path = $app->run();
+} catch (Exception $exception) {
+  print("error!")
+    exit(1);
+}
+// Success!
+print("\nTests and Continuous Integration set up successfully!\n");
+print("\nTo begin testing locally,  change the Drupal root path in tests/example.env and rename the file to to tests/.env\n");
+print("\nTo enable Travis CI, push your project to Github and visit https://travis-ci.org/\n");
+print("\nFor full instructions, please see the Tripal Test Repo at: https://github.com/statonlab/TripalTestSuite \n");
+
+//$prompt->success('Field generated successfully.');
+//$prompt->success("The field can be found at {$path['field']}");
