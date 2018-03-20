@@ -31,7 +31,7 @@ protected function setUpTests(){
     $root = $this->root;
     $vendor_root = $this->vendor_root;
 
-  $this->_mkdir("tests");
+  $this->_create_dir("tests");
   copy($vendor_root . "/stubs/TripalExampleTest.php.test", $root . "/tests/TripalExampleTest.php.test");
 
   copy($vendor_root . "/stubs/example.env", $root . "/tests/example.env");
@@ -43,17 +43,13 @@ protected function setUpTests(){
   }
 }
 
-
-
-private function _mdkir($dir){
+protected function _create_dir($dir){
   $root = $this->root;
   $dir = "/" . $dir;
   if (!file_exists($root . $dir)){
-
-
     if (!mkdir($root . $dir)) {
       throw new Exception(
-        "Could not create" . $root . $dir" !\n";
+        "Could not create" . $root . $dir . " !\n"
 );
     };
   }

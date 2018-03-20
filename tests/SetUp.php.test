@@ -32,22 +32,36 @@ $this->set_up = new StatonLab\TripalTestSuite\SetUp();
 /**
 * Tests that the setup method creates all expected folders and files exist.
 *
-* @dataProvider ExpectedFileProvider
 */
 
-public function testCreateTestDirectory($file, $message) {
-    $set_up = $this->set_up;
-    $set_up->run();
-    $this->assertTrue(file_exists($file), $message);
+public function testCreateTestDirectory() {
+	$dir = __DIR__;
+
+	$set_up = $this->set_up;
+	$set_up->run();
+
+$tests = [
+[$dir . "/TripalExampleTest.php.test", TRUE, "The example test was not created"],
+ [$dir . "/example.env", TRUE, "The example environment file was not created."],
+	[$dir . "/../.travis.yml", FALSE ,"The travis.yml file was not created"]];
+
+
+foreach ($tests as $file_to_check){
+	$file = $file_to_check[0];
+	$cleanup = $file_to_check[1];
+	$message = $file_to_check[2];
+	print($file . "\n");
+	print($cleanup . "\n");
+
+	$this->assertTrue(file_exists($file), $message);
+	if ($cleanup){
+
+		unlink($file);
+	}
 }
-public function ExpectedFileProvider(){
-  $dir = __DIR__;
-  var_dump($dir);
-  return [[$dir."/tests", "The tests directory does not exist."],
-   [$dir . "/tests/ExampleTest.php.test", "The example test was not created"],
-    [$dir . "/tests/example.env", "The example environment file was not created."],
-     [$dir . "/travis.yml", "The travis.yml file was not created"]];
+
 
 }
+
 
 }
