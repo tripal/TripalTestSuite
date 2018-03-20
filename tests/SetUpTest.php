@@ -43,9 +43,11 @@ final class SetUpTest extends TestCase
         $set_up->run();
 
         $tests = [
-[$dir . "/TripalExampleTest.php.test", true, "The example test was not created"],
+[$dir . "/TripalExampleTest.php", true, "The example test was not created"],
  [$dir . "/example.env", true, "The example environment file was not created."],
-    [$dir . "/../.travis.yml", false ,"The travis.yml file was not created"]];
+    [$dir . "/../.travis.yml", false ,"The travis.yml file was not created"],
+[$dir . "/bootstrap.php", false, "The bootstrap file was not copied to test."]
+	];
 
         foreach ($tests as $file_to_check) {
             $file = $file_to_check[0];
