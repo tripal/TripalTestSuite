@@ -17,6 +17,8 @@ class SetUp
 
     protected $vendor_root;
 
+    protected $module_name;
+
 
     public function run()
     {
@@ -24,8 +26,10 @@ class SetUp
         $root =  getcwd();
         $this->root = $root;
         $this->vendor_root = __DIR__ . '/../';
+        $this->module_name = dirname($root);
         $this->setUpTests();
         $this->addTravis();
+
     }
 
 
@@ -68,6 +72,16 @@ class SetUp
             print  "\n.travis.yml file already exists: skipping Travis Integration step...\n";
         } else {
             copy($vendor_root . "stubs/travis.yml", $root . "/.travis.yml");
+            //Replace the MODULE_NAME variable with the module name
+            $this->replace_string_in_file($root . "/.travis.yml", "MODULE_NAME", $this->module_name);
         }
     }
+
+    protected function replace_string_in_file($filename, $string_to_replace, $replace_with){
+        $content=file_get_contents($filename);
+        $content_chunks=explode($string_to_replace, $content);
+        $content=implode($replace_with, $content_chunks);
+        file_put_contents($filename, $content);
+    }
+
 }

@@ -7,7 +7,6 @@ sudo: required
 
 env:
   - DRUPAL_ROOT=/var/www/html
-  - MODULE_NAME=basename "$PWD"
 
 before_script:
   - docker pull statonlab/tripal3
