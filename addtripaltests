@@ -11,8 +11,9 @@ $app = new \StatonLab\TripalTestSuite\SetUp();
 try {
     $path = $app->run();
 } catch (Exception $exception) {
-  print("error!")
-    exit(1);
+  var_dump($exception);
+  //print("error!")
+    //exit(1);
 }
 // Success!
 print("\nTests and Continuous Integration set up successfully!\n");
