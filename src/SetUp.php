@@ -34,8 +34,7 @@ class SetUp
         $vendor_root = $this->vendor_root;
 
         $this->_create_dir("tests");
-        copy($vendor_root . "/stubs/TripalExampleTest.php.test", $root . "/tests/TripalExampleTest.php.test");
-
+        copy($vendor_root . "/stubs/TripalExampleTest.php", $root . "TripalExampleTest.php");
         copy($vendor_root . "/stubs/example.env", $root . "/tests/example.env");
 
         if (file_exists($root . "/phpunit.xml")) {
