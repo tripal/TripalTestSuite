@@ -16,7 +16,7 @@ $app = new \StatonLab\TripalTestSuite\SetUp();
 try {
     $path = $app->run();
 } catch (Exception $exception) {
-  //print("error!")
+    //print("error!")
     //exit(1);
 }
 // Success!
