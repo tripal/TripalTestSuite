@@ -5,7 +5,7 @@ namespace StatonLab\TripalTestSuite;
 use PHPUnit\Framework\TestCase;
 use StatonLab\TripalTestSuite\Exceptions\TripalTestSuiteException;
 
-class TripalTestCase extends TestCase
+abstract class TripalTestCase extends TestCase
 {
     /**
      * @var bool

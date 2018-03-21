@@ -1,6 +1,7 @@
 <?php
 load_php_files('TripalTestSuite');
 load_php_files('TripalTestSuite/Exceptions');
+load_php_files('TripalTestSuite/Mocks');
 
 function load_php_files($dir) {
     $dir = __DIR__.'/'.$dir;

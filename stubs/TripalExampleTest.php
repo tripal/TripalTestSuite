@@ -4,13 +4,9 @@ namespace Tests;
 
 use StatonLab\TripalTestSuite\TripalTestCase;
 
-class MyTest extends TripalTestCase {
+class TripalTestCase extends TripalTestCase {
 
-
-public function exampleTest() {
-
-$this->assertTrue(true);
-
-}
-
+public function testExampleTest() {
+  $this->assertTrue(true);
+  }
 }
