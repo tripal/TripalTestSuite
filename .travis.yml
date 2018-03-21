@@ -15,5 +15,5 @@ before_script:
 script:
   - sleep 15
   - docker-compose exec app drush en -y test_module
-  - docker-compose exec app bash -c "cd /modules/test_module && composer install && ./vendor/bin/phpunit"
+  - docker-compose exec app bash -c "cd /modules/test_module && composer install"
   - docker-compose exec app bash -c "cd /modules/test_module && ./vendor/bin/phpunit"

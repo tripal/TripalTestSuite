@@ -35,6 +35,8 @@ class DBTransactionTest extends TestCase
     {
         $this->DBTransactionSetUp();
 
+        $count = db_query('SELECT COUNT(*) FROM {test_module}')->fetchField();
+
         // Insert something into the db
         db_insert('test_module')->fields([
             'name' => 'test',
@@ -42,17 +44,17 @@ class DBTransactionTest extends TestCase
         ])->execute();
 
         // Make sure it exists in the db
-        $objects = db_query('SELECT * FROM {test_module}')->fetchAll();
+        $newCount = db_query('SELECT COUNT(*) FROM {test_module}')->fetchField();
 
-        $this->assertEquals(1, count($objects));
+        $this->assertEquals($count + 1, $newCount);
 
         // End the transaction
         $this->DBTransactionTearDown();
 
         // Now the record should not exit
-        $objects = db_query('SELECT * FROM {test_module}')->fetchAll();
+        $finalCount = db_query('SELECT COUNT(*) FROM {test_module}')->fetchField();
 
-        $this->assertEquals(0, count($objects));
+        $this->assertEquals($newCount - 1, $finalCount);
     }
 
     /**
