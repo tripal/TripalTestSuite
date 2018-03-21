@@ -2,7 +2,7 @@
 namespace Test\Feature;
 
 use PHPUnit\Framework\TestCase;
-use StatonLab\TripalTestSuite\TripalTestCase;
+use StatonLab\TripalTestSuite\Mocks\TripalTestCaseMock;
 
 class BootstrapTest extends TestCase {
     /**
@@ -11,8 +11,8 @@ class BootstrapTest extends TestCase {
      * @throws \ReflectionException
      * @test
      */
-    public function should_find_drupal_root() {
-        $test_case = new TripalTestCase();
+    public function shouldFindDrupalRoot() {
+        $test_case = new TripalTestCaseMock();
         $method = $this->getMethod('_getDrupalRoot');
         $drupal_root = $method->invoke($test_case);
 
@@ -26,8 +26,8 @@ class BootstrapTest extends TestCase {
      * @throws \ReflectionException
      * @test
      */
-    public function should_find_env_file_successfully() {
-        $test_case = new TripalTestCase();
+    public function shouldFindEnvFileSuccessfully() {
+        $test_case = new TripalTestCaseMock();
 
         $method = $this->getMethod('_getEnvironmentFilePath');
         $env_file_path = $method->invoke($test_case);
@@ -43,8 +43,8 @@ class BootstrapTest extends TestCase {
      * @throws \ReflectionException
      * @test
      */
-    public function should_successfully_bootstrap_drupal() {
-        $test_case = new TripalTestCase();
+    public function shouldSuccessfullyBootstrapDrupal() {
+        $test_case = new TripalTestCaseMock();
         $method = $this->getMethod('_bootstrapDrupal');
         $method->invoke($test_case);
 
@@ -69,7 +69,7 @@ class BootstrapTest extends TestCase {
      */
     protected function getMethod($method_name, $class_name = '') {
         if(empty($class_name)) {
-            $class_name = TripalTestCase::class;
+            $class_name = TripalTestCaseMock::class;
         }
 
         $reflection = new \ReflectionClass($class_name);

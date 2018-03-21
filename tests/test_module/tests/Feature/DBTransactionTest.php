@@ -4,7 +4,7 @@ namespace Tests\Feature;
 
 use PHPUnit\Framework\TestCase;
 use StatonLab\TripalTestSuite\DBTransaction;
-use StatonLab\TripalTestSuite\TripalTestCase;
+use StatonLab\TripalTestSuite\Mocks\TripalTestCaseMock;
 
 class DBTransactionTest extends TestCase
 {
@@ -17,13 +17,13 @@ class DBTransactionTest extends TestCase
      */
     protected function setUp()
     {
-        $test_case = new TripalTestCase();
+        $test_case = new TripalTestCaseMock();
         $method = $this->getMethod('_bootstrapDrupal');
         $method->invoke($test_case);
     }
 
     /** @test */
-    public function should_start_a_transaction()
+    public function shouldStartATransaction()
     {
         $this->DBTransactionSetUp();
         $this->assertInstanceOf(\DatabaseTransaction::class, $this->_transaction);
@@ -31,7 +31,7 @@ class DBTransactionTest extends TestCase
     }
 
     /** @test */
-    public function should_fail_to_find_record_after_transaction_has_ended()
+    public function shouldFailToFindRecordAfterTransactionHasEnded()
     {
         $this->DBTransactionSetUp();
 
@@ -66,7 +66,7 @@ class DBTransactionTest extends TestCase
     protected function getMethod($method_name, $class_name = '')
     {
         if (empty($class_name)) {
-            $class_name = TripalTestCase::class;
+            $class_name = TripalTestCaseMock::class;
         }
 
         $reflection = new \ReflectionClass($class_name);
