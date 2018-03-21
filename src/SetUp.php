@@ -91,14 +91,14 @@ class SetUp
     protected function append_to_gitignore()
     {
         $root = $this->root;
-        $filepath = $root . "./.gitignore";
+        $filepath = $root . "/.gitignore";
 
         if (!file_exists($filepath)) {
             $fh = fopen($filepath, 'w');
             fwrite($fh, "\nvendor/\n");
         } else {
-            if (strpos(file_get_contents($root . "./.gitignore", "vendor/")) == false) {
-                $fh =  fopen($myFile, 'a');
+            if (strpos(file_get_contents($filepath), "vendor/") == false) {
+                $fh =  fopen($filepath, 'a');
                 fwrite($fh, "\nvendor/\n");
             }
         }
