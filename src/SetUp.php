@@ -27,14 +27,14 @@ class SetUp
         $this->root = $root;
         $this->vendor_root = __DIR__ . '/../';
 
-        $position = strrpos($root,'/') + 1;
-        $module_name = substr($root,$position);
+        $position = strrpos($root, '/') + 1;
+        $module_name = substr($root, $position);
 
         $this->module_name = $module_name;
         print("\nmodule:  ". $module_name . " \n");
         $this->setUpTests();
         $this->addTravis();
-
+        $this->append_to_gitignore();
     }
 
 
@@ -79,16 +79,36 @@ class SetUp
             copy($vendor_root . "stubs/travis.yml", $root . "/.travis.yml");
             //Replace the MODULE_NAME variable with the module name
             $this->replace_string_in_file($root . "/.travis.yml", "MODULE_NAME", $this->module_name);
-
-
         }
     }
 
-    protected function replace_string_in_file($filename, $string_to_replace, $replace_with){
+    /**
+    *
+    * Check if theres a gitignore in the project root.  if no, create and append vendor folder.
+    * If yes, check if vendor is in there and append it if it isnt.
+    */
+
+    protected function append_to_gitignore()
+    {
+        $root = $this->root;
+        $filepath = $root . "./.gitignore";
+
+        if (!file_exists($filepath)) {
+            $fh = fopen($filepath, 'w');
+            fwrite($fh, "\nvendor/\n");
+        } else {
+            if (strpos(file_get_contents($root . "./.gitignore", "vendor/")) == false) {
+                $fh =  fopen($myFile, 'a');
+                fwrite($fh, "\nvendor/\n");
+            }
+        }
+    }
+
+    protected function replace_string_in_file($filename, $string_to_replace, $replace_with)
+    {
         $content=file_get_contents($filename);
         $content_chunks=explode($string_to_replace, $content);
         $content=implode($replace_with, $content_chunks);
         file_put_contents($filename, $content);
     }
-
 }
