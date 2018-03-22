@@ -19,4 +19,5 @@ script:
   - docker-compose exec app bash -c "cd /modules/test_module && composer install"
   - docker-compose exec app bash -c "cd /modules/test_module && ./vendor/bin/phpunit"
   # Finally test local commands that don't require drupal
+  - composer install
   - phpunit
