@@ -61,7 +61,6 @@ class InitCommand extends BaseCommand
             $this->error($exception->getMessage());
         }
 
-
         // Done! Print success message and .gitignore instructions
         $this->info('Set up completed successfully. Please add the following lines to your .gitignore file.');
         $this->info('.env');

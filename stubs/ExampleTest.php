@@ -4,7 +4,15 @@ namespace Tests;
 
 use StatonLab\TripalTestSuite\TripalTestCase;
 
-class TripalTestCase extends TripalTestCase {
+/**
+ * Class ExampleTest
+ *
+ * Note that test classes must have a suffix of Test.php and the filename
+ * must match the class name.
+ *
+ * @package Tests
+ */
+class ExampleTest extends TripalTestCase {
   /**
    * Basic test example.
    * Tests must begin with the word "test".
