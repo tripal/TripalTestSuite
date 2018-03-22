@@ -23,6 +23,7 @@ From your modules root directory, execute:
 This will 
 - Set up the testing framework by creating the tests directory, phpunit.xml and tests/bootstrap.php
 - Create an example test in tests/ExampleTest.php
+- Create an example `.env` file.
 - Create `.travis.yml` configured to use a tripal3 docker container to run your tests  
 
 You can now write tests in your `tests` folder.  To enable continuous
@@ -62,5 +63,17 @@ class MyTest extends TripalTestCase {
 
 The trait will automatically activate DB transactions and rollback the database when the test is finished.
 
-**NOTE**: If the code you are testing requires
-a transaction, Postgres will fail since it does not support nested transactions.
+**NOTE**: If the code you are testing requires a transaction, Postgres
+will fail since it does not support nested transactions.
+
+### Environment Variables
+You can specify the Drupal web root path in `tests/.env`.
+```bash
+# tests/.env
+DRUPAL_ROOT=/var/www/html
+```
+
+This allows TripalTestSuite to bootstrap the entire Drupal framework and make it available in your tests.
+
+## License
+TripalTestSuite is licensed under GPLv3.
