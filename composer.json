@@ -1,6 +1,6 @@
 {
     "name": "statonlab/tripal-test-suite",
-    "license": "GPL-2.0",
+    "license": "GPL-3.0",
     "authors": [
         {
             "name": "Abdullah Almsaeed",
@@ -24,6 +24,6 @@
         "tripaltest"
     ],
     "scripts": {
-        "post-install-cmd": "tripaltest welcome"
+        "post-install-cmd": "./vendor/bin/tripaltest welcome"
     }
 }
