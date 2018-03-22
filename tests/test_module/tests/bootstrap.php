@@ -1,8 +1,4 @@
 <?php
-load_php_files('TripalTestSuite');
-load_php_files('TripalTestSuite/Exceptions');
-load_php_files('TripalTestSuite/Mocks');
-
 if (! function_exists('load_php_files')) {
     function load_php_files($dir)
     {
@@ -13,3 +9,7 @@ if (! function_exists('load_php_files')) {
         }
     }
 }
+
+load_php_files('TripalTestSuite');
+load_php_files('TripalTestSuite/Exceptions');
+load_php_files('TripalTestSuite/Mocks');
