@@ -24,6 +24,6 @@
         "tripaltest"
     ],
     "scripts": {
-        "post-install-cmd": "./vendor/bin/tripaltest welcome"
+        "post-install-cmd": "pwd && ls && ls vendor && ls vendor/bin"
     }
 }
