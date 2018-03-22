@@ -13,7 +13,10 @@ before_script:
   - docker-compose up -d
 
 script:
+  # Tests that require drupal
   - sleep 15
   - docker-compose exec app drush en -y test_module
   - docker-compose exec app bash -c "cd /modules/test_module && composer install"
   - docker-compose exec app bash -c "cd /modules/test_module && ./vendor/bin/phpunit"
+  # Finally test local commands that don't require drupal
+  - phpunit
