@@ -1,7 +1,5 @@
 [![Build Status](https://travis-ci.org/statonlab/TripalTestSuite.svg?branch=master)](https://travis-ci.org/statonlab/TripalTestSuite) [![DOI](https://zenodo.org/badge/123318173.svg)](https://zenodo.org/badge/latestdoi/123318173)
 
-
-
 TripalTestSuite is a composer package that handles
 common test practices such as bootstrapping Drupal
 before running the tests.
@@ -9,21 +7,26 @@ before running the tests.
 ### Installation
 Within your Drupal root path, run the following.
 ```bash
-composer require statonlab/tripal-test-suite
+composer require statonlab/tripal-test-suite --dev
 ```
 
-
 #### Automatic Set Up
-This module will automatically configure your tests directory, PHPUnit bootstrap files, and travis continuous integration file. 
+This module will automatically configure your tests directory,
+PHPUnit bootstrap files, and travis continuous integration file
+as well as provide an example test to get you started. 
 
-From your modules root directory, execute `vendor/bin/tripaltest`.
+From your modules root directory, execute:
+```bash
+./vendor/bin/tripaltest init MODULE_NAME 
+```
 
 This will 
-* Set up the testing framework
-* Add a `.travis.yml` file
+- Set up the testing framework by creating the tests directory, phpunit.xml and tests/bootstrap.php
+- Create an example test in tests/ExampleTest.php
+- Create `.travis.yml` configured to use a tripal3 docker container to run your tests  
 
-You can now write tests in your `tests` folder.  To enable tests to run, push your module to github and [enable Travis CI](https://travis-ci.org/) 
-
+You can now write tests in your `tests` folder.  To enable continuous
+integration testing, push your module to github and [enable Travis CI](https://travis-ci.org/).
 
 ### Usage
 
