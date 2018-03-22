@@ -22,8 +22,5 @@
     },
     "bin" : [
         "tripaltest"
-    ],
-    "scripts": {
-        "post-install-cmd": "pwd && ls && ls vendor && ls vendor/bin"
-    }
+    ]
 }
