@@ -5,7 +5,7 @@ common test practices such as bootstrapping Drupal
 before running the tests.
 
 ### Installation
-Within your Drupal root path, run the following.
+Within your Drupal module path (e,g sites/all/my_module), run the following.
 ```bash
 composer require statonlab/tripal-test-suite --dev
 ```

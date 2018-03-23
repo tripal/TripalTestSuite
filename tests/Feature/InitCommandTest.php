@@ -65,7 +65,7 @@ class InitCommandTest extends TestCase
         // Go back to where we were
         chdir($this->cwd);
 
-        // Clean up (Not the best way but PHP's rmdir can't delete folders that are not empty. However,
+        // Clean up (Not the best way but PHP's `rmdir()` can't delete folders that are not empty. However,
         // this is safe to use since it's escaped)
         system(sprintf('rm -rf %s', escapeshellarg($this->debugFolder)));
     }
