@@ -15,7 +15,7 @@ This module will automatically configure your tests directory,
 PHPUnit bootstrap files, and travis continuous integration file
 as well as provide an example test to get you started. 
 
-From your modules root directory, execute:
+From your module's directory, execute:
 ```bash
 ./vendor/bin/tripaltest init MODULE_NAME 
 ```
