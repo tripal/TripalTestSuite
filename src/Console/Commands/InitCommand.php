@@ -30,7 +30,8 @@ class InitCommand extends BaseCommand
             ->setHelp('This command creates the tests folder, .travis.yml and phpunit.xml');
 
         // Add arguments
-        $this->addArgument('name', InputArgument::REQUIRED, 'Specifies the module name (for example, tripal_awesome_extension).');
+        $this->addArgument('name', InputArgument::OPTIONAL,
+            'Specifies the module name (for example, tripal_awesome_extension).', $this->getModuleName());
     }
 
     /**
@@ -54,8 +55,8 @@ class InitCommand extends BaseCommand
         try {
             $this->configureVariables([
                 '.travis.yml' => [
-                    '$$MODULE_NAME$$' => $this->getArgument('name')
-                ]
+                    '$$MODULE_NAME$$' => $this->getArgument('name'),
+                ],
             ]);
         } catch (\Exception $exception) {
             $this->error($exception->getMessage());
@@ -65,6 +66,16 @@ class InitCommand extends BaseCommand
         $this->info('Set up completed successfully. Please add the following lines to your .gitignore file.');
         $this->info('.env');
         $this->info('vendor/');
+    }
+
+    /**
+     * Get a default module name.
+     *
+     * @return string
+     */
+    function getModuleName()
+    {
+        return basename(getcwd());
     }
 
     /**
@@ -100,6 +111,7 @@ class InitCommand extends BaseCommand
 
     /**
      * Finds a replaces variables in given files.
+     *
      * @param array $files List of files and values in the following structure:
      *                        ['FILE_NAME' => [
      *                             "VARIABLE" => "NEW_VALUE"

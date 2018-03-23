@@ -24,8 +24,6 @@ abstract class TripalTestCase extends TestCase
      */
     protected function setUp()
     {
-        parent::setUp();
-
         $this->_bootstrapDrupal();
 
         $this->_includedTraits = class_uses($this);
@@ -39,8 +37,6 @@ abstract class TripalTestCase extends TestCase
      */
     protected function tearDown()
     {
-        parent::tearDown();
-
         if (in_array(DBTransaction::class, $this->_includedTraits)) {
             $this->DBTransactionTearDown();
         }
