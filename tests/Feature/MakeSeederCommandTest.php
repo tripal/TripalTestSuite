@@ -10,11 +10,11 @@ namespace Tests\Feature;
 
 use PHPUnit\Framework\TestCase;
 use StatonLab\TripalTestSuite\Console\Commands\InitCommand;
+use StatonLab\TripalTestSuite\Console\Commands\MakeSeederCommand;
 use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Tester\CommandTester;
 
-class InitCommandTest extends TestCase
+class MakeSeederCommandTest extends TestCase
 {
     /**
      * Holds the command.
@@ -49,7 +49,7 @@ class InitCommandTest extends TestCase
      */
     protected function setUp()
     {
-        // Since the command is supposed to create the tests scaffold in the
+        // Since the command is supposed to create the seeder in the
         // current working directory, we'll create a debug folder and run
         // the command in it to test the produced files.
         $this->cwd = getcwd();
@@ -58,12 +58,13 @@ class InitCommandTest extends TestCase
 
         // Move into the directory to start the tests.
         chdir($this->debugFolder);
+        mkdir('tests');
 
         // Now we can create the application and initiate the command tester
         $app = new Application();
-        $app->add(new InitCommand());
+        $app->add(new MakeSeederCommand());
 
-        $this->command = $app->find('init');
+        $this->command = $app->find('make:seeder');
         $this->tester = new CommandTester($this->command);
     }
 
@@ -83,50 +84,39 @@ class InitCommandTest extends TestCase
     /**
      * Make sure an exception is thrown when the name argument is missing.
      */
-    public function testResultingScaffoldingIsCorrectAndComplete()
+    public function testSeederThrowsExceptionIfNoArgumentsSupplied()
     {
+        $this->expectException(\Exception::class);
+
         // Execute the command
         $this->tester->execute([
             'command' => $this->command->getName(),
         ]);
-
-        // Verify all files exist
-        $files = [
-            "tests",
-            "tests/bootstrap.php",
-            "tests/ExampleTest.php",
-            "tests/example.env",
-            "phpunit.xml",
-            ".travis.yml",
-        ];
-
-        foreach ($files as $file) {
-            $this->assertTrue(file_exists($file), "Failed to find {$file}");
-        }
-
-        // Make sure travis contains the correct module name, which in this case is the folder
-        // name since we did not provide the module name as an argument
-        $content = file_get_contents('.travis.yml');
-        $moduleName = 'modules/'.basename($this->debugFolder);
-        $this->assertTrue(strpos($content, $moduleName) !== false, "Failed to find the module name in .travis.yml");
     }
 
     /**
-     * Tests that the name argument is present in .travis.yml
-     * when provided.
+     * Test the seeder gets created.
      */
-    public function testNameArgumentIsHandledCorrectly()
+    public function testSeederExists()
     {
-        // Execute the command and pass it the name argument
-        $name = 'my_test_module';
+        // Execute the command
         $this->tester->execute([
             'command' => $this->command->getName(),
 
-            // Name argument
-            'name' => $name,
+            // arguments
+            'name' => 'TestDBSeeder',
         ]);
 
-        $content = file_get_contents('.travis.yml');
-        $this->assertTrue(strpos($content, "modules/{$name}") !== false, "Failed to find $name in .travis.yml");
+        // Make sure we return successfully
+        $this->assertTrue(strstr($this->tester->getDisplay(), 'successfully') !== false);
+
+        // Verify the file exists
+        $path = "tests/DatabaseSeeders/TestDBSeeder.php";
+        $this->assertTrue(file_exists($path), "Failed to find $path");
+
+        // Verify the class name is correct
+        $content = file_get_contents($path);
+        $exists = strpos($content, 'TestDBSeeder') !== false;
+        $this->assertTrue($exists, "Failed to find the class name in resulting file.");
     }
 }

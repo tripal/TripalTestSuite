@@ -4,5 +4,7 @@
  */
 return [
     \StatonLab\TripalTestSuite\Console\Commands\InitCommand::class,
-    \StatonLab\TripalTestSuite\Console\Commands\WelcomeCommand::class
+    \StatonLab\TripalTestSuite\Console\Commands\WelcomeCommand::class,
+    \StatonLab\TripalTestSuite\Console\Commands\MakeTestCommand::class,
+    \StatonLab\TripalTestSuite\Console\Commands\MakeSeederCommand::class,
 ];
