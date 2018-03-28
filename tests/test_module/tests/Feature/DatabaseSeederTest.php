@@ -9,7 +9,7 @@ class DatabaseSeederTest extends TestCase
 {
     /**
      * Tests whether database seeders are found and run.
-     * 
+     *
      * @test
      */
     public function testDatabaseSeedersHaveRan()
