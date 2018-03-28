@@ -2,7 +2,9 @@
 
 TripalTestSuite is a composer package that handles
 common test practices such as bootstrapping Drupal
-before running the tests.
+before running the tests, creating test file, and creating
+and managing database seeders (files that seed the database
+with data for use in testing).
 
 ### Installation
 Within your Drupal module path (e,g sites/all/my_module), run the following.
@@ -23,6 +25,7 @@ From your module's directory, execute:
 This will 
 - Set up the testing framework by creating the tests directory, phpunit.xml and tests/bootstrap.php
 - Create an example test in tests/ExampleTest.php
+- Create a DatabaseSeeders folder and an example seeder in tests/DatabaseSeeders/UsersTableSeeder.php
 - Create an example `.env` file.
 - Create `.travis.yml` configured to use a tripal3 docker container to run your tests  
 
@@ -30,6 +33,19 @@ You can now write tests in your `tests` folder.  To enable continuous
 integration testing, push your module to github and [enable Travis CI](https://travis-ci.org/).
 
 ### Usage
+
+#### Creating Tests
+Using `tripaltest`, you can create test pre-populated with all requirements.
+To create a new test, run the following command from your module's root directory:
+```bash
+# Creates a test file called ExampleTest.php in the tests folder
+./vendor/bin/tripaltest make:tests ExampleTest
+
+# Creates a test file called ExampleTest.php in tests/Features/Entities
+# This will automatically detect and configure the namespace of your script
+./vendor/bin/tripaltest make:tests Features/Entities/ExampleTest
+```
+Note: Test names should end with Test for phpunit to recognize them.
 
 #### TripalTestCase
 Test classes should extend the TripalTestCase class. Once extended, bootstrapping
