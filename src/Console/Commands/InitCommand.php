@@ -50,6 +50,7 @@ class InitCommand extends BaseCommand
             'travis.yml' => '.travis.yml',
             'phpunit.xml' => 'phpunit.xml',
             'ExampleTest.php' => 'tests/ExampleTest.php',
+            'UsersTableSeeder.php' => 'tests/DatabaseSeedersTable.php'
         ]);
 
         try {
@@ -102,11 +103,15 @@ class InitCommand extends BaseCommand
     {
         if (! file_exists($this->path.'/tests')) {
             mkdir($this->path.'/tests');
-
-            return;
+        } else {
+            $this->line('TRIPALTEST: tests folder already exists.');
         }
 
-        $this->line('TRIPALTEST: tests folder already exists.');
+        if (! file_exists($this->path.'/tests/DatabaseSeeders')) {
+            mkdir($this->path.'/tests/DatabaseSeeders');
+        } else {
+            $this->line('TRIPALTEST: tests/DatabaseSeeders folder already exists.');
+        }
     }
 
     /**
