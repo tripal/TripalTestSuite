@@ -11,3 +11,4 @@ if (! function_exists('load_php_files')) {
 }
 
 load_php_files('Console');
+load_php_files('Helpers');

@@ -2,7 +2,7 @@
 namespace Test\Feature;
 
 use PHPUnit\Framework\TestCase;
-use StatonLab\TripalTestSuite\Mocks\TripalTestCaseMock;
+use StatonLab\TripalTestSuite\Services\BootstrapDrupal;
 
 class BootstrapTest extends TestCase {
     /**
@@ -12,8 +12,8 @@ class BootstrapTest extends TestCase {
      * @test
      */
     public function shouldFindDrupalRoot() {
-        $test_case = new TripalTestCaseMock();
-        $method = $this->getMethod('_getDrupalRoot');
+        $test_case = new BootstrapDrupal();
+        $method = $this->getMethod('getDrupalRoot');
         $drupal_root = $method->invoke($test_case);
 
         $this->assertNotEmpty($drupal_root);
@@ -27,9 +27,9 @@ class BootstrapTest extends TestCase {
      * @test
      */
     public function shouldFindEnvFileSuccessfully() {
-        $test_case = new TripalTestCaseMock();
+        $test_case = new BootstrapDrupal();
 
-        $method = $this->getMethod('_getEnvironmentFilePath');
+        $method = $this->getMethod('getEnvironmentFilePath');
         $env_file_path = $method->invoke($test_case);
 
         // The path should not equal false and should exist.
@@ -44,8 +44,8 @@ class BootstrapTest extends TestCase {
      * @test
      */
     public function shouldSuccessfullyBootstrapDrupal() {
-        $test_case = new TripalTestCaseMock();
-        $method = $this->getMethod('_bootstrapDrupal');
+        $test_case = new BootstrapDrupal();
+        $method = $this->getMethod('run');
         $method->invoke($test_case);
 
         // _SERVER['REMOTE_ADDR'] should exists and equals 127.0.0.1
@@ -69,7 +69,7 @@ class BootstrapTest extends TestCase {
      */
     protected function getMethod($method_name, $class_name = '') {
         if(empty($class_name)) {
-            $class_name = TripalTestCaseMock::class;
+            $class_name = BootstrapDrupal::class;
         }
 
         $reflection = new \ReflectionClass($class_name);

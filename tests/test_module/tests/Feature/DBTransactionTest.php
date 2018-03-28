@@ -5,6 +5,8 @@ namespace Tests\Feature;
 use PHPUnit\Framework\TestCase;
 use StatonLab\TripalTestSuite\DBTransaction;
 use StatonLab\TripalTestSuite\Mocks\TripalTestCaseMock;
+use StatonLab\TripalTestSuite\Services\BootstrapDrupal;
+use StatonLab\TripalTestSuite\TripalTestBootstrap;
 
 class DBTransactionTest extends TestCase
 {
@@ -13,13 +15,11 @@ class DBTransactionTest extends TestCase
     /**
      * Bootstrap Drupal.
      *
-     * @throws \ReflectionException
+     * @throws \ReflectionException|\Exception
      */
     protected function setUp()
     {
-        $test_case = new TripalTestCaseMock();
-        $method = $this->getMethod('_bootstrapDrupal');
-        $method->invoke($test_case);
+        (new BootstrapDrupal())->run();
     }
 
     /** @test */
@@ -55,26 +55,5 @@ class DBTransactionTest extends TestCase
         $finalCount = db_query('SELECT COUNT(*) FROM {test_module}')->fetchField();
 
         $this->assertEquals($newCount - 1, $finalCount);
-    }
-
-    /**
-     * Get a private or protected methods from a given class.
-     *
-     * @param string $method_name Method name
-     * @param string $class_name Class name. Defaults to TripalTestCase
-     * @return \ReflectionMethod
-     * @throws \ReflectionException
-     */
-    protected function getMethod($method_name, $class_name = '')
-    {
-        if (empty($class_name)) {
-            $class_name = TripalTestCaseMock::class;
-        }
-
-        $reflection = new \ReflectionClass($class_name);
-        $method = $reflection->getMethod($method_name);
-        $method->setAccessible(true);
-
-        return $method;
     }
 }
