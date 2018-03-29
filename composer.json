@@ -17,10 +17,10 @@
     },
     "autoload": {
         "psr-4": {
-            "StatonLab\\TripalTestSuite\\": "src/Helpers/*.php"
+            "StatonLab\\TripalTestSuite\\": "src/"
         },
         "files": [
-            "src/Helpers"
+            "src/Helpers/helpers.php"
         ]
     },
     "bin" : [
