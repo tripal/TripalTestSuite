@@ -35,7 +35,7 @@ integration testing, push your module to github and [enable Travis CI](https://t
 ### Usage
 
 #### Creating Tests
-Using `tripaltest`, you can create test pre-populated with all requirements.
+Using `tripaltest`, you can create test files pre-populated with all the requirements.
 To create a new test, run the following command from your module's root directory:
 ```bash
 # Creates a test file called ExampleTest.php in the tests folder
@@ -45,7 +45,89 @@ To create a new test, run the following command from your module's root director
 # This will automatically detect and configure the namespace of your script
 ./vendor/bin/tripaltest make:test Features/Entities/ExampleTest
 ```
-Note: Test names should end with Test for phpunit to recognize them.
+Note: Test names should end with `Test` for phpunit to recognize them.
+
+#### Database Seeders
+Database seeders are also supported in TripalTestSuite. They give you the ability
+to create reusable seeders that can run automatically before entering the testing
+stage and get rolled back automatically after the tests are completed.
+
+##### Creating Database Seeders
+DB seeders can also be created automatically using `tripaltest`:
+```bash
+./vendor/bin/tripaltest make:seeder ExampleTableSeeder
+```
+The above command will create `ExampleTableSeeder.php` in `tests/DatabaseSeeders/` pre-populated
+with the necessary namespace, methods and properties.
+
+#### Using Database Seeders
+DB seeders support two important methods, `up()` and `down()`. The `up()`
+method is used to insert data into the database while the `down()` method
+is used to clean up the inserted data. The following is an example of a Seeder class.
+
+```php
+<?php
+
+namespace Tests\DatabaseSeeders;
+
+use StatonLab\TripalTestSuite\Database\Seeder;
+
+class UsersTableSeeder extends Seeder
+{
+    /**
+     * Whether to run the seeder automatically before
+     * starting our tests and destruct them automatically
+     * once the tests are completed.
+     *
+     * If you set this to false, you can run the seeder
+     * from your tests directly using UsersTableSeeder::seed()
+     * which returns an instance of the class the you can use
+     * to run the down() method whenever required.
+     *
+     * @var bool
+     */
+    public $auto_run = true;
+
+    /**
+     * The users that got created.
+     * We save this here to have them easily deleted
+     * in the down() method.
+     *
+     * @var array
+     */
+    protected $users = [];
+
+    /**
+     * Seeds the database with users.
+     */
+    public function up()
+    {
+        $new_user = [
+            'name' => 'test user',
+            'pass' => 'secret',
+            'mail' => 'test@example.com',
+            'status' => 1,
+            'init' => 'Email',
+            'roles' => [
+                DRUPAL_AUTHENTICATED_RID => 'authenticated user',
+            ],
+        ];
+
+        // The first parameter is sent blank so a new user is created.
+        $this->users[] = user_save(new \stdClass(), $new_user);
+    }
+
+    /**
+     * Cleans up the database from the created users.
+     */
+    public function down()
+    {
+        foreach ($this->users as $user) {
+            user_delete($user->uid);
+        }
+    }
+}
+```
 
 #### TripalTestCase
 Test classes should extend the TripalTestCase class. Once extended, bootstrapping

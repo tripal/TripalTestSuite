@@ -71,7 +71,7 @@ class MakeTestCommand extends BaseCommand
         $stub = __DIR__.'/../../../stubs/TestStub.php';
         $this->extractNameSpace($path);
         $content = file_get_contents($stub);
-        $content = str_replace('$$TEST_NAME$$', $this->extractFileName($path), $content);
+        $content = str_replace('$$$TEST_NAME$$', $this->extractFileName($path), $content);
         $content = str_replace('$$NAME_SPACE$$', $this->extractNameSpace($path), $content);
         $done = file_put_contents($path, $content);
 
