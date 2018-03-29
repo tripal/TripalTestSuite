@@ -7,18 +7,20 @@ and managing database seeders (files that seed the database
 with data for use in testing).
 
 ### Installation
-Within your Drupal module path (e,g sites/all/my_module), run the following.
+Within your Drupal module path (e,g sites/all/modules/my_module), run the following.
 ```bash
 composer require statonlab/tripal-test-suite --dev
 ```
 
 #### Automatic Set Up
-This module will automatically configure your tests directory,
-PHPUnit bootstrap files, and travis continuous integration file
-as well as provide an example test to get you started. 
+This module will automatically configure your tests directory, PHPUnit bootstrap files, and travis 
+continuous integration file as well as provide an example test and an example database seeder to
+get you started. 
 
 From your module's directory, execute:
 ```bash
+# You may specify the module name or leave it blank.
+# When left blank, the name of the current directory will be used as the module name.
 ./vendor/bin/tripaltest init MODULE_NAME 
 ```
 
@@ -33,6 +35,14 @@ You can now write tests in your `tests` folder.  To enable continuous
 integration testing, push your module to github and [enable Travis CI](https://travis-ci.org/).
 
 ### Usage
+
+#### Running Tests
+Tripal Test Suite auto installs PHPunit as part of it's dependencies in composer.json.
+Therefore, running tests in Tripal Test Suite is done via phpunit as such:
+```bash
+./vendor/bin/phpunit
+```
+The command above, will read your `phpunit.xml` and runs the tests accordingly.
 
 #### Creating Tests
 Using `tripaltest`, you can create test files pre-populated with all the requirements.
