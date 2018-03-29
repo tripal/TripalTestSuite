@@ -129,6 +129,20 @@ class UsersTableSeeder extends Seeder
 }
 ```
 
+##### Auto Running Seeders
+The DB seeder classes have an `auto_run` property, as shown in the example above, that
+control whether the seeder should run automatically before the testing stage begins.
+However, you can also run the seeder manually by changing the `$auto_run` value to false
+then using the static `seed()` method. For example, within a test class, you can run
+`$seeder = UsersTableSeeder::seed()` which runs the `up()` method and returns an initialized seeder
+object. Whenever done with the data, you can run `$seeder->down()` to rollback the changes. If you are
+using the `DBTransaction` trait, you will not need to run the `down()` since transactions are
+automatically rolled at the end of each test function.
+
+Note that running the seeder manually in a test function with `DBTransaction` enabled,
+means that the data is available only to that function and nothing else. However,
+running it automatically, makes it available to the entire test suite. 
+
 #### TripalTestCase
 Test classes should extend the TripalTestCase class. Once extended, bootstrapping
 Drupal and reading your `.env` file is done automatically when the first test is run.
