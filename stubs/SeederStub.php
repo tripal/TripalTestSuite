@@ -13,7 +13,7 @@ class $$CLASS_NAME$$ extends Seeder
      *
      * @var bool
      */
-    public $auto_run = true;
+    public static $auto_run = true;
 
     /**
      * Seeds the database with users.
