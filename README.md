@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.org/statonlab/TripalTestSuite.svg?branch=master)](https://travis-ci.org/statonlab/TripalTestSuite) [![DOI](https://zenodo.org/badge/123318173.svg)](https://zenodo.org/badge/latestdoi/123318173)
 
-TripalTestSuite is a composer package that handles
+**TripalTestSuite** is a composer package that handles
 common test practices such as bootstrapping Drupal
 before running the tests, creating test file, and creating
 and managing database seeders (files that seed the database
@@ -141,7 +141,7 @@ class UsersTableSeeder extends Seeder
 
 ##### Auto Running Seeders
 The DB seeder classes have an `auto_run` property, as shown in the example above, that
-control whether the seeder should run automatically before the testing stage begins.
+controls whether the seeder should run automatically before the testing stage begins.
 However, you can also run the seeder manually by changing the `$auto_run` value to false
 then using the static `seed()` method. For example, within a test class, you can run
 `$seeder = UsersTableSeeder::seed()` which runs the `up()` method and returns an initialized seeder
@@ -167,8 +167,11 @@ class MyTest extends TripalTestCase {
 ```
 
 ### Using DB Transactions
-Using DB transactions, cleans up the database after every test by rolling back
-the database to the original state before the test started.
+Using DB transactions cleans up the database after every test by rolling back
+the database to the original state before the test started. Therefore, anything
+added to the database in one test function will not be available for the next
+function. If you'd like data to be available for all of the tests, see [database
+seeders](https://github.com/statonlab/TripalTestSuite#database-seeders) above.
 
 To activate DB Transactions, simply add the DBTransaction trait to your test class:
 
