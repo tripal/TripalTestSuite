@@ -13,7 +13,8 @@
     ],
     "require": {
         "phpunit/phpunit": "^6 || ^7.0",
-        "symfony/console": "^3 || ^4.0"
+        "symfony/console": "^3 || ^4.0",
+        "fzaninotto/faker": "^1.7"
     },
     "autoload": {
         "psr-4": {

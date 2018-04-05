@@ -29,6 +29,9 @@ class TripalTestBootstrap
         // run the Drupal bootstrap commands
         (new BootstrapDrupal())->run();
 
+        // Get the factories
+        $this->loadFactories();
+
         // Run any seeders set to run automatically
         static::$loadedSeeders = $this->loadDatabaseSeeders();
 
@@ -37,16 +40,29 @@ class TripalTestBootstrap
     }
 
     /**
+     * Load data factories.
+     */
+    public function loadFactories()
+    {
+        $path = getcwd().'/tests/DataFactory.php';
+        if (file_exists($path)) {
+            require_once $path;
+        }
+    }
+
+    /**
      * Register error handlers.
      */
-    public function registerErrorHandler() {
+    public function registerErrorHandler()
+    {
         register_shutdown_function('\\StatonLab\\TripalTestSuite\\TripalTestBootstrap::shutdownHandler');
     }
 
     /**
      * Revert seeders in case of a fatal error.
      */
-    public static function shutdownHandler() {
+    public static function shutdownHandler()
+    {
         $last_error = error_get_last();
         if ($last_error['type'] === E_ERROR) {
             // fatal error
