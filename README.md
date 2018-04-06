@@ -222,6 +222,7 @@ Factory::define('chado.cv', function (Faker\Generator $faker) {
 
 As shown in the example above, using Factory::define(), we can define new factories.
 The define method takes the following parameters:
+
 |Parameter|Type|Description|Example|
 |---------|----|-----------|-------|
 |$table|`string`|The table name preceded with the schema name if the schema is not public|`chado.cv` or `node`|
