@@ -7,7 +7,7 @@ and managing database seeders (files that seed the database
 with data for use in testing).
 
 ### Installation
-Within your Drupal module path (e,g sites/all/modules/my_module), run the following.
+Within your Drupal module path (e,g `sites/all/modules/my_module`), run the following.
 ```bash
 composer require statonlab/tripal-test-suite --dev
 ```
@@ -220,7 +220,7 @@ Factory::define('chado.cv', function (Faker\Generator $faker) {
 });
 ```
 
-As shown in the example above, using Factory::define(), we can define new factories.
+As shown in the example above, using `Factory::define()`, we can define new factories.
 The define method takes the following parameters:
 
 |Parameter|Type|Description|Example|
