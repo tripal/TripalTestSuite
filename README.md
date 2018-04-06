@@ -196,7 +196,7 @@ DB factories provide a method to populate the database with fake data. Using fac
 won't have to run SQL queries to populate the Database in every test. Since they are reusable,
 you can define one factory for each table and use them across all tests.
 Usage example:
-```
+```php
 # Generates 100 controlled vocabularies.
 # @return an array of vocabularies
 $controlledVocabs = factory('chado.cv', 100)->create()
