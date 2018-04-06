@@ -2,6 +2,16 @@
 
 use StatonLab\TripalTestSuite\Database\Factory;
 
+/**
+ * Data Factory
+ * -----------------------------------------------------------
+ * This is where you can define factories for use in tests and
+ * database seeders.
+ *
+ * @docs https://github.com/statonlab/TripalTestSuite
+ */
+
+/** @see  StatonLab\TripalTestSuite\Database\Factory::define() */
 Factory::define('chado.cv', function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
@@ -9,6 +19,7 @@ Factory::define('chado.cv', function (Faker\Generator $faker) {
     ];
 });
 
+/** @see  StatonLab\TripalTestSuite\Database\Factory::define() */
 Factory::define('chado.db', function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
@@ -18,6 +29,7 @@ Factory::define('chado.db', function (Faker\Generator $faker) {
     ];
 });
 
+/** @see  StatonLab\TripalTestSuite\Database\Factory::define() */
 Factory::define('chado.dbxref', function (Faker\Generator $faker) {
     return [
         'db_id' => factory('chado.db')->create()->db_id,
@@ -27,6 +39,7 @@ Factory::define('chado.dbxref', function (Faker\Generator $faker) {
     ];
 });
 
+/** @see  StatonLab\TripalTestSuite\Database\Factory::define() */
 Factory::define('chado.cvterm', function (Faker\Generator $faker) {
     return [
         'cv_id' => factory('chado.cv')->create()->cv_id,
@@ -38,6 +51,7 @@ Factory::define('chado.cvterm', function (Faker\Generator $faker) {
     ];
 });
 
+/** @see  StatonLab\TripalTestSuite\Database\Factory::define() */
 Factory::define('chado.organism', function (Faker\Generator $faker) {
     return [
         'abbreviation' => $faker->name,
@@ -48,6 +62,7 @@ Factory::define('chado.organism', function (Faker\Generator $faker) {
     ];
 });
 
+/** @see  StatonLab\TripalTestSuite\Database\Factory::define() */
 Factory::define('chado.feature', function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,

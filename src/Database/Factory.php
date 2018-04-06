@@ -33,6 +33,13 @@ class Factory
     protected $primary_key;
 
     /**
+     * Faker locale.
+     *
+     * @var string
+     */
+    protected $locale;
+
+    /**
      * Create a new Factory instance.
      *
      * @param string $table Table name preceded by the schema if not public.
@@ -50,6 +57,10 @@ class Factory
         $this->table = $table;
         $this->times = $times;
         $this->primary_key = $this->extractPrimaryKey();
+        $this->locale = getenv('FAKER_LOCALE');
+        if ($this->locale === false) {
+            $this->locale = 'en_US';
+        }
     }
 
     /**
@@ -85,7 +96,7 @@ class Factory
         $data = [];
 
         for ($i = 0; $i < $this->times; $i++) {
-            $values = $factory(\Faker\Factory::create()) + $overrides;
+            $values = $this->override($factory(\Faker\Factory::create($this->locale)), $overrides);
 
             $data[] = $this->insert($values);
         }
@@ -95,6 +106,26 @@ class Factory
         }
 
         return $data;
+    }
+
+    /**
+     * Override array.
+     *
+     * @param array $values
+     * @param array $overrides
+     * @return array
+     */
+    protected function override(array $values, array $overrides)
+    {
+        if (count($overrides) === 0) {
+            return $values;
+        }
+
+        foreach ($overrides as $key => $value) {
+            $values[$key] = $overrides[$key];
+        }
+
+        return $values;
     }
 
     /**
@@ -108,19 +139,9 @@ class Factory
     {
         $id = db_insert($this->table)->fields($values)->execute();
 
-        if ($this->primary_key !== null) {
-            $query = db_select($this->table, 'T');
-            $query->fields('T');
-            $query->condition($this->primary_key, $id);
-
-            return $query->execute()->fetchObject();
-        }
-
         $query = db_select($this->table, 'T');
         $query->fields('T');
-        foreach ($values as $key => $value) {
-            $query->condition($key, $value);
-        }
+        $query->condition($this->primary_key, $id);
 
         return $query->execute()->fetchObject();
     }
@@ -128,6 +149,7 @@ class Factory
     /**
      * Get the primary key of a table.
      *
+     * @throws \Exception
      * @return string
      */
     protected function extractPrimaryKey()
@@ -139,12 +161,24 @@ class Factory
         if (preg_match('/^chado\./', $this->table)) {
             $schema = chado_get_schema(str_replace('chado.', '', $this->table));
             if ($schema) {
-                if (isset($schema['primary keys'])) {
+                if (isset($schema['primary key'])) {
+                    return $schema['primary key'][0];
+                } elseif (isset($schema['primary keys'])) {
                     return $schema['primary keys'][0];
                 }
             }
         }
 
-        return null;
+        throw new \Exception("Unable to determine primary key for $this->table factory. Please provide the primary key such as `nid` as a third argument in Factory::define().");
+    }
+
+    /**
+     * Get the primary key.
+     *
+     * @return string
+     */
+    public function primaryKey()
+    {
+        return $this->primary_key;
     }
 }

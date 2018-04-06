@@ -3,9 +3,11 @@
 namespace StatonLab\TripalTestSuite;
 
 use PHPUnit\Framework\TestCase;
+use StatonLab\TripalTestSuite\Database\PublishesData;
 
 abstract class TripalTestCase extends TestCase
 {
+    use PublishesData;
     /**
      * @var array
      */
