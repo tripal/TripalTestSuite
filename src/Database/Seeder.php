@@ -7,7 +7,7 @@ use StatonLab\TripalTestSuite\TripalTestBootstrap;
 abstract class Seeder
 {
     use PublishesData;
-    
+
     /**
      * Whether to auto run the seeder before tests begin.
      *

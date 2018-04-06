@@ -75,11 +75,6 @@ class PublishRecords
                 throw $exception;
             }
 
-            if (! $published) {
-                $this->delete();
-                throw new Exception("Publishing $this->data_table failed!");
-            }
-
             $this->published[] = $published;
         }
     }
