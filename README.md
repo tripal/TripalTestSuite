@@ -191,6 +191,67 @@ The trait will automatically activate DB transactions and rollback the database 
 **NOTE**: If the code you are testing requires a transaction, Postgres
 will fail since it does not support nested transactions.
 
+### Factories
+DB factories provide a method to populate the database with fake data. Using factories, you
+won't have to run SQL queries to populate the Database in every test. Since they are reusable,
+you can define one factory for each table and use them across all tests.
+Usage example:
+```
+# Generates 100 controlled vocabularies.
+# @return an array of vocabularies
+$controlledVocabs = factory('chado.cv', 100)->create()
+```
+
+#### Defining Factories
+Factories live in `tests/DataFactory.php`. If you don't have that file, create it. Note that this file
+is auto created with `tripaltest init`.
+
+Example DataFactory file:
+```php
+<?php
+
+use StatonLab\TripalTestSuite\Database\Factory;
+
+Factory::define('chado.cv', function (Faker\Generator $faker) {
+    return [
+        'name' => $faker->name,
+        'definition' => $faker->text,
+    ];
+});
+```
+
+As shown in the example above, using Factory::define(), we can define new factories.
+The define method takes the following parameters:
+|Parameter|Type|Description|Example|
+|---------|----|-----------|-------|
+|$table|`string`|The table name preceded with the schema name if the schema is not public|`chado.cv` or `node`|
+|$callback|`callable`|The function that generates the array. A `Faker\Generator` instance is automatically passed to the callable|see above for example|
+|$primary_key|`string`|**OPTIONAL** The primary key for the given table. Primary keys auto discovered for CHADO tables only. If the factory wasn't able to find the primary key, an `Exception` will be thrown|`nid` or `cv_id`|
+ 
+#### Using Factories
+Once defined, factories can be used in test files directly or in database seeders.
+Usage:
+```php
+# Create a single CV record
+$cv = factory('chado.cv')->create();
+echo "$cv->name\n";
+
+# Create 100 CV records
+$cvs = factory('chado.cv', 100)->create();
+```
+
+###### Overriding Defaults
+Sometimes you need to override a column to be a static predictable value. The `create()` method accepts an array of values
+to override the faker data with. Example:
+```php
+# Let's make sure the cvterm has a specific cv id
+$cv = factory('chado.cv')->create();
+$cv_term factory('chado.cvterm', 100)->create([
+    'cv_id' => $cv->cv_id,
+])
+```
+The above example creates 100 cv terms that have the same cv_id.
+
 ### Environment Variables
 You can specify the Drupal web root path in `tests/.env`.
 ```bash

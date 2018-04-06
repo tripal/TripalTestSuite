@@ -16,5 +16,6 @@ load_php_files('TripalTestSuite');
 load_php_files('TripalTestSuite/Services');
 load_php_files('TripalTestSuite/Mocks');
 load_php_files('TripalTestSuite/Exceptions');
+load_php_files('TripalTestSuite/Helpers');
 
 new \StatonLab\TripalTestSuite\TripalTestBootstrap();

@@ -6,6 +6,8 @@ use StatonLab\TripalTestSuite\TripalTestBootstrap;
 
 abstract class Seeder
 {
+    use PublishesData;
+
     /**
      * Whether to auto run the seeder before tests begin.
      *
@@ -25,7 +27,7 @@ abstract class Seeder
 
         // Add the seeder the loaded seeders property to get destructed
         // in case of a fatal error.
-        array_push(TripalTestBootstrap::$loadedSeeders, $seeder);
+        TripalTestBootstrap::$loadedSeeders[] = $seeder;
 
         return $seeder;
     }
