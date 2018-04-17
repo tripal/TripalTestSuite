@@ -4,9 +4,7 @@ namespace Tests\Feature;
 
 use PHPUnit\Framework\TestCase;
 use StatonLab\TripalTestSuite\DBTransaction;
-use StatonLab\TripalTestSuite\Mocks\TripalTestCaseMock;
 use StatonLab\TripalTestSuite\Services\BootstrapDrupal;
-use StatonLab\TripalTestSuite\TripalTestBootstrap;
 
 class DBTransactionTest extends TestCase
 {

@@ -8,6 +8,7 @@ use StatonLab\TripalTestSuite\Database\PublishesData;
 abstract class TripalTestCase extends TestCase
 {
     use PublishesData;
+
     /**
      * @var array
      */
