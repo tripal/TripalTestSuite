@@ -62,7 +62,7 @@ class DBTransactionTest extends TestCase
     {
         $this->DBTransactionSetUp();
 
-        $cvs = factory('cv', 100)->create();
+        $cvs = factory('chado.cv', 100)->create();
 
         $ids = array_map(function ($cv) {
             return $cv->cv_id;
