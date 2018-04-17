@@ -64,7 +64,7 @@ class MakeTestCommand extends BaseCommand
         $name = $this->getArgument('name');
         $path = getcwd()."/tests/{$name}.php";
 
-        if(file_exists($path)) {
+        if (file_exists($path)) {
             throw new \Exception("File already exists at $path");
         }
 
@@ -116,13 +116,13 @@ class MakeTestCommand extends BaseCommand
 
         // Create the path
         $current = 'tests/';
-        foreach($folders as $folder) {
+        foreach ($folders as $folder) {
             $current .= "/{$folder}";
-            if(!file_exists("$workingDir/$current")) {
+            if (! file_exists("$workingDir/$current")) {
                 mkdir("$workingDir/$current");
             }
         }
 
-        return $namespace."\\".implode('\\', $folders);
+        return trim($namespace."\\".implode('\\', $folders), '\\');
     }
 }
