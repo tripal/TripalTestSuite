@@ -69,6 +69,5 @@ Factory::define('chado.feature', function (Faker\Generator $faker) {
         'uniquename' => $faker->unique()->name,
         'organism_id' => factory('chado.organism')->create()->organism_id,
         'type_id' => factory('chado.cvterm')->create()->cvterm_id,
-        'residues' => implode('', $faker->randomElements(['A','C','T','G'], 125))
     ];
 });
