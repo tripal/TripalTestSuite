@@ -166,6 +166,8 @@ class MyTest extends TripalTestCase {
 }
 ```
 
+**Note:** If you define a `setUp` method within a test class, be sure to call `parent::setUp`!
+
 ### Using DB Transactions
 Using DB transactions cleans up the database after every test by rolling back
 the database to the original state before the test started. Therefore, anything
