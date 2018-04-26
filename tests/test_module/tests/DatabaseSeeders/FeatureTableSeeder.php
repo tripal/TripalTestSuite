@@ -42,8 +42,9 @@ class FeatureTableSeeder extends Seeder
      */
     public function up()
     {
+        $gname = uniqid();
         chado_query("INSERT INTO {organism} (genus, species) VALUES (:genus, :species)", [
-            ':genus' => 'Some Genus',
+            ':genus' =>$gname,
             ':species' => 'Some Species',
         ]);
         $this->organism_id = chado_query('SELECT organism_id FROM {organism} ORDER BY organism_id ASC LIMIT 1')->fetchField();
@@ -55,18 +56,19 @@ class FeatureTableSeeder extends Seeder
             throw new \Exception('CV Term Not Found');
         }
 
+        $fname = uniqid();
         chado_query('INSERT INTO {feature} (name, uniquename, type_id, organism_id) VALUES(:name, :uniquename, :cv_id, :oid)',
             [
-                ':name' => 'tripal feature test',
-                ':uniquename' => 'tripal feature unique',
+                ':name' => $fname,
+                ':uniquename' => $fname,
                 ':cv_id' => $cv_id,
                 ':oid' => $this->organism_id,
             ]);
 
         $this->features = chado_query('SELECT * FROM {feature} WHERE name = :name AND uniquename=:uniquename AND type_id=:cv_id',
             [
-                ':name' => 'tripal feature test',
-                ':uniquename' => 'tripal feature unique',
+                ':name' => $fname,
+                ':uniquename' => $fname,
                 ':cv_id' => $cv_id,
             ])->fetchAll();
 

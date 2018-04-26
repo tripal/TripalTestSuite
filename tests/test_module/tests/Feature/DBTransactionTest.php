@@ -4,9 +4,7 @@ namespace Tests\Feature;
 
 use PHPUnit\Framework\TestCase;
 use StatonLab\TripalTestSuite\DBTransaction;
-use StatonLab\TripalTestSuite\Mocks\TripalTestCaseMock;
 use StatonLab\TripalTestSuite\Services\BootstrapDrupal;
-use StatonLab\TripalTestSuite\TripalTestBootstrap;
 
 class DBTransactionTest extends TestCase
 {
@@ -55,5 +53,31 @@ class DBTransactionTest extends TestCase
         $finalCount = db_query('SELECT COUNT(*) FROM {test_module}')->fetchField();
 
         $this->assertEquals($newCount - 1, $finalCount);
+    }
+
+    /** @test */
+    public function shouldFailToFindFactoryCreatedRecordAfterTransactionEnds()
+    {
+        $this->DBTransactionSetUp();
+
+        $cvs = factory('chado.cv', 100)->create();
+
+        $ids = array_map(function ($cv) {
+            return $cv->cv_id;
+        }, $cvs);
+
+        $count = (int)db_query('SELECT COUNT(*) FROM chado.cv WHERE cv_id IN (:cv_id)', [
+            ':cv_id' => $ids,
+        ])->fetchField();
+
+        $this->assertEquals($count, 100);
+
+        $this->DBTransactionTearDown();
+
+        $count = (int)db_query('SELECT COUNT(*) FROM chado.cv WHERE cv_id IN (:cv_id)', [
+            ':cv_id' => $ids,
+        ])->fetchField();
+
+        $this->assertEquals($count, 0);
     }
 }

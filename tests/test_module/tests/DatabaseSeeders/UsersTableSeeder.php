@@ -2,6 +2,8 @@
 
 namespace Tests\DatabaseSeeders;
 
+use Faker\Factory;
+use Faker\Generator;
 use StatonLab\TripalTestSuite\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
@@ -28,10 +30,12 @@ class UsersTableSeeder extends Seeder
      */
     public function up()
     {
+        $faker = Factory::create();
+
         $new_user = [
-            'name' => 'test user',
+            'name' => $faker->name,
             'pass' => 'secret',
-            'mail' => 'test@example.com',
+            'mail' => $faker->email,
             'status' => 1,
             'init' => 'Email',
             'roles' => [
