@@ -241,6 +241,10 @@ echo "$cv->name\n";
 
 # Create 100 CV records
 $cvs = factory('chado.cv', 100)->create();
+
+foreach ($cvs as $cv) {
+  echo "$cv->name\n";
+}
 ```
 
 ###### Overriding Defaults
