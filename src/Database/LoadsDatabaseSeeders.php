@@ -26,20 +26,13 @@ trait LoadsDatabaseSeeders
             foreach (glob("$workingDir/tests/DatabaseSeeders/*.php") as $seeder) {
                 require $seeder;
 
-                // Extract the class name and check if it should run automatically
+                // Extract the class name
                 /** @var \StatonLab\TripalTestSuite\Database\Seeder $className */
                 $className = $this->getClassName($seeder);
 
                 if (! class_exists($className)) {
                     $error = "Database seeder class $className not found. Make sure the filename and the class name match.";
                     throw new TripalTestBootstrapException($error);
-                }
-
-                if ($className::$auto_run) {
-                    /** @var \StatonLab\TripalTestSuite\Database\Seeder $class */
-                    $class = new $className();
-                    $class->up();
-                    $this->seeders[] = $class;
                 }
             }
         }
@@ -61,11 +54,11 @@ trait LoadsDatabaseSeeders
     /**
      * Get the class name from the file name.
      *
-     * @param $file
+     * @param string $file
      * @return string
      */
     protected function getClassName($file)
     {
-        return 'Tests\\DatabaseSeeders\\'.basename($file, '.php');
+        return trim('Tests\\DatabaseSeeders\\'.basename($file, '.php'), '\\');
     }
 }

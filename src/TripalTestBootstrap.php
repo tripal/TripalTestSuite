@@ -10,14 +10,6 @@ class TripalTestBootstrap
     use LoadsDatabaseSeeders;
 
     /**
-     * Save all seeders that have been run automatically
-     * to run their down method in case of a fatal error.
-     *
-     * @var array
-     */
-    public static $loadedSeeders = [];
-
-    /**
      * TripalTestBootstrap constructor.
      *
      * Bootstrap the application.
@@ -31,9 +23,6 @@ class TripalTestBootstrap
 
         // Get the factories
         $this->loadFactories();
-
-        // Run any seeders set to run automatically
-        static::$loadedSeeders = $this->loadDatabaseSeeders();
 
         // Add shutdown handler to revert database seeders
         $this->registerErrorHandler();
@@ -66,9 +55,6 @@ class TripalTestBootstrap
         $last_error = error_get_last();
         if ($last_error['type'] === E_ERROR) {
             // fatal error
-            foreach (static::$loadedSeeders as $seeder) {
-                $seeder->down();
-            }
         }
     }
 

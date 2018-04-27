@@ -3,11 +3,13 @@
 namespace StatonLab\TripalTestSuite;
 
 use PHPUnit\Framework\TestCase;
-use StatonLab\TripalTestSuite\Database\PublishesData;
+use StatonLab\TripalTestSuite\Concerns\InteractsWithAuthSystem;
+use StatonLab\TripalTestSuite\Concerns\PublishesData;
 
 abstract class TripalTestCase extends TestCase
 {
-    use PublishesData;
+    use PublishesData,
+        InteractsWithAuthSystem;
 
     /**
      * @var array
@@ -34,6 +36,10 @@ abstract class TripalTestCase extends TestCase
     {
         if (isset($this->_includedTraits[DBTransaction::class])) {
             $this->DBTransactionTearDown();
+        }
+
+        if(isset($this->_includedTraits[InteractsWithAuthSystem::class])) {
+            $this->authSystemTearDown();
         }
     }
 }
