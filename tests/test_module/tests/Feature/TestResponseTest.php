@@ -60,7 +60,7 @@ class TestResponseTest extends TripalTestCase
     }
 
     /** @test */
-    public function testVisibilityAssrtion() {
+    public function testVisibilityAssertion() {
         $this->response->assertSee('values');
     }
 }

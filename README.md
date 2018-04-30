@@ -226,6 +226,85 @@ $cv_term = factory('chado.cvterm', 100)->create([
 ```
 The above example creates 100 cv terms that have the same cv_id.
 
+### Testing HTTP Calls
+TripalTestSuite provides a comprehensive HTTP testing methods. It allows you to call 
+site urls and check that your Drupal menu items are working as expected.
+
+For example, the following tests that the homepage is accessible and that the name of the
+website is present in the response.
+```php
+public function testHomePage() {
+  // Send a GET request
+  $response = $this->get('/')
+  
+  // Verify the HTTP response code is "200 OK" and that the site name is visible
+  $response->assertStatus(200)
+           ->assertSee('My Site');
+}
+```
+
+#### Available HTTP Testing Methods
+The following table describes all available HTTP methods in any test class that
+extends TripalTestSuite:
+
+| name | parameters | Description | Return |
+|------|------------|-------------|--------|
+|`$this->actingAs()`|**$user** `object` or `int` You can pass a user object (such as the user in drupal's global variables) or pass the user id directly|Autheticate the given user for the duration of the test method|`void`|
+|`$this->get()`|**$url** `string` The url to call<br/>**$params** `array` Query parameters.<br/>**$headers** `array` Additional HTTP headers|Sends a GET request|`TestResponse`|
+|`$this->post()`|**$url** `string` The url to call<br/>**$params** `array` Form request parameters.<br/>**$headers** `array` Additional HTTP headers|Sends a POST request|`TestResponse`|
+|`$this->put()`|**$url** `string` The url to call<br/>**$params** `array` Query parameters.<br/>**$headers** `array` Additional HTTP headers|Sends a PUT request|`TestResponse`|
+|`$this->patch()`|**$url** `string` The url to call<br/>**$params** `array` Query parameters.<br/>**$headers** `array` Additional HTTP headers|Sends a PATCH request|`TestResponse`|
+|`$this->delete()`|**$url** `string` The url to call<br/>**$params** `array` Query parameters.<br/>**$headers** `array` Additional HTTP headers|Sends a DELETE request|`TestResponse`|
+
+The `TestResponse` returned from the HTTP requests, provide the following set of assertion methods:
+
+| name | Parameters | Description |
+|`$response->assertStatus()`|**$code** `int`|Verify the returned HTTP status code is equal to `$code`|
+|`$response->assertSee()`|**$content** `string`|Verify the given string is present in the returned response body (i,e HTML, JSON, etc)|
+|`$response->assertJsonStructure()`|**$structure** `array`|Verifies that the returned JSON matches the given structure (see below for example)|
+|`$response->assertSuccessful()`|none|Verify the returned HTTP status code is between 200 and 299, which are HTTP's successful response codes|
+
+
+#### Testing User Access to Pages
+The HTTP requests system in TripalTestSuite allows you to authenticate users
+and test URI endpoints to verify user access to your menu items. 
+See below for example.
+
+```php
+class AuthSystemTest extends TripalTestCase {
+	/**
+	 * Tests that non-admin users can't access admin pages.
+	 */
+	public function testThatAccessToAdminPagesFailsIfUserIsNotAdmin() {
+	  // Create a new user (non admin user)
+	  $user = factory('user')->create();
+	  
+	  // Authenticate the user
+	  $this->actingAs($user);
+	  
+	  // Send GET request to protected page
+	  $response = $this->get('/admin')
+	  
+	  $response->assertStatus(403)
+	           ->assertSee('Access Denied');
+  }
+  
+  /**
+   * Tests that admin users can access admin pages.
+   */
+  public function testThatAcessToAdminPagesIsAllowedIfUserIsAdmin() {
+  	// User id 1 is always an admin
+  	$this->actingAs(1);
+	
+	// Send GET request to protected page
+	$response = $this->get('/admin')
+	
+	// Verify that access is granted by checking HTTP status code
+	$response->assertStatus(200);	  	
+  }
+}
+```
+
 ### Environment Variables
 You can specify the Drupal web root path in `tests/.env`.
 ```bash
