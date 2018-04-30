@@ -34,21 +34,12 @@ trait LoadsDatabaseSeeders
                     $error = "Database seeder class $className not found. Make sure the filename and the class name match.";
                     throw new TripalTestBootstrapException($error);
                 }
+
+                $this->seeders[] = $className;
             }
         }
 
         return $this->seeders;
-    }
-
-    /**
-     * Destruct all seeders that have been run automatically.
-     */
-    public function databaseSeederTearDown()
-    {
-        foreach ($this->seeders as $seeder) {
-            /** @var \StatonLab\TripalTestSuite\Database\Seeder $seeder */
-            $seeder->down();
-        }
     }
 
     /**

@@ -1,4 +1,5 @@
 <?php
+
 namespace StatonLab\TripalTestSuite\Services;
 
 use StatonLab\TripalTestSuite\Exceptions\TripalTestSuiteException;
@@ -24,6 +25,9 @@ class BootstrapDrupal
 
         // Read environment variables to set drupal root
         $this->readEnvironmentFile();
+
+        // Set the base url if provided in environment
+        $this->setBaseURL();
 
         // Read environment variables
         if (! defined('DRUPAL_ROOT')) {
@@ -53,7 +57,7 @@ class BootstrapDrupal
      */
     protected function getDrupalRoot()
     {
-        if($path = getenv('DRUPAL_ROOT')) {
+        if ($path = getenv('DRUPAL_ROOT')) {
             return $path;
         }
 
@@ -67,6 +71,22 @@ class BootstrapDrupal
         }
 
         return '';
+    }
+
+    /**
+     * Set the global base url if provided in .env
+     */
+    protected function setBaseURL()
+    {
+        global $base_url;
+
+        if ($url = getenv('BASE_URL')) {
+            $base_url = $url;
+
+            return;
+        }
+
+        $base_url = 'http://127.0.0.1';
     }
 
     /**

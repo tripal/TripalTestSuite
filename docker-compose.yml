@@ -7,5 +7,4 @@ services:
       - DRUPAL_ROOT=/var/www/html
     volumes:
       - ./tests/test_module:/modules/test_module
-      - ./src:/modules/test_module/vendor/statonlab/tripal-test-suite/src
-      - ./stubs:/modules/test_module/vendor/statonlab/tripal-test-suite/stubs
+      - ./src:/modules/test_module/TripalTestSuite

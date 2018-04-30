@@ -7,14 +7,6 @@ use StatonLab\TripalTestSuite\Database\Seeder;
 class FeatureTableSeeder extends Seeder
 {
     /**
-     * Whether to run the seeder automatically before
-     * starting our tests.
-     *
-     * @var bool
-     */
-    public static $auto_run = true;
-
-    /**
      * The publisher.
      *
      * @var \StatonLab\TripalTestSuite\Database\PublishRecords
@@ -73,30 +65,5 @@ class FeatureTableSeeder extends Seeder
             ])->fetchAll();
 
         $this->publisher = $this->publish('feature');
-    }
-
-    /**
-     * Cleans up the database from the created entities.
-     *
-     * @throws \Exception
-     */
-    public function down()
-    {
-        if ($this->publisher) {
-            $this->publisher->delete();
-        }
-
-        $feature_ids = [];
-        foreach ($this->features as $feature) {
-            $feature_ids = $feature->feature_id;
-        }
-
-        if (! empty($feature_ids)) {
-            chado_query('DELETE FROM {feature} WHERE feature_id IN (:ids)', [':ids' => $feature_ids]);
-        }
-
-        if ($this->organism_id) {
-            chado_query('DELETE FROM {organism} WHERE organism_id = :oid', [':oid' => $this->organism_id]);
-        }
     }
 }

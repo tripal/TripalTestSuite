@@ -4,6 +4,7 @@ namespace StatonLab\TripalTestSuite\Concerns;
 
 use GuzzleHttp\Client;
 use StatonLab\TripalTestSuite\Services\TestResponse;
+use PHPUnit\Framework\Assert as PHPUnit;
 
 trait MakesHTTPRequests
 {
@@ -12,13 +13,14 @@ trait MakesHTTPRequests
      *
      * @param string $uri
      * @param array $params
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @param array $headers
      * @return TestResponse
      */
-    public function get($uri, $params = [])
+    public function get($uri, $params = [], $headers = [])
     {
         return $this->_call('GET', $uri, [
             'query' => $params,
+            'headers' => $headers
         ]);
     }
 
@@ -27,13 +29,60 @@ trait MakesHTTPRequests
      *
      * @param string $uri
      * @param array $params
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @param array $headers
      * @return TestResponse
      */
-    public function post($uri, $params = [])
+    public function post($uri, $params = [], $headers = [])
     {
         return $this->_call('POST', $uri, [
             'form_params' => $params,
+            'headers' => $headers
+        ]);
+    }
+
+    /**
+     * Sends a DELETE request.
+     *
+     * @param string $uri
+     * @param array $params
+     * @param array $headers
+     * @return \StatonLab\TripalTestSuite\Services\TestResponse
+     */
+    public function delete($uri, $params = [], $headers = [])
+    {
+        return $this->_call('DELETE', $uri, [
+            'query' => $params,
+            'headers' => $headers
+        ]);
+    }
+
+    /**
+     * Sends a PUT request.
+     *
+     * @param string $uri
+     * @param array $params
+     * @param array $headers
+     * @return \StatonLab\TripalTestSuite\Services\TestResponse
+     */
+    public function put($uri, $params = [], $headers = []) {
+        return $this->_call('PUT', $uri, [
+            'form_params' => $params,
+            'headers' => $headers
+        ]);
+    }
+
+    /**
+     * Sends a PATCH request.
+     *
+     * @param string $uri
+     * @param array $params
+     * @param array $headers
+     * @return \StatonLab\TripalTestSuite\Services\TestResponse
+     */
+    public function patch($uri, $params = [], $headers = []) {
+        return $this->_call('PATCH', $uri, [
+            'form_params' => $params,
+            'headers' => $headers
         ]);
     }
 
@@ -42,7 +91,8 @@ trait MakesHTTPRequests
      *
      * @param string $method
      * @param string $uri
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @params array $params
+     *
      * @return TestResponse
      */
     private function _call($method, $uri, $params = [])
@@ -50,8 +100,13 @@ trait MakesHTTPRequests
         $client = new Client();
 
         $uri = $this->_prepareURI($uri);
+        try {
+            return new TestResponse($client->request($method, $uri, $params));
+        } catch (\GuzzleHttp\Exception\GuzzleException $exception) {
+            PHPUnit::fail("Failed to send $method request to $uri. ".$exception->getMessage());
+        }
 
-        return new TestResponse($client->request($method, $uri, $params));
+        return null;
     }
 
     /**

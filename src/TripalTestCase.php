@@ -4,12 +4,14 @@ namespace StatonLab\TripalTestSuite;
 
 use PHPUnit\Framework\TestCase;
 use StatonLab\TripalTestSuite\Concerns\InteractsWithAuthSystem;
+use StatonLab\TripalTestSuite\Concerns\MakesHTTPRequests;
 use StatonLab\TripalTestSuite\Concerns\PublishesData;
 
 abstract class TripalTestCase extends TestCase
 {
-    use PublishesData,
-        InteractsWithAuthSystem;
+    use InteractsWithAuthSystem,
+        MakesHTTPRequests,
+        PublishesData;
 
     /**
      * @var array
@@ -24,6 +26,7 @@ abstract class TripalTestCase extends TestCase
     protected function setUp()
     {
         $this->_includedTraits = array_reverse(class_uses_recursive(static::class));
+
         if (isset($this->_includedTraits[DBTransaction::class])) {
             $this->DBTransactionSetUp();
         }

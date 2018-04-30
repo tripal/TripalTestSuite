@@ -18,11 +18,15 @@ class TripalTestBootstrap
      */
     public function __construct()
     {
+
         // run the Drupal bootstrap commands
         (new BootstrapDrupal())->run();
 
         // Get the factories
         $this->loadFactories();
+
+        // Load Database Seeders
+        $this->loadDatabaseSeeders();
 
         // Add shutdown handler to revert database seeders
         $this->registerErrorHandler();
@@ -55,15 +59,7 @@ class TripalTestBootstrap
         $last_error = error_get_last();
         if ($last_error['type'] === E_ERROR) {
             // fatal error
+            debug_print_backtrace();
         }
-    }
-
-    /**
-     * Clean up.
-     */
-    public function __destruct()
-    {
-        // Run the down method for all seeders that got run automatically
-        $this->databaseSeederTearDown();
     }
 }

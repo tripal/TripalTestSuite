@@ -7,4 +7,5 @@ return [
     \StatonLab\TripalTestSuite\Console\Commands\WelcomeCommand::class,
     \StatonLab\TripalTestSuite\Console\Commands\MakeTestCommand::class,
     \StatonLab\TripalTestSuite\Console\Commands\MakeSeederCommand::class,
+    \StatonLab\TripalTestSuite\Console\Commands\DBSeedCommand::class,
 ];

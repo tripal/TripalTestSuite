@@ -54,12 +54,13 @@ trait InteractsWithAuthSystem
     /**
      * Restore session data.
      */
-    public function authSystemTearDown() {
-        if($this->_authenticated_account === null) {
+    public function authSystemTearDown()
+    {
+        global $user;
+
+        if ($this->_authenticated_account === null) {
             return;
         }
-
-        global $user;
 
         $user = $this->_original_user;
         drupal_save_session($this->_old_state);
