@@ -1,6 +1,7 @@
 {
     "require": {
-        "phpunit/phpunit": "^6 || ^7.0"
+        "phpunit/phpunit": "^6 || ^7.0",
+        "guzzlehttp/guzzle": "^6.3"
     },
     "require-dev": {
         "fzaninotto/faker": "^1.7"

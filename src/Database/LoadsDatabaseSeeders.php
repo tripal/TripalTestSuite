@@ -26,7 +26,7 @@ trait LoadsDatabaseSeeders
             foreach (glob("$workingDir/tests/DatabaseSeeders/*.php") as $seeder) {
                 require $seeder;
 
-                // Extract the class name and check if it should run automatically
+                // Extract the class name
                 /** @var \StatonLab\TripalTestSuite\Database\Seeder $className */
                 $className = $this->getClassName($seeder);
 
@@ -35,12 +35,7 @@ trait LoadsDatabaseSeeders
                     throw new TripalTestBootstrapException($error);
                 }
 
-                if ($className::$auto_run) {
-                    /** @var \StatonLab\TripalTestSuite\Database\Seeder $class */
-                    $class = new $className();
-                    $class->up();
-                    $this->seeders[] = $class;
-                }
+                $this->seeders[] = $className;
             }
         }
 
@@ -48,24 +43,13 @@ trait LoadsDatabaseSeeders
     }
 
     /**
-     * Destruct all seeders that have been run automatically.
-     */
-    public function databaseSeederTearDown()
-    {
-        foreach ($this->seeders as $seeder) {
-            /** @var \StatonLab\TripalTestSuite\Database\Seeder $seeder */
-            $seeder->down();
-        }
-    }
-
-    /**
      * Get the class name from the file name.
      *
-     * @param $file
+     * @param string $file
      * @return string
      */
     protected function getClassName($file)
     {
-        return 'Tests\\DatabaseSeeders\\'.basename($file, '.php');
+        return trim('Tests\\DatabaseSeeders\\'.basename($file, '.php'), '\\');
     }
 }

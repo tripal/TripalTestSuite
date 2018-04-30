@@ -7,4 +7,4 @@ services:
       - DRUPAL_ROOT=/var/www/html
     volumes:
       - ./tests/test_module:/modules/test_module
-      - ./src:/modules/test_module/tests/TripalTestSuite
+      - ./src:/modules/test_module/TripalTestSuite

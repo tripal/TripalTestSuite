@@ -1,5 +1,7 @@
 <?php
-namespace StatonLab\TripalTestSuite\Database;
+namespace StatonLab\TripalTestSuite\Concerns;
+
+use StatonLab\TripalTestSuite\Database\PublishRecords;
 
 trait PublishesData
 {

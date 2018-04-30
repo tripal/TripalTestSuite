@@ -2,21 +2,19 @@
 
 namespace test_module\tests\Feature;
 
-use StatonLab\TripalTestSuite\TripalTestBootstrap;
 use PHPUnit\Framework\TestCase;
+use Tests\DatabaseSeeders\UsersTableSeeder;
 
 class DatabaseSeederTest extends TestCase
 {
     /**
-     * Tests whether database seeders are found and run.
+     * Tests whether database seeders are found and are runnable.
      *
      * @test
      */
-    public function testDatabaseSeedersHaveRan()
-    {
-        // When the database seeder runs, the static loadedSeeders
-        // variable get's populated with seeders that have been initialized
-        $count = count(TripalTestBootstrap::$loadedSeeders);
-        $this->assertTrue($count > 0);
+    public function testThatSeederProvidesASeedMethod() {
+        $seeder = UsersTableSeeder::seed();
+
+        $this->assertTrue($seeder instanceof UsersTableSeeder);
     }
 }

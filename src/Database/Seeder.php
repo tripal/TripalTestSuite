@@ -2,18 +2,11 @@
 
 namespace StatonLab\TripalTestSuite\Database;
 
-use StatonLab\TripalTestSuite\TripalTestBootstrap;
+use StatonLab\TripalTestSuite\Concerns\PublishesData;
 
 abstract class Seeder
 {
     use PublishesData;
-
-    /**
-     * Whether to auto run the seeder before tests begin.
-     *
-     * @var bool
-     */
-    public static $auto_run = false;
 
     /**
      * Initialize and run the seeder.
@@ -25,10 +18,6 @@ abstract class Seeder
         $seeder = new static();
         $seeder->up();
 
-        // Add the seeder the loaded seeders property to get destructed
-        // in case of a fatal error.
-        TripalTestBootstrap::$loadedSeeders[] = $seeder;
-
         return $seeder;
     }
 
@@ -38,11 +27,4 @@ abstract class Seeder
      * @return void
      */
     abstract public function up();
-
-    /**
-     * Clean up by removing the inserted data.
-     *
-     * @return void
-     */
-    abstract public function down();
 }
