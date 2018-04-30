@@ -6,6 +6,26 @@ before running the tests, creating test file, and creating
 and managing database seeders (files that seed the database
 with data for use in testing).
 
+# Table of Contents
+- [Installation](#installation)
+  - [Automatic Set Up](#automatic-set-up)
+- [Usage](#usage)
+  - [Creating Tests](#creating-tests)
+  - [Running Tests](#running-tests)
+  - [TripalTestCase](#tripaltestcase)
+  - [Using DB Transactions to Automatically Rollback Database Changes](#using-db-transactions-to-automatically-rollback-database-changes)
+  - [Database Seeders](#database-seeders)
+  	- [Creating Database Seeders](#creating-database-seeders)
+  	- [Using Database Seeders](#using-database-seeders)
+  	- [Running Seeders](#running-seeders)
+  - [Data Factories](#factories)
+  	- [Defining Factories](#defining-factories)
+  	- [Using Factories](#using-factories)
+      - [Overriding Defaults](#overriding-defaults)
+  - [Testing HTTP Requests](#testing-http-requests)
+  	- [Available HTTP Testing Methods](#available-http-testing-methods)
+  	- [Testing User Access to Pages (Example)](#testing-user-access-to-pages)
+
 ### Installation
 Within your Drupal module path (e,g `sites/all/modules/my_module`), run the following.
 ```bash
@@ -36,14 +56,6 @@ integration testing, push your module to github and [enable Travis CI](https://t
 
 ### Usage
 
-#### Running Tests
-Tripal Test Suite auto installs PHPunit as part of it's dependencies in composer.json.
-Therefore, running tests in Tripal Test Suite is done via phpunit as such:
-```bash
-./vendor/bin/phpunit
-```
-The command above, will read your `phpunit.xml` and runs the tests accordingly.
-
 #### Creating Tests
 Using `tripaltest`, you can create test files pre-populated with all the requirements.
 To create a new test, run the following command from your module's root directory:
@@ -57,10 +69,59 @@ To create a new test, run the following command from your module's root director
 ```
 Note: Test names should end with `Test` for phpunit to recognize them.
 
+
+#### Running Tests
+Tripal Test Suite auto installs PHPunit as part of it's dependencies in composer.json.
+Therefore, running tests in Tripal Test Suite is done via phpunit as such:
+```bash
+./vendor/bin/phpunit
+```
+The command above, will read your `phpunit.xml` and runs the tests accordingly.
+
+#### TripalTestCase
+Test classes should extend the TripalTestCase class. Once extended, bootstrapping
+Drupal and reading your `.env` file is done automatically when the first test is run.
+
+```php
+namespace Tests;
+
+use StatonLab\TripalTestSuite\TripalTestCase;
+
+class MyTest extends TripalTestCase {
+}
+```
+
+**Note:** If you define a `setUp` method within a test class, be sure to call `parent::setUp`!
+
+### Using DB Transactions to Automatically Rollback Database Changes
+Using DB transactions cleans up the database after every test by rolling back
+the database to the original state before the test started. Therefore, anything
+added to the database in one test function will not be available for the next
+function. If you'd like data to be available for all of the tests, see [database
+seeders](https://github.com/statonlab/TripalTestSuite#database-seeders) above.
+
+To activate DB Transactions, simply add the DBTransaction trait to your test class:
+
+```php
+namespace Tests;
+
+use StatonLab\TripalTestSuite\TripalTestCase;
+use StatonLab\TripalTestSuite\DBTransaction;
+
+class MyTest extends TripalTestCase {
+	use DBTransaction;
+}
+```
+
+The trait will automatically activate DB transactions and rollback the database when the test is finished.
+
+**NOTE**: If the code you are testing requires a transaction, Postgres
+will fail since it does not support nested transactions.
+
+
 #### Database Seeders
 Database seeders are also supported in TripalTestSuite. They give you the ability
-to create reusable seeders that can run automatically before entering the testing
-stage and get rolled back automatically after the tests are completed.
+to create reusable seeders that can be run using the `tripaltest` command line tool.
 
 ##### Creating Database Seeders
 DB seeders can also be created automatically using `tripaltest`:
@@ -106,59 +167,24 @@ class UsersTableSeeder extends Seeder
 }
 ```
 
-##### Auto Running Seeders
-The DB seeder classes have an `auto_run` property, as shown in the example above, that
-controls whether the seeder should run automatically before the testing stage begins.
-However, you can also run the seeder manually by changing the `$auto_run` value to false
-then using the static `seed()` method. For example, within a test class, you can run
-`$seeder = UsersTableSeeder::seed()` which runs the `up()` method and returns an initialized seeder
-object. Whenever done with the data, you can run `$seeder->down()` to rollback the changes. If you are
-using the `DBTransaction` trait, you will not need to run the `down()` since transactions are
-automatically rolled at the end of each test function.
+##### Running Seeders
+You can also run the seeder manually by using the static `seed()` method. For example, within a test class,
+you can run `$seeder = UsersTableSeeder::seed()` which runs the `up()` method and returns an initialized seeder
+object. If you are using the `DBTransaction` trait, the data will be automatically rolled at the end of each test
+function.
+
+The other option is to run it using `tripaltest` as follows
+```bash
+# run all available seeders
+tripaltest db:seed
+
+# Run a specific seeder by providing the class name
+tripaltest db:seed ExampleSeeder
+```
 
 Note that running the seeder manually in a test function with `DBTransaction` enabled,
 means that the data is available only to that function and nothing else. However,
-running it automatically, makes it available to the entire test suite. 
-
-#### TripalTestCase
-Test classes should extend the TripalTestCase class. Once extended, bootstrapping
-Drupal and reading your `.env` file is done automatically when the first test is run.
-
-```php
-namespace Tests;
-
-use StatonLab\TripalTestSuite\TripalTestCase;
-
-class MyTest extends TripalTestCase {
-}
-```
-
-**Note:** If you define a `setUp` method within a test class, be sure to call `parent::setUp`!
-
-### Using DB Transactions
-Using DB transactions cleans up the database after every test by rolling back
-the database to the original state before the test started. Therefore, anything
-added to the database in one test function will not be available for the next
-function. If you'd like data to be available for all of the tests, see [database
-seeders](https://github.com/statonlab/TripalTestSuite#database-seeders) above.
-
-To activate DB Transactions, simply add the DBTransaction trait to your test class:
-
-```php
-namespace Tests;
-
-use StatonLab\TripalTestSuite\TripalTestCase;
-use StatonLab\TripalTestSuite\DBTransaction;
-
-class MyTest extends TripalTestCase {
-	use DBTransaction;
-}
-```
-
-The trait will automatically activate DB transactions and rollback the database when the test is finished.
-
-**NOTE**: If the code you are testing requires a transaction, Postgres
-will fail since it does not support nested transactions.
+running it using `tripaltest` makes it always available unless explicitly deleted. 
 
 ### Factories
 DB factories provide a method to populate the database with fake data. Using factories, you
@@ -226,7 +252,7 @@ $cv_term = factory('chado.cvterm', 100)->create([
 ```
 The above example creates 100 cv terms that have the same cv_id.
 
-### Testing HTTP Calls
+### Testing HTTP Requests
 TripalTestSuite provides a comprehensive HTTP testing methods. It allows you to call 
 site urls and check that your Drupal menu items are working as expected.
 
