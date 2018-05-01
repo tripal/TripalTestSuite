@@ -265,7 +265,7 @@ The following publishes all features in `chado.feature` if they have not been pu
 $cvterm = chado_select_record('cvterm', ['cvterm_id'], ['name' => 'mRNA'])[0];
 
 // Create 100 mRNA records
-$features = factory('feature', 100)->create(['cvterm_id' => $cvterm->cvterm_id]);
+$features = factory('feature', 100)->create(['type_id' => $cvterm->cvterm_id]);
 
 // Publish all features in chado.feature
 $this->publish('feature');
@@ -277,7 +277,7 @@ The following publishes only the given feature ids:
 $cvterm = chado_select_record('cvterm', ['cvterm_id'], ['name' => 'mRNA'])[0];
 
 // Create 100 mRNA records
-$features = factory('feature', 100)->create(['cvterm_id' => $cvterm->cvterm_id]);
+$features = factory('feature', 100)->create(['type_id' => $cvterm->cvterm_id]);
 
 // Get the ids of our new features
 $feature_ids = [];
