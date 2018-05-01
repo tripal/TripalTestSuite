@@ -22,6 +22,7 @@ with data for use in testing).
   	- [Defining Factories](#defining-factories)
   	- [Using Factories](#using-factories)
       - [Overriding Defaults](#overriding-defaults)
+  - [Publishing Tripal Entities](#publishing-tripal-entities)
   - [Testing HTTP Requests](#testing-http-requests)
   	- [Available HTTP Testing Methods](#available-http-testing-methods)
   	- [Testing User Access to Pages (Example)](#testing-user-access-to-pages)
@@ -251,6 +252,46 @@ $cv_term = factory('chado.cvterm', 100)->create([
 ])
 ```
 The above example creates 100 cv terms that have the same cv_id.
+
+### Publishing Tripal Entities
+We provide an easy way to convert your chado records into entities. This is the equivalent of
+publishing Tripal content using the GUI.
+
+Publishing records is possible in both database seeders and directly in the test class.
+
+The following publishes all features in `chado.feature` if they have not been published yet.
+```php
+// Get the cvterm id of mRNA
+$cvterm = chado_select_record('cvterm', ['cvterm_id'], ['name' => 'mRNA'])[0];
+
+// Create 100 mRNA records
+$features = factory('feature', 100)->create(['cvterm_id' => $cvterm->cvterm_id]);
+
+// Publish all features in chado.feature
+$this->publish('feature');
+```
+
+The following publishes only the given feature ids:
+```php
+// Get the cvterm id of mRNA
+$cvterm = chado_select_record('cvterm', ['cvterm_id'], ['name' => 'mRNA'])[0];
+
+// Create 100 mRNA records
+$features = factory('feature', 100)->create(['cvterm_id' => $cvterm->cvterm_id]);
+
+// Get the ids of our new features
+$feature_ids = [];
+foreach ($features as $feature) {
+    $feature_ids[] = $feature->feature_id;
+}
+
+// Publish only the given features
+$this->publish('feature', $feature_ids);
+```
+
+The previous examples create mRNA entities. 
+
+**NOTE** that an mRNA bundle must already be available before running this script.
 
 ### Testing HTTP Requests
 TripalTestSuite provides a comprehensive HTTP testing methods. It allows you to call 
