@@ -326,6 +326,7 @@ extends TripalTestSuite:
 The `TestResponse` returned from the HTTP requests, provide the following set of assertion methods:
 
 | name | Parameters | Description |
+|------|------------|-------------|
 |`$response->assertStatus()`|**$code** `int`|Verify the returned HTTP status code is equal to `$code`|
 |`$response->assertSee()`|**$content** `string`|Verify the given string is present in the returned response body (i,e HTML, JSON, etc)|
 |`$response->assertJsonStructure()`|**$structure** `array`|Verifies that the returned JSON matches the given structure (see below for example)|
