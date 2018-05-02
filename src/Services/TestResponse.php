@@ -146,7 +146,7 @@ class TestResponse
      * @return $this
      */
     public function assertSee($content) {
-        PHPUnit::assertContains($content, $this->getResponseBody(), "Unable to find [$content] in response.");
+        PHPUnit::assertContains($content, (string) $this->getResponseBody(), "Unable to find [$content] in response.");
 
         return $this;
     }
