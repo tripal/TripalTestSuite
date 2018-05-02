@@ -3,6 +3,8 @@
 namespace StatonLab\TripalTestSuite\Concerns;
 
 use GuzzleHttp\Client;
+use StatonLab\TripalTestSuite\Mocks\TestResponseMock;
+use StatonLab\TripalTestSuite\Services\MenuCaller;
 use StatonLab\TripalTestSuite\Services\TestResponse;
 use PHPUnit\Framework\Assert as PHPUnit;
 
@@ -20,7 +22,7 @@ trait MakesHTTPRequests
     {
         return $this->_call('GET', $uri, [
             'query' => $params,
-            'headers' => $headers
+            'headers' => $headers,
         ]);
     }
 
@@ -36,7 +38,7 @@ trait MakesHTTPRequests
     {
         return $this->_call('POST', $uri, [
             'form_params' => $params,
-            'headers' => $headers
+            'headers' => $headers,
         ]);
     }
 
@@ -52,7 +54,7 @@ trait MakesHTTPRequests
     {
         return $this->_call('DELETE', $uri, [
             'query' => $params,
-            'headers' => $headers
+            'headers' => $headers,
         ]);
     }
 
@@ -64,10 +66,11 @@ trait MakesHTTPRequests
      * @param array $headers
      * @return \StatonLab\TripalTestSuite\Services\TestResponse
      */
-    public function put($uri, $params = [], $headers = []) {
+    public function put($uri, $params = [], $headers = [])
+    {
         return $this->_call('PUT', $uri, [
             'form_params' => $params,
-            'headers' => $headers
+            'headers' => $headers,
         ]);
     }
 
@@ -79,10 +82,11 @@ trait MakesHTTPRequests
      * @param array $headers
      * @return \StatonLab\TripalTestSuite\Services\TestResponse
      */
-    public function patch($uri, $params = [], $headers = []) {
+    public function patch($uri, $params = [], $headers = [])
+    {
         return $this->_call('PATCH', $uri, [
             'form_params' => $params,
-            'headers' => $headers
+            'headers' => $headers,
         ]);
     }
 
@@ -93,14 +97,21 @@ trait MakesHTTPRequests
      * @param string $uri
      * @params array $params
      *
+     * @throws \Exception
      * @return TestResponse
      */
     private function _call($method, $uri, $params = [])
     {
-        $client = new Client();
+        if (! str_begins_with('/', $uri) && ! str_begins_with('http', $uri)) {
+            $client = new MenuCaller();
 
-        $uri = $this->_prepareURI($uri);
+            return $client->setMethod($method)->addParams($params)->send();
+        }
+
         try {
+            $client = new Client();
+            $uri = $this->_prepareURI($uri);
+
             return new TestResponse($client->request($method, $uri, $params));
         } catch (\GuzzleHttp\Exception\GuzzleException $exception) {
             PHPUnit::fail("Failed to send $method request to $uri. ".$exception->getMessage());

@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Almsaeed
- * Date: 2/28/18
- * Time: 10:48 AM
- */
-
 namespace StatonLab\TripalTestSuite;
 
 trait DBTransaction

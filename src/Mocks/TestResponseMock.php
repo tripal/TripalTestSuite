@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Almsaeed
- * Date: 4/30/18
- * Time: 10:57 AM
- */
-
 namespace StatonLab\TripalTestSuite\Mocks;
 
 use StatonLab\TripalTestSuite\Services\TestResponse;
@@ -21,6 +14,10 @@ class TestResponseMock extends TestResponse
         if (isset($response['body']) && is_array($response['body'])) {
             $this->response['body'] = json_encode($response['body']);
         }
+
+        if (! isset($response['status'])) {
+            $this->response['status'] = 200;
+        }
     }
 
     public function json()
@@ -30,7 +27,7 @@ class TestResponseMock extends TestResponse
 
     public function getStatusCode()
     {
-        return 200;
+        return $this->response['status'];
     }
 
     public function getResponseHeaders()
