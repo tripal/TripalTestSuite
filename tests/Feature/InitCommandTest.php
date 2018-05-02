@@ -96,6 +96,7 @@ class InitCommandTest extends TestCase
             "tests/bootstrap.php",
             "tests/ExampleTest.php",
             "tests/example.env",
+            "tests/DatabaseSeeders/UsersTableSeeder.php",
             "phpunit.xml",
             ".travis.yml",
         ];

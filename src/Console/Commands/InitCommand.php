@@ -50,7 +50,7 @@ class InitCommand extends BaseCommand
             'travis.yml' => '.travis.yml',
             'phpunit.xml' => 'phpunit.xml',
             'ExampleTest.php' => 'tests/ExampleTest.php',
-            'UsersTableSeeder.php' => 'tests/DatabaseSeedersTable.php',
+            'UsersTableSeeder.php' => 'tests/DatabaseSeeders/UsersTableSeeder.php',
             'DataFactory.php' => 'tests/DataFactory.php'
         ]);
 
