@@ -68,7 +68,9 @@ To create a new test, run the following command from your module's root director
 # This will automatically detect and configure the namespace of your script
 ./vendor/bin/tripaltest make:test Features/Entities/ExampleTest
 ```
-Note: Test names should end with `Test` for phpunit to recognize them.
+**Note:** You should not include `tests/` in your path, nor should you specify a file extension.
+ 
+**Note:** Test names should end with `Test` for phpunit to recognize them.
 
 
 #### Running Tests
