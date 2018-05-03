@@ -60,7 +60,25 @@ class TestResponseTest extends TripalTestCase
     }
 
     /** @test */
-    public function testVisibilityAssertion() {
+    public function testVisibilityAssertion()
+    {
         $this->response->assertSee('values');
+    }
+
+
+    /** @test */
+    public function testPublicRoute()
+    {
+        $response = $this->get('testing/test_module');
+
+        $response->assertSuccessful()->assertSee('testing html');
+    }
+
+    /** @test */
+    public function testRequestForm()
+    {
+        $response = $this->get('testing/test_module_form');
+
+        $response->assertSuccessful()->assertSee('Please enter your first name.');
     }
 }

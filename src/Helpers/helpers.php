@@ -58,3 +58,19 @@ if (! function_exists('trait_uses_recursive')) {
         return $traits;
     }
 }
+
+if (! function_exists('str_begins_with')) {
+    /**
+     * Checks whether the given string begins with some characters.
+     *
+     * @param string $needle Needle to match
+     * @param string $subject String to compare against
+     * @return bool
+     */
+    function str_begins_with($needle, $subject)
+    {
+        $len = strlen($needle);
+
+        return substr($subject, 0, $len) === $needle;
+    }
+}

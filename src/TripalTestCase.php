@@ -9,8 +9,8 @@ use StatonLab\TripalTestSuite\Concerns\PublishesData;
 
 abstract class TripalTestCase extends TestCase
 {
-    use InteractsWithAuthSystem,
-        MakesHTTPRequests,
+    use MakesHTTPRequests,
+        //InteractsWithAuthSystem,
         PublishesData;
 
     /**
@@ -41,8 +41,16 @@ abstract class TripalTestCase extends TestCase
             $this->DBTransactionTearDown();
         }
 
-        if(isset($this->_includedTraits[InteractsWithAuthSystem::class])) {
-            $this->authSystemTearDown();
-        }
+        //$this->authSystemTearDown();
+        $this->_clearRequestData();
+    }
+
+    /**
+     * Destroy session and clear request body.
+     */
+    protected function _clearRequestData()
+    {
+        $_POST = [];
+        $_GET = [];
     }
 }

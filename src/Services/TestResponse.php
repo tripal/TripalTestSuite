@@ -5,6 +5,7 @@ namespace StatonLab\TripalTestSuite\Services;
 use Psr\Http\Message\ResponseInterface;
 use PHPUnit\Framework\Assert as PHPUnit;
 use SebastianBergmann\CodeCoverage\Report\PHP;
+use StatonLab\TripalTestSuite\Exceptions\InvalidJSONException;
 
 class TestResponse
 {
@@ -23,6 +24,16 @@ class TestResponse
     public function __construct(ResponseInterface $response)
     {
         $this->response = $response;
+    }
+
+    /**
+     * Convert response to string.
+     *
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string)$this->getResponseBody();
     }
 
     /**
@@ -60,12 +71,15 @@ class TestResponse
      * Get the json response as an associative array.
      *
      * @return array
+     * @throws \StatonLab\TripalTestSuite\Exceptions\InvalidJSONException
      */
     public function json()
     {
         $json = json_decode($this->getResponseBody(), true);
-        if ($json === false) {
+        if (is_null($json)) {
             PHPUnit::fail('Unable to decode json response!');
+
+            throw new InvalidJSONException('Unable to decode json response!');
         }
 
         return $json;
@@ -81,12 +95,21 @@ class TestResponse
     public function assertJsonStructure(array $structure, $data = null)
     {
         if (is_null($data)) {
-            $data = $this->json();
+            try {
+                $data = $this->json();
+            } catch (InvalidJSONException $exception) {
+                PHPUnit::fail('Unable to decode json response!');
+            }
         }
 
         foreach ($structure as $key => $value) {
             if (is_array($value)) {
                 PHPUnit::assertArrayHasKey($key, $data);
+
+                // Prevent infinite loops
+                if (is_null($data[$key])) {
+                    continue;
+                }
 
                 $this->assertJsonStructure($structure[$key], $data[$key]);
                 continue;
@@ -111,11 +134,11 @@ class TestResponse
     /**
      * Get response body.
      *
-     * @return \Psr\Http\Message\StreamInterface
+     * @return string
      */
     public function getResponseBody()
     {
-        return $this->response->getBody();
+        return (string)$this->response->getBody();
     }
 
     /**
@@ -145,8 +168,10 @@ class TestResponse
      * @param $content
      * @return $this
      */
-    public function assertSee($content) {
-        PHPUnit::assertContains($content, (string) $this->getResponseBody(), "Unable to find [$content] in response.");
+    public function assertSee($content)
+    {
+        $response = (string)$this->getResponseBody();
+        PHPUnit::assertContains($content, $response, "Unable to find [$content] in response.");
 
         return $this;
     }

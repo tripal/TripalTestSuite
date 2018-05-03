@@ -3,11 +3,19 @@
 namespace StatonLab\TripalTestSuite\Concerns;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Cookie\CookieJar;
+use StatonLab\TripalTestSuite\Mocks\TestResponseMock;
+use StatonLab\TripalTestSuite\Services\MenuCaller;
 use StatonLab\TripalTestSuite\Services\TestResponse;
 use PHPUnit\Framework\Assert as PHPUnit;
 
 trait MakesHTTPRequests
 {
+    /**
+     * @var array
+     */
+    private $_cookies;
+
     /**
      * Send a GET request.
      *
@@ -20,7 +28,7 @@ trait MakesHTTPRequests
     {
         return $this->_call('GET', $uri, [
             'query' => $params,
-            'headers' => $headers
+            'headers' => $headers,
         ]);
     }
 
@@ -36,7 +44,7 @@ trait MakesHTTPRequests
     {
         return $this->_call('POST', $uri, [
             'form_params' => $params,
-            'headers' => $headers
+            'headers' => $headers,
         ]);
     }
 
@@ -52,7 +60,7 @@ trait MakesHTTPRequests
     {
         return $this->_call('DELETE', $uri, [
             'query' => $params,
-            'headers' => $headers
+            'headers' => $headers,
         ]);
     }
 
@@ -64,10 +72,11 @@ trait MakesHTTPRequests
      * @param array $headers
      * @return \StatonLab\TripalTestSuite\Services\TestResponse
      */
-    public function put($uri, $params = [], $headers = []) {
+    public function put($uri, $params = [], $headers = [])
+    {
         return $this->_call('PUT', $uri, [
             'form_params' => $params,
-            'headers' => $headers
+            'headers' => $headers,
         ]);
     }
 
@@ -79,10 +88,11 @@ trait MakesHTTPRequests
      * @param array $headers
      * @return \StatonLab\TripalTestSuite\Services\TestResponse
      */
-    public function patch($uri, $params = [], $headers = []) {
+    public function patch($uri, $params = [], $headers = [])
+    {
         return $this->_call('PATCH', $uri, [
             'form_params' => $params,
-            'headers' => $headers
+            'headers' => $headers,
         ]);
     }
 
@@ -93,14 +103,29 @@ trait MakesHTTPRequests
      * @param string $uri
      * @params array $params
      *
+     * @throws \Exception
      * @return TestResponse
      */
     private function _call($method, $uri, $params = [])
     {
-        $client = new Client();
+        //if (! str_begins_with('/', $uri) && ! str_begins_with('http', $uri)) {
+        //    var_dump('user is ' . ($GLOBALS['user'] ? $GLOBALS['user']->uid : ' not available'));
+        //    $client = new MenuCaller();
+        //
+        //    return $client->setPath($uri)->setMethod($method)->addParams($params)->send();
+        //}
 
-        $uri = $this->_prepareURI($uri);
         try {
+            $client = new Client();
+            $uri = $this->_prepareURI($uri);
+
+            if (! empty($this->_cookies)) {
+                $domain = str_replace('http://', '', $GLOBALS['base_url']);
+                $domain = str_replace('https://', '', $domain);
+                $cookieJar = CookieJar::fromArray($this->_cookies, $domain);
+                $params['cookies'] = $cookieJar;
+            }
+
             return new TestResponse($client->request($method, $uri, $params));
         } catch (\GuzzleHttp\Exception\GuzzleException $exception) {
             PHPUnit::fail("Failed to send $method request to $uri. ".$exception->getMessage());
@@ -119,12 +144,8 @@ trait MakesHTTPRequests
     {
         global $base_url;
 
-        if (substr($uri, 0, 1) === '/') {
-            return trim($base_url.$uri, '/');
-        }
-
-        if (! substr($uri, 0, 4) === 'http') {
-            return trim($base_url.'/'.$uri, '/');
+        if (str_begins_with($uri, '/') || ! str_begins_with($uri, 'http')) {
+            return trim($base_url.'/'.trim($uri, '/'), '/');
         }
 
         return trim($uri, '/');
