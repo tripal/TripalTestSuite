@@ -1,6 +1,8 @@
 <?php
+
 namespace StatonLab\TripalTestSuite\Mocks;
 
+use StatonLab\TripalTestSuite\Exceptions\InvalidJSONException;
 use StatonLab\TripalTestSuite\Services\TestResponse;
 
 class TestResponseMock extends TestResponse
@@ -22,7 +24,12 @@ class TestResponseMock extends TestResponse
 
     public function json()
     {
-        return json_decode($this->response['body'], true);
+        $data = json_decode($this->response['body'], true);
+        if (is_null($data)) {
+            throw new InvalidJSONException('Unable to decode json response!');
+        }
+
+        return $data;
     }
 
     public function getStatusCode()

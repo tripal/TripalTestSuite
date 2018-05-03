@@ -5,9 +5,9 @@ services:
     image: 'statonlab/tripal3'
     environment:
       - DRUPAL_ROOT=/var/www/html
-      - BASE_URL=http://localhost:8080
+      - BASE_URL=http://localhost:8090
     volumes:
       - ./tests/test_module:/modules/test_module
       - ./src:/modules/test_module/TripalTestSuite
     ports:
-      - 8080:80
+      - 8090:80

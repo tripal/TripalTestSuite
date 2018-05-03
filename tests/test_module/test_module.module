@@ -1,2 +1,79 @@
 <?php
 
+/**
+ * Implements hook_menu().
+ */
+function test_module_menu()
+{
+    return [
+        'testing/admin/test_module' => [
+            'title' => 'Foobar',
+            'description' => 'List, add, and edit Foobars.',
+            'page callback' => 'test_module_output_some_json',
+            'access arguments' => ['administer users'],
+        ],
+
+        'testing/test_module' => [
+            'title' => 'Foobar',
+            'description' => 'HTML Foobar',
+            'page callback' => 'test_module_output_some_html',
+            'access arguments' => ['access content'],
+        ],
+
+        'testing/test_module_form' => [
+            'title' => 'Form',
+            'description' => 'form',
+            'page callback' => 'drupal_get_form',
+            'page arguments' => ['test_module_test_form'],
+            'access callback' => true,
+        ],
+    ];
+}
+
+function test_module_output_some_json()
+{
+    drupal_json_output([
+        'name' => 'test_module',
+        'description' => 'This is a test module',
+        'data' => [
+            'nested' => [
+                'values' => 'value',
+            ],
+        ],
+    ]);
+}
+
+function test_module_output_some_html()
+{
+    return [
+        'item' => [
+            '#type' => 'markup',
+            '#markup' => '<p>testing html</p>',
+        ],
+    ];
+}
+
+function test_module_test_form($form, &$form_state)
+{
+    $form['name'] = [
+        '#type' => 'textfield',
+        '#title' => t('First name'),
+        '#required' => true,
+        '#default_value' => "First name",
+        '#description' => "Please enter your first name.",
+        '#size' => 20,
+        '#maxlength' => 20,
+    ];
+
+    $form['submit'] = [
+        '#type' => 'submit',
+        '#value' => 'Submit',
+    ];
+
+    return $form;
+}
+
+function test_module_test_form_submit($form, &$form_state)
+{
+    drupal_set_message('Name saved successfully');
+}

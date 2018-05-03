@@ -76,6 +76,7 @@ class MenuCaller
     {
         if (isset($params['form_params'])) {
             $params = $params['form_params'];
+            $params['form_token'] = drupal_get_token();
         } elseif (isset($params['query'])) {
             $params = $params['query'];
         }
@@ -99,38 +100,57 @@ class MenuCaller
         if (! in_array($this->method, $allowed_methods)) {
             throw new \Exception("Unknown method $this->method.");
         }
-
+        $_SERVER['REQUEST_METHOD'] = $this->method;
         $this->injectParams();
 
-        $value = menu_execute_active_handler($this->path, false);
+        list($status, $value, $headers) = $this->execute();
 
-        $status = 200;
-        if ($value === MENU_ACCESS_DENIED) {
-            $status = 403;
-            $value = "Access Denied Forbidden 403";
-        } elseif ($value === MENU_NOT_FOUND) {
-            $status = 404;
-            $value = "Page not found";
-        }
+        drupal_add_http_header('Content-Type', null);
 
         return new TestResponseMock([
             'status' => $status,
-            'body' => drupal_render_page($value),
+            'body' => $value,
             'headers' => [
-                'Cache-Control' => 'no-cache, must-revalidate',
-                'Connection' => 'Keep-Alive',
-                'Content-Language' => 'en',
-                'Content-Type' => 'text/html; charset=utf-8',
-                'Date' => gmdate('D, d M Y H:is e'),
-                'Expires' => 'Sun, 19 Nov 1978 05:00:00 GMT',
-                'Keep-Alive' => 'timeout=5, max=100',
-                'Server' => 'Apache/2.4.29 (Unix) PHP/7.1.14',
-                'Transfer-Encoding' => 'chunked',
-                'X-Content-Type-Options' => 'nosniff',
-                'X-Frame-Options' => 'SAMEORIGIN',
-                'X-Generator' => 'Drupal 7 (http://drupal.org)',
-            ],
+                    'Cache-Control' => 'no-cache, must-revalidate',
+                    'Connection' => 'Keep-Alive',
+                    'Content-Language' => 'en',
+                    'Content-Type' => 'text/html; charset=utf-8',
+                    'Date' => gmdate('D, d M Y H:is e'),
+                    'Expires' => 'Sun, 19 Nov 1978 05:00:00 GMT',
+                    'Keep-Alive' => 'timeout=5, max=100',
+                    'Server' => 'Apache/2.4.29 (Unix) PHP/'.phpversion(),
+                    'Transfer-Encoding' => 'chunked',
+                    'X-Content-Type-Options' => 'nosniff',
+                    'X-Frame-Options' => 'SAMEORIGIN',
+                    'X-Generator' => 'Drupal 7 (http://drupal.org)',
+                ] + $headers,
         ]);
+    }
+
+    protected function execute()
+    {
+        $buffer = '';
+        ob_start(function ($str) use (&$buffer) {
+            $buffer .= $str;
+        });
+        menu_execute_active_handler($this->path);
+        ob_end_clean();
+
+        $status = 200;
+        $header = drupal_get_http_header('Status');
+        if ($header && strstr($header, '404') !== false) {
+            $status = 404;
+        } elseif ($header && strstr($header, '403') !== false) {
+            $status = 403;
+        }
+
+        $value = $buffer;
+
+        return [
+            $status,
+            $value,
+            drupal_get_http_header(),
+        ];
     }
 
     /**
@@ -146,6 +166,8 @@ class MenuCaller
             return;
         }
 
+        $menu_item = menu_get_item($this->path);
+        $_POST['form_id'] = isset($menu_item['page_arguments']) ? $menu_item['page_arguments'][0] : '';
         foreach ($this->params as $key => $param) {
             $_POST[$key] = $param;
         }

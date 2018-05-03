@@ -3,6 +3,7 @@
 namespace StatonLab\TripalTestSuite\Concerns;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Cookie\CookieJar;
 use StatonLab\TripalTestSuite\Mocks\TestResponseMock;
 use StatonLab\TripalTestSuite\Services\MenuCaller;
 use StatonLab\TripalTestSuite\Services\TestResponse;
@@ -10,6 +11,11 @@ use PHPUnit\Framework\Assert as PHPUnit;
 
 trait MakesHTTPRequests
 {
+    /**
+     * @var array
+     */
+    private $_cookies;
+
     /**
      * Send a GET request.
      *
@@ -102,15 +108,23 @@ trait MakesHTTPRequests
      */
     private function _call($method, $uri, $params = [])
     {
-        if (! str_begins_with('/', $uri) && ! str_begins_with('http', $uri)) {
-            $client = new MenuCaller();
-
-            return $client->setMethod($method)->addParams($params)->send();
-        }
+        //if (! str_begins_with('/', $uri) && ! str_begins_with('http', $uri)) {
+        //    var_dump('user is ' . ($GLOBALS['user'] ? $GLOBALS['user']->uid : ' not available'));
+        //    $client = new MenuCaller();
+        //
+        //    return $client->setPath($uri)->setMethod($method)->addParams($params)->send();
+        //}
 
         try {
             $client = new Client();
             $uri = $this->_prepareURI($uri);
+
+            if (! empty($this->_cookies)) {
+                $domain = str_replace('http://', '', $GLOBALS['base_url']);
+                $domain = str_replace('https://', '', $domain);
+                $cookieJar = CookieJar::fromArray($this->_cookies, $domain);
+                $params['cookies'] = $cookieJar;
+            }
 
             return new TestResponse($client->request($method, $uri, $params));
         } catch (\GuzzleHttp\Exception\GuzzleException $exception) {
@@ -130,12 +144,8 @@ trait MakesHTTPRequests
     {
         global $base_url;
 
-        if (substr($uri, 0, 1) === '/') {
-            return trim($base_url.$uri, '/');
-        }
-
-        if (! substr($uri, 0, 4) === 'http') {
-            return trim($base_url.'/'.$uri, '/');
+        if (str_begins_with($uri, '/') || ! str_begins_with($uri, 'http')) {
+            return trim($base_url.'/'.trim($uri, '/'), '/');
         }
 
         return trim($uri, '/');
