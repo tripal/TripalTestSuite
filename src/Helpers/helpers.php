@@ -74,3 +74,18 @@ if (! function_exists('str_begins_with')) {
         return substr($subject, 0, $len) === $needle;
     }
 }
+
+if(!function_exists('silent')) {
+    /**
+     * Silently run a function.
+     *
+     * @param string|callable $callable
+     * @param array $arguments
+     * @see \StatonLab\TripalTestSuite\Services\SilentResponse::__construct();
+     * @return \StatonLab\TripalTestSuite\Services\SilentResponse
+     * @throws \StatonLab\TripalTestSuite\Exceptions\FunctionNotFoundException
+     */
+    function silent($callable, array $arguments = []) {
+        return new \StatonLab\TripalTestSuite\Services\SilentResponse($callable, $arguments);
+    }
+}
