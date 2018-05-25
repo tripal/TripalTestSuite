@@ -25,6 +25,10 @@ with data for use in testing).
   - [Publishing Tripal Entities](#publishing-tripal-entities)
   - [Testing HTTP Requests](#testing-http-requests)
   	- [Available HTTP Testing Methods](#available-http-testing-methods)
+  - [Helper Methods](#helper-methods)
+  	- [Silently Testing Printed Output](#silently-testing-printed-output)
+  	  - [Assertions and Methods](#assertions-and-methods)
+  - [Environment Variables](#environment-variables)
 
 ### Installation
 Within your Drupal module path (e,g `sites/all/modules/my_module`), run the following.
@@ -331,6 +335,74 @@ The `TestResponse` returned from the HTTP requests, provide the following set of
 |`$response->assertSee()`|**$content** `string`|Verify the given string is present in the returned response body (i,e HTML, JSON, etc)|
 |`$response->assertJsonStructure()`|**$structure** `array`|Verifies that the returned JSON matches the given structure (see below for example)|
 |`$response->assertSuccessful()`|none|Verify the returned HTTP status code is between 200 and 299, which are HTTP's successful response codes|
+
+### Helper Methods
+TripalTestSuite provides a set of helper methods to automate tedious aspects of testing.
+
+#### Silently Testing Printed Output
+Since tests should run "silently", i.e. without printing output to the screen, we'd have to create
+an output buffer to collect printed strings into a variable. In PHP, this can be done as such:
+```php
+// Supress tripal errors
+putenv("TRIPAL_SUPPRESS_ERRORS=TRUE");
+ob_start();
+echo "testing";
+$output = ob_get_contents();
+
+// Clean the buffer and unset tripal errors suppression 
+ob_end_clean();
+putenv("TRIPAL_SUPPRESS_ERRORS");
+```
+**Note**: the above code will **not** work with large strings.
+
+However, TripalTestSuite provides a `silent()` method that automates this process. Example
+usage:
+```php
+$output = silent(function() {
+  echo "testing";
+});
+$output->assertSee('testing');
+```
+
+#### Assertions and Methods
+The silent method returns a SilentResponse which provides the following methods.
+
+|Method|Arguments|Description|
+|------|---------|-----------|
+|`assertSee()`|`$value` mixed|Asserts that the given value is present in the suppressed printed output|
+|`assertReturnEquals()`|`$value` mixed| Asserts that the given value equals the returned value from the called function|
+|`assertJsonStructure()`|`$strcture` array<br>`$data` array **Optional**|Asserts that the given stricture matches that of the suppressed printed output|
+|`getContent()`|None|Get the suppressed printed content as a string|
+|`getReturnValue()`|None|Get the returned value from the called function|
+
+**Examples**
+
+```php
+$output = silent(function() {
+	drupal_json_output(['key' => 'value']);
+	return true;
+})
+
+$output->assertSee('key')
+	   ->assertJsonStructure(['key'])
+	   ->assertReturnEquals(true);
+``` 
+
+You can also call methods directly in the Callable function:
+```php
+// Assume we have the following function
+function tripal_print_message($message) {
+  echo $message;
+}
+
+$output = silent(function() {
+  tripal_print_message('tripal test suite');
+});
+$output->assertSee('test');
+
+// Get the output as a string
+$rawOtput = $output->getContent();
+```
 
 ### Environment Variables
 You can specify the Drupal web root path in `tests/.env`.
