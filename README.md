@@ -346,6 +346,8 @@ an output buffer to collect printed strings into a variable. In PHP, this can be
 // Supress tripal errors
 putenv("TRIPAL_SUPPRESS_ERRORS=TRUE");
 ob_start();
+
+// Run the call
 echo "testing";
 $output = ob_get_contents();
 
@@ -355,13 +357,14 @@ putenv("TRIPAL_SUPPRESS_ERRORS");
 ```
 **Note**: the above code will **not** work with large strings.
 
-However, TripalTestSuite provides a `silent()` method that automates this process. Example
-usage:
+However, TripalTestSuite provides a `silent()` method that automates this process, provides helpful assertions
+and supports larger strings. Example usage:
+
 ```php
 $output = silent(function() {
   echo "testing";
 });
-$output->assertSee('testing');
+$output->assertSee('testing'); // true!
 ```
 
 #### Assertions and Methods
@@ -381,9 +384,9 @@ The silent method returns a SilentResponse which provides the following methods.
 $output = silent(function() {
 	drupal_json_output(['key' => 'value']);
 	return true;
-})
+});
 
-$output->assertSee('key')
+$output->assertSee('value')
 	   ->assertJsonStructure(['key'])
 	   ->assertReturnEquals(true);
 ``` 
