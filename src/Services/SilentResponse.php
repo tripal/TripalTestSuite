@@ -132,10 +132,14 @@ class SilentResponse extends BaseResponse
      * Assert the return value of the callable equals the given value.
      *
      * @param $value
+     *
+     * @return $this
      */
     public function assertReturnEquals($value)
     {
         PHPUnit::assertEquals($value, $this->getReturnValue());
+
+        return $this;
     }
 
     /**

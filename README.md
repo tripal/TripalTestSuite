@@ -27,6 +27,7 @@ with data for use in testing).
   	- [Available HTTP Testing Methods](#available-http-testing-methods)
   - [Helper Methods](#helper-methods)
   	- [Silently Testing Printed Output](#silently-testing-printed-output)
+  	  - [Assertions and Methods](#assertions-and-methods)
   - [Environment Variables](#environment-variables)
 
 ### Installation
@@ -362,6 +363,30 @@ $output = silent(function() {
 });
 $output->assertSee('testing');
 ```
+
+#### Assertions and Methods
+The silent method returns a SilentResponse which provides the following methods.
+
+|Method|Arguments|Description|
+|------|---------|-----------|
+|`assertSee()`|`$value` mixed|Asserts that the given value is present in the suppressed printed output|
+|`assertReturnEquals()`|`$value` mixed| Asserts that the given value equals the returned value from the called function|
+|`assertJsonStructure()`|`$strcture` array<br>`$data` array **Optional**|Asserts that the given stricture matches that of the suppressed printed output|
+|`getContent()`|None|Get the suppressed printed content as a string|
+|`getReturnValue()`|None|Get the returned value from the called function|
+
+**Examples**
+
+```php
+$output = silent(function() {
+	drupal_json_output(['key' => 'value']);
+	return true;
+})
+
+$output->assertSee('key')
+	   ->assertJsonStructure(['key'])
+	   ->assertReturnEquals(true);
+``` 
 
 You can also call methods directly in the Callable function:
 ```php
