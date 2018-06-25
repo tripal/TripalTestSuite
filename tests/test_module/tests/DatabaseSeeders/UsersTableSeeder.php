@@ -3,7 +3,6 @@
 namespace Tests\DatabaseSeeders;
 
 use Faker\Factory;
-use Faker\Generator;
 use StatonLab\TripalTestSuite\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
