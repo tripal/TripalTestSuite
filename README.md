@@ -25,6 +25,7 @@ with data for use in testing).
   - [Publishing Tripal Entities](#publishing-tripal-entities)
   - [Testing HTTP Requests](#testing-http-requests)
   	- [Available HTTP Testing Methods](#available-http-testing-methods)
+  - [User Authentication](#user-authentication)
   - [Helper Methods](#helper-methods)
   	- [Silently Testing Printed Output](#silently-testing-printed-output)
   	  - [Assertions and Methods](#assertions-and-methods)
@@ -192,6 +193,34 @@ Note that running the seeder manually in a test function with `DBTransaction` en
 means that the data is available only to that function and nothing else. However,
 running it using `tripaltest` makes it always available unless explicitly deleted. 
 
+##### Retrieving Seeder Data
+If your seeder returns any data, you can obtain the returned record by manually running
+the seeder in your test. See below for an example:
+
+```php
+<?php
+// Seeder Class
+class MySeeder extends Seeder {
+    public function up() {
+        // Generate some data.
+        $data = db_query(...);
+        
+        return $data;
+    }
+}
+
+// Test Class
+class MyTest extends TripalTestCase {
+    public function testExample() {
+        $seeder = new MySeeder();
+        $data = $seeder->up();
+        
+        // Run some tests using the generated data
+        // ...
+    }
+}
+```
+
 ### Factories
 DB factories provide a method to populate the database with fake data. Using factories, you
 won't have to run SQL queries to populate the Database in every test. Since they are reusable,
@@ -335,6 +364,25 @@ The `TestResponse` returned from the HTTP requests, provide the following set of
 |`$response->assertSee()`|**$content** `string`|Verify the given string is present in the returned response body (i,e HTML, JSON, etc)|
 |`$response->assertJsonStructure()`|**$structure** `array`|Verifies that the returned JSON matches the given structure (see below for example)|
 |`$response->assertSuccessful()`|none|Verify the returned HTTP status code is between 200 and 299, which are HTTP's successful response codes|
+
+### User Authentication
+Authenticating a user with TripalTestSuite is very simple using the `actingAs` method. When
+authenticating a user with TripalTestSuite, the user is automatically signed out by the end
+of each test method, which guarantees that your other tests are using the anonymous user
+unless you specifically tell it otherwise. 
+
+```php
+publich function testExample() {
+  // Authenticate the superuser who has an id 1 
+  $this->actingAs(1);
+  
+  // Verify that the user is the admin user
+  global $user;
+  $this->assertTrue(1 === $user->uid);
+}
+```
+
+Note: The `actingAs` method can take a user id to authenticate or a Drupal user object.
 
 ### Helper Methods
 TripalTestSuite provides a set of helper methods to automate tedious aspects of testing.
