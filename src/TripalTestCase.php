@@ -10,7 +10,7 @@ use StatonLab\TripalTestSuite\Concerns\PublishesData;
 abstract class TripalTestCase extends TestCase
 {
     use MakesHTTPRequests,
-        //InteractsWithAuthSystem,
+        InteractsWithAuthSystem,
         PublishesData;
 
     /**
@@ -41,7 +41,7 @@ abstract class TripalTestCase extends TestCase
             $this->DBTransactionTearDown();
         }
 
-        //$this->authSystemTearDown();
+        $this->authSystemTearDown();
         $this->_clearRequestData();
     }
 

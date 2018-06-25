@@ -7,7 +7,8 @@ trait InteractsWithAuthSystem
     /**
      * Set the active user.
      *
-     * @param int|object $user
+     * @param int|object $user Either a user object or simply a user id.
+     * @return $this
      */
     public function actingAs($uid)
     {
