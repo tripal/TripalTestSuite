@@ -4,6 +4,7 @@ namespace StatonLab\TripalTestSuite\Console\Commands;
 
 use StatonLab\TripalTestSuite\Database\LoadsDatabaseSeeders;
 use StatonLab\TripalTestSuite\Database\Seeder;
+use StatonLab\TripalTestSuite\Services\BootstrapDrupal;
 use Symfony\Component\Console\Input\InputArgument;
 
 class DBSeedCommand extends BaseCommand
@@ -28,6 +29,10 @@ class DBSeedCommand extends BaseCommand
      */
     public function handle()
     {
+        // Let's bootstrap first
+        $bootstrap = new BootstrapDrupal();
+        $bootstrap->run();
+        
         $this->loadDatabaseSeeders();
 
         $seeder = $this->getArgument('name');
