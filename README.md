@@ -29,6 +29,7 @@ with data for use in testing).
   - [Helper Methods](#helper-methods)
   	- [Silently Testing Printed Output](#silently-testing-printed-output)
   	  - [Assertions and Methods](#assertions-and-methods)
+  	- [Access Private and Protected Properties and Methods of Objects](#access-private-and-protected-properties-and-methods-of-objects)
   - [Environment Variables](#environment-variables)
 
 ### Installation
@@ -453,6 +454,62 @@ $output->assertSee('test');
 
 // Get the output as a string
 $rawOtput = $output->getContent();
+```
+
+#### Access Private and Protected Properties and Methods of Objects
+
+TripalTestSuite provides a `reflect()` method that accepts and object
+and makes all of the properties and methods public and available
+for testing. Assume we have the following class:
+
+```php
+class PrivateClass
+{
+    private $private;
+
+    public function __construct($private = 'private')
+    {
+        $this->protected = $protected;
+    }
+
+    protected function myProtected()
+    {
+        return 'protected';
+    }
+
+    private function privateWithArgs($one, $two)
+    {
+        return $one.' '.$two;
+    }
+}
+```
+
+Because of the functions and properties of the class are private or protected, we
+normally would not be able to access any of them. However, we can force access
+using the reflect helper. See below for an examples.
+
+**Accessing Methods**
+```php
+// Pass an initialized class to the reflect method
+$myObject = new PrivateClass();
+$privateClass = reflect($myObject);
+
+// Accessing protected methods
+$value = $privateClass->myProtected();
+$this->assertEquals('protected', $value);
+
+// Accessing private methods with arguments
+$value = $privateClass->privateWithArgs('one', 'two');
+$this->assertEquals('one two', $value);
+```
+
+**Accessing Properties**
+```php
+// Pass an initialized class to the reflect method
+$myObject = new PrivateClass();
+$privateClass = reflect($myObject);
+
+$this->assertEquals('private', $privateClass->private);
 ```
 
 ### Environment Variables

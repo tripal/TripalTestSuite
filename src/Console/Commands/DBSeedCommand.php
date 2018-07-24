@@ -32,7 +32,7 @@ class DBSeedCommand extends BaseCommand
         // Let's bootstrap first
         $bootstrap = new BootstrapDrupal();
         $bootstrap->run();
-        
+
         $this->loadDatabaseSeeders();
 
         $seeder = $this->getArgument('name');
