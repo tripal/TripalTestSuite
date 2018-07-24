@@ -18,6 +18,22 @@ if (! function_exists('factory')) {
     }
 }
 
+if (! function_exists('reflect')) {
+    /**
+     * A helper function to create a reflection of a given object.
+     * The reflection will allow you to access private and
+     * protected methods and properties.
+     *
+     * @param object Initialized object.
+     * @return StatonLab\TripalTestSuite\Services\Reflector
+     * @throws \Exception
+     */
+    function reflect($object)
+    {
+        return new \StatonLab\TripalTestSuite\Services\Reflector($object);
+    }
+}
+
 if (! function_exists('class_uses_recursive')) {
     /**
      * Returns all traits used by a class, its subclasses and trait of their traits.
@@ -75,7 +91,7 @@ if (! function_exists('str_begins_with')) {
     }
 }
 
-if(!function_exists('silent')) {
+if (! function_exists('silent')) {
     /**
      * Silently run a function.
      *
@@ -85,7 +101,8 @@ if(!function_exists('silent')) {
      * @return \StatonLab\TripalTestSuite\Services\SilentResponse
      * @throws \StatonLab\TripalTestSuite\Exceptions\FunctionNotFoundException
      */
-    function silent($callable, array $arguments = []) {
+    function silent($callable, array $arguments = [])
+    {
         return new \StatonLab\TripalTestSuite\Services\SilentResponse($callable, $arguments);
     }
 }
