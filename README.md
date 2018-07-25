@@ -458,7 +458,7 @@ $rawOtput = $output->getContent();
 
 #### Access Private and Protected Properties and Methods of Objects
 
-TripalTestSuite provides a `reflect()` method that accepts and object
+TripalTestSuite provides a `reflect()` method that accepts an object
 and makes all of the properties and methods public and available
 for testing. Assume we have the following class:
 
@@ -469,7 +469,7 @@ class PrivateClass
 
     public function __construct($private = 'private')
     {
-        $this->protected = $protected;
+        $this->private = $private;
     }
 
     protected function myProtected()
