@@ -14,23 +14,27 @@ class DevSeedSeeder extends Seeder {
 
 //protected $protein_file = ['file_local' => '/path/to/local/file'];
 
-  protected $mRNA_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/sequences/FexcelsiorCDS.fasta'];
+  protected $mRNA_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/blob/master/Fexcel_mini/sequences/mrna_mini.fasta'];
 
-  protected $protein_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/sequences/FexcelsiorAA.minoas.fasta'];
+  protected $protein_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/blob/master/Fexcel_mini/sequences/polypeptide_mini.fasta'];
 
-  protected $gff_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/gff/Fexcelsior_filtered.gff3'];
+  protected $gff_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/blob/master/Fexcel_mini/gff/filtered.gff'];
+
+  protected $blast_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/blob/master/Fexcel_mini/gff/filtered.gff'];
+
+
+  protected $biomaterial_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/blob/master/Fexcel_mini/biomaterials/biomaterials.xml'];
+
+  protected $expression_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/blob/master/Fexcel_mini/expression/expression.tsv'];
 
 //coming soon
-  protected $blast_file = ['file_remote' => NULL];
-
   protected $interpro_file = ['file_remote' => NULL];
 
-  protected $biomaterial_file = ['file_remote' => NULL];
-
-  protected $expression_file = ['file_remote' => NULL];
 
 //Regular expression that will link the protein name to the mRNA parent feature name.
-  protected $prot_regexp = '/(FRA.*?)(?=:)/';
+ // protected $prot_regexp = '/(FRA.*?)(?=:)/';
+
+protected  $prot_regexp = NULL;
 
 //Don't change these variables here!  Instead, change the values in the factory within the constructor below.
   protected $organism = NULL;
@@ -68,6 +72,32 @@ class DevSeedSeeder extends Seeder {
    */
   public function up() {
 
+
+    $run_args = [
+      'analysis_id' => $this->sequence_analysis->analysis_id,
+      'organism_id' => $this->organism->organism_id,
+
+      'use_transaction' => 1,
+      'add_only' => 0,
+      'update' => 1,
+      'create_organism' => 0,
+      'create_target' => 0,
+
+      ///regexps for mRNA and protein.
+      're_mrna' => NULL,
+      're_protein' => $this->prot_regexp,
+      //optional
+      'target_organism_id' => NULL,
+      'target_type' => NULL,
+      'start_line' => NULL,
+      'landmark_type' => NULL,
+      'alt_id_attr' => NULL,
+
+    ];
+
+    //$this->load_GFF($run_args, $gff_file);
+
+
     $run_args = [
       'organism_id' => $this->organism->organism_id,
       'analysis_id' => $this->sequence_analysis->analysis_id,
@@ -94,10 +124,6 @@ class DevSeedSeeder extends Seeder {
       'method' => 2,
       'match_type' => 1,
 
-      //links polypeptide to mRNA
-      'rel_type' => 'derives_from',
-      're_subject' => $this->prot_regexp,
-      'parent_type' => 'mRNA',
 
       //optional
       're_name' => NULL,
@@ -107,31 +133,15 @@ class DevSeedSeeder extends Seeder {
 
     ];
 
+    if  ($this->prot_regexp){
+      //links polypeptide to mRNA
+      $run_args['rel_type'] = 'derives_from';
+      $run_args['re_subject'] = $this->prot_regexp;
+      $run_args['parent_type'] = 'mRNA';
+    }
+
+
     //$this->load_polypeptide_FASTA($run_args, $protein_file);
-
-    $run_args = [
-      'analysis_id' => $this->sequence_analysis->analysis_id,
-      'organism_id' => $this->organism->organism_id,
-
-      'use_transaction' => 1,
-      'add_only' => 0,
-      'update' => 1,
-      'create_organism' => 0,
-      'create_target' => 0,
-
-      ///regexps for mRNA and protein.
-      're_mrna' => NULL,
-      're_protein' => $this->prot_regexp,
-      //optional
-      'target_organism_id' => NULL,
-      'target_type' => NULL,
-      'start_line' => NULL,
-      'landmark_type' => NULL,
-      'alt_id_attr' => NULL,
-
-    ];
-
-    //$this->load_GFF($run_args, $gff_file);
 
     $run_args = [
       'analysis_id' => $this->sequence_analysis->analysis_id,
