@@ -25,7 +25,7 @@
             "src/Helpers/helpers.php"
         ]
     },
-    "bin" : [
+    "bin": [
         "tripaltest"
     ]
 }

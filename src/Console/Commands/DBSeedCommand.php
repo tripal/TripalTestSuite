@@ -4,7 +4,7 @@ namespace StatonLab\TripalTestSuite\Console\Commands;
 
 use StatonLab\TripalTestSuite\Database\LoadsDatabaseSeeders;
 use StatonLab\TripalTestSuite\Database\Seeder;
-use StatonLab\TripalTestSuite\Services\BootstrapDrupal;
+use StatonLab\TripalTestSuite\TripalTestBootstrap;
 use Symfony\Component\Console\Input\InputArgument;
 
 class DBSeedCommand extends BaseCommand
@@ -25,13 +25,13 @@ class DBSeedCommand extends BaseCommand
 
     /**
      * Seed the database.
+     *
      * @throws \Exception
      */
     public function handle()
     {
         // Let's bootstrap first
-        $bootstrap = new BootstrapDrupal();
-        $bootstrap->run();
+        new TripalTestBootstrap();
 
         $this->loadDatabaseSeeders();
 
@@ -40,11 +40,13 @@ class DBSeedCommand extends BaseCommand
         if ($seeder) {
             $this->runSeeder($seeder);
             $this->success($seeder);
+
             return;
         }
 
-        if(empty($this->seeders)) {
+        if (empty($this->seeders)) {
             $this->error('No database seeders found!');
+
             return;
         }
 
@@ -59,7 +61,8 @@ class DBSeedCommand extends BaseCommand
      *
      * @param $seeder
      */
-    protected function success($seeder) {
+    protected function success($seeder)
+    {
         $this->info("Ran $seeder successfully!");
     }
 
@@ -91,7 +94,7 @@ class DBSeedCommand extends BaseCommand
         /** @var Seeder $class */
         $class = $this->prepSeeder($class);
 
-        if(!in_array($class, $this->seeders)) {
+        if (! in_array($class, $this->seeders)) {
             throw new \Exception("Seeder $class Not Found!");
         }
 
