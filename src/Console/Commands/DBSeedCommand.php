@@ -31,7 +31,7 @@ class DBSeedCommand extends BaseCommand
     public function handle()
     {
         // Let's bootstrap first
-        new TripalTestBootstrap();
+        new TripalTestBootstrap(false);
 
         $this->loadDatabaseSeeders();
 
