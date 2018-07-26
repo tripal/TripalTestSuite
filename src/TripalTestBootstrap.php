@@ -16,7 +16,7 @@ class TripalTestBootstrap
      *
      * @throws \Exception
      */
-    public function __construct()
+    public function __construct($load_seeders = true)
     {
 
         // run the Drupal bootstrap commands
@@ -25,8 +25,10 @@ class TripalTestBootstrap
         // Get the factories
         $this->loadFactories();
 
-        // Load Database Seeders
-        $this->loadDatabaseSeeders();
+        if ($load_seeders) {
+            // Load Database Seeders
+            $this->loadDatabaseSeeders();
+        }
 
         // Add shutdown handler to revert database seeders
         $this->registerErrorHandler();
