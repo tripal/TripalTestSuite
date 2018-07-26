@@ -32,7 +32,7 @@ class TripalTest
      */
     protected function createApplication()
     {
-        $this->application = new Application('TripalTest', '1.2.2');
+        $this->application = new Application('TripalTest', '1.2.3');
     }
 
     /**
