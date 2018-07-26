@@ -24,7 +24,7 @@ trait LoadsDatabaseSeeders
         $workingDir = getcwd();
         if (file_exists("$workingDir/tests/DatabaseSeeders")) {
             foreach (glob("$workingDir/tests/DatabaseSeeders/*.php") as $seeder) {
-                require $seeder;
+                require_once $seeder;
 
                 // Extract the class name
                 /** @var \StatonLab\TripalTestSuite\Database\Seeder $className */
