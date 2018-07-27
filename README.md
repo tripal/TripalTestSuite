@@ -60,6 +60,13 @@ This will
 You can now write tests in your `tests` folder.  To enable continuous
 integration testing, push your module to github and [enable Travis CI](https://travis-ci.org/).
 
+**Forcing initialization**
+To force replacing files that tripaltest have perviously generated, you can use the
+`--force` flag. You will need to confirm this flag by typing `y` and hitting `enter`.
+```bash
+./vendor/bin/tripaltest init --force
+```
+
 ### Usage
 
 #### Creating Tests

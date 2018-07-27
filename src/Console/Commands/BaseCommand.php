@@ -5,6 +5,7 @@ namespace StatonLab\TripalTestSuite\Console\Commands;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 abstract class BaseCommand extends Command
 {
@@ -43,7 +44,7 @@ abstract class BaseCommand extends Command
      *
      * @param string|array $line
      */
-    protected function line($line)
+    public function line($line)
     {
         $this->output->writeln($line);
     }
@@ -53,7 +54,7 @@ abstract class BaseCommand extends Command
      *
      * @param string|array $line
      */
-    protected function info($line)
+    public function info($line)
     {
         if (is_array($line)) {
             $lines = [];
@@ -74,7 +75,7 @@ abstract class BaseCommand extends Command
      *
      * @param string|array $line
      */
-    protected function error($line)
+    public function error($line)
     {
         if (is_array($line)) {
             $lines = [];
@@ -96,7 +97,8 @@ abstract class BaseCommand extends Command
      * @param $name
      * @return mixed
      */
-    protected function getArgument($name) {
+    public function getArgument($name)
+    {
         return $this->input->getArgument($name);
     }
 
@@ -105,7 +107,8 @@ abstract class BaseCommand extends Command
      *
      * @return array
      */
-    protected function getArguments() {
+    public function getArguments()
+    {
         return $this->input->getArguments();
     }
 
@@ -115,7 +118,8 @@ abstract class BaseCommand extends Command
      * @param $name
      * @return bool
      */
-    protected function hasArgument($name) {
+    public function hasArgument($name)
+    {
         return $this->input->hasArgument($name);
     }
 
@@ -125,7 +129,8 @@ abstract class BaseCommand extends Command
      * @param $name
      * @return mixed
      */
-    protected function getOption($name) {
+    public function getOption($name)
+    {
         return $this->input->getOption($name);
     }
 
@@ -134,7 +139,8 @@ abstract class BaseCommand extends Command
      *
      * @return array
      */
-    protected function getOptions() {
+    public function getOptions()
+    {
         return $this->input->getOptions();
     }
 
@@ -144,7 +150,23 @@ abstract class BaseCommand extends Command
      * @param $name
      * @return bool
      */
-    protected function hasOption($name) {
+    public function hasOption($name)
+    {
         return $this->input->hasOption($name);
+    }
+
+    /**
+     * Ask the user a question.
+     *
+     * @param $question
+     * @param bool $default
+     * @return mixed
+     */
+    public function ask($question, $default = false)
+    {
+        $handler = $this->getHelper('question');
+        $confirmation = new ConfirmationQuestion($question, $default);
+
+        return $handler->ask($this->input, $this->output, $confirmation);
     }
 }
