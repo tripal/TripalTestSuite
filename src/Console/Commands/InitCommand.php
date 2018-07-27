@@ -3,6 +3,7 @@
 namespace StatonLab\TripalTestSuite\Console\Commands;
 
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputOption;
 
 class InitCommand extends BaseCommand
 {
@@ -32,6 +33,9 @@ class InitCommand extends BaseCommand
         // Add arguments
         $this->addArgument('name', InputArgument::OPTIONAL,
             'Specifies the module name (for example, tripal_awesome_extension).', $this->getModuleName());
+
+        $this->addOption('force', 'f', InputOption::VALUE_NONE,
+            'Force replacement of existing files such as phpunit.xml, .travis.yml, DataFactory.php, example.env, ExampleTest.php and bootstrap.php');
     }
 
     /**
@@ -42,6 +46,16 @@ class InitCommand extends BaseCommand
         $this->stubsDir = __DIR__.'/../../../stubs';
         $this->path = getcwd();
 
+        if ($this->getOption('force') !== false) {
+            $value = $this->ask("<info>Are you sure you want to force replacing files (y/N)?</info> ");
+
+            if (! $value) {
+                $this->info('Aborting');
+
+                return;
+            }
+        }
+
         $this->createTestsFolder();
 
         $this->copyStubs([
@@ -51,7 +65,7 @@ class InitCommand extends BaseCommand
             'phpunit.xml' => 'phpunit.xml',
             'ExampleTest.php' => 'tests/ExampleTest.php',
             'UsersTableSeeder.php' => 'tests/DatabaseSeeders/UsersTableSeeder.php',
-            'DataFactory.php' => 'tests/DataFactory.php'
+            'DataFactory.php' => 'tests/DataFactory.php',
         ]);
 
         try {
@@ -89,7 +103,7 @@ class InitCommand extends BaseCommand
     {
         foreach ($files as $file => $to) {
             $to = "{$this->path}/{$to}";
-            if (! file_exists($to)) {
+            if (! file_exists($to) || $this->getOption('force') !== false) {
                 copy("{$this->stubsDir}/{$file}", $to);
             } else {
                 $this->line("TRIPALTEST: $to already exists.");
