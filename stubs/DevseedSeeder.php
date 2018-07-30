@@ -30,9 +30,7 @@ class DevSeedSeeder extends Seeder {
 
   protected $expression_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/expression/expression.tsv'];
 
-  //coming soon
-  protected $interpro_file = ['file_remote' => NULL];
-
+  protected $interpro_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/ips/polypeptide_mini.fasta.xml'];
 
   //Regular expression that will link the protein name to the mRNA parent feature name.
   // protected $prot_regexp = '/(FRA.*?)(?=:)/';
