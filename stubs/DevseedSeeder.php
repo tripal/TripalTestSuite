@@ -6,32 +6,70 @@ use StatonLab\TripalTestSuite\Database\Seeder;
 
 class DevSeedSeeder extends Seeder {
 
+
+/**
+* Part one:
+* Chado records.
+* These are records used by many of the below importers.
+* ALL importers require an organism.
+* The expression data loader will associate the data with the $expression_analysis record.
+* All other importers associate data with the $sequence_analysis.
+* Uncomment the array to create that chado record.
+*/
+
+
+// protected $organism = [
+//         'common_name' => 'F. excelsior miniature',
+//         'genus' => 'Fraxinus',
+//         'species' => 'excelsior',
+//         'abbreviation' => 'F. excelsor',
+//         'comment' => 'Loaded with TripalDev Seed.',
+//       ];
+
+// protected $sequence_analysis = [
+//       'name' => 'Fraxinus exclesior miniature dataset',
+//       'description' => 'Tripal Dev Seed',
+//     ];
+
+//     protected $expression_analysis = [
+
+//       'name' => 'Fraxinus exclesior miniature dataset Expression Analysis',
+//       'description' => 'Tripal Dev Seed',
+//     ];
+  
+//   protected $blastdb = [
+//     'name' => 'DevSeed Database: TREMBL',
+//     'description' => 'A dummy database created by DevSeed',
+//   ];
+
   /**
+  * Part 2:
    * Files.
    * Each importer will take a file argument.  This argument should be an array
    * with one of the following two keys: file_remote => url where the file is
-   * located file_local => server path where the file is located
+   * located file_local => server path where the file is located.
    */
 
-  //protected $protein_file = ['file_local' => '/path/to/local/file'];
-  protected $landmark_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/sequences/empty_landmarks.fasta'];
+
+
+
+//  protected $landmark_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/sequences/empty_landmarks.fasta'];
 
   protected $landmark_type = 'scaffold';
 
-  protected $mRNA_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/sequences/mrna_mini.fasta'];
+ // protected $mRNA_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/sequences/mrna_mini.fasta'];
 
-  protected $protein_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/sequences/polypeptide_mini.fasta'];
+ // protected $protein_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/sequences/polypeptide_mini.fasta'];
 
-  protected $gff_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/gff/filtered.gff'];
+  //protected $gff_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/gff/filtered.gff'];
 
-  protected $blast_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/gff/filtered.gff'];
+  //protected $blast_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/gff/filtered.gff'];
 
-  protected $biomaterial_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/biomaterials/biomaterials.xml'];
+  //protected $biomaterial_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/biomaterials/biomaterials.xml'];
 
-  protected $expression_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/expression/expression.tsv'];
+  //protected $expression_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/expression/expression.tsv'];
 
-  //coming soon
-  protected $interpro_file = ['file_remote' => NULL];
+  //protected $interpro_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/ips/polypeptide_mini.fasta.xml'];
 
 
   //Regular expression that will link the protein name to the mRNA parent feature name.
@@ -39,57 +77,53 @@ class DevSeedSeeder extends Seeder {
 
   protected $prot_regexp = NULL;
 
-  protected $organism_name = 'F. excelsior miniature';
-
-  //Don't change these variables here!  Instead, change the values in the factory within the constructor below.
-  protected $organism = NULL;
-
-  protected $sequence_analysis = NULL;
-
-  protected $blastdb = NULL;
-
-  protected $expression_analysis = NULL;
-
   public function __construct() {
 
-    $organism = db_select('chado.organism', 'o')
-      ->fields('o', [
-        'common_name',
-        'genus',
-        'species',
-        'organism_id',
-        'abbreviation',
-        'comment',
-      ])
-      ->condition('common_name', $this->organism_name)
-      ->execute()->FetchObject();
+if ($this->organism){
 
-    if (!$organism) {
-      $organism = factory('chado.organism')->create([
-        'common_name' => $this->organism_name,
-        'genus' => 'Fraxinus',
-        'species' => 'excelsior',
-        'abbreviation' => 'F. excelsor',
-        'comment' => 'Loaded with TripalDev Seed.',
-      ]);
-    }
+  try {
 
-    $this->organism = $organism;
-    $sequence_analysis = factory('chado.analysis')->create([
-      'name' => 'Fraxinus exclesior miniature dataset',
-      'description' => 'Tripal Dev Seed',
-    ]);
+ $organism = this->fetch_chado_record('chado.organism', ['common_name', 'organism_id'], $this->organism);
 
-    $this->sequence_analysis = $sequence_analysis;
+} catch (\Exception $e) {
+echo $e->getMessage();
+exit;
+}
 
-    $expression_analysis = factory('chado.analysis')->create([
-      'name' => 'Fraxinus exclesior miniature dataset Expression Analysis',
-      'description' => 'Tripal Dev Seed',
-    ]);
+$this->organism = $organism;
+
+    if ($this->sequence_analysis){
+
+      try {
+
+ $seq_analysis = this->fetch_chado_record('chado.analysis', ['analysis_id'], $this->sequence_analysis);
+
+} catch (\Exception $e) {
+echo $e->getMessage();
+exit;
+}  
+    $this->sequence_analysis = $seq_analysis;
+
+$expression_analysis = this->fetch_chado_record('chado.analysis', ['analysis_id'], $this->expression_analysis);
+
+} catch (\Exception $e) {
+echo $e->getMessage();
+exit;
+}
 
     $this->expression_analysis = $expression_analysis;
 
-    $this->blastdb = factory('chado.db')->create()->db_id;
+    if ($this->blastdb){
+
+try {
+      $blastdb = $this->fetch_chado_record('chado.db', ['db_id'], $this->blastdb);
+    }
+    catch(\Excetion $e){
+      echo $e->getMessage();
+    }
+
+$this->blastdb =  $blastdb;
+
   }
 
   /**
@@ -116,7 +150,11 @@ class DevSeedSeeder extends Seeder {
       'parent_type' => NULL,
 
     ];
-    //  $this->load_landmarks($run_args, $this->landmark_file);
+    
+if ($this->landmark_file){
+      $this->load_landmarks($run_args, $this->landmark_file);
+
+}
 
 
     $run_args = [
@@ -161,7 +199,7 @@ class DevSeedSeeder extends Seeder {
 
     ];
 
-   // $this->load_mRNA_FASTA($run_args, $this->mRNA_file);
+    $this->load_mRNA_FASTA($run_args, $this->mRNA_file);
 
     $run_args = [
       'organism_id' => $this->organism->organism_id,
@@ -187,7 +225,7 @@ class DevSeedSeeder extends Seeder {
     }
 
 
-    // $this->load_polypeptide_FASTA($run_args, $this->protein_file);
+     $this->load_polypeptide_FASTA($run_args, $this->protein_file);
 
     $run_args = [
       'analysis_id' => $this->sequence_analysis->analysis_id,
@@ -198,7 +236,7 @@ class DevSeedSeeder extends Seeder {
       'parsego' => TRUE,
     ];
 
-    //$this->load_interpro_annotations($run_args, $this->interpro_file);
+    $this->load_interpro_annotations($run_args, $this->interpro_file);
 
     $run_args = [
       'analysis_id' => $this->sequence_analysis->analysis_id,
@@ -307,4 +345,27 @@ class DevSeedSeeder extends Seeder {
     $importer->prepareFiles();
     $importer->run();
   }
+
+  private function fetch_chado_record($table, $fields, $factory_array){
+    $query = db_select($table, 't')
+    ->fields('t', $fields);
+
+    foreach ($factory_array as $key => $value ){
+      $query->condition($key, $value);
+    }
+
+    $count_query = $query;
+    $count_query->countQuery()->execute()->fetchField();
+
+    if ($count_query === 0){
+      return factory($table)->create($factory_array);
+    }
+    if ($count_query === 1){
+    return $query->execute()->fetchObject();
+    }
+
+    throw new Exception("Error creating object for: " . $table
+      . ".\n Array supplied matches " . $count_query . " results, must match 1.", 1);
+  }
+
 }
