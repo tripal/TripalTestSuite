@@ -11,6 +11,7 @@ if (! function_exists('factory')) {
      *                       Example: "node", "public.node" or "chado.feature"
      * @param int $times The number of times to repeat the operation.
      * @return \StatonLab\TripalTestSuite\Database\Factory
+     * @throws \Exception
      */
     function factory($table, $times = 1)
     {
