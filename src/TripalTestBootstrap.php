@@ -54,7 +54,7 @@ class TripalTestBootstrap
     }
 
     /**
-     * Revert seeders in case of a fatal error.
+     * Print debuggable stack trace.
      */
     public static function shutdownHandler()
     {
