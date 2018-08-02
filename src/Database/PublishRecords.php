@@ -150,7 +150,7 @@ class PublishRecords
         if (empty($ids)) {
             $where = " WHERE CE.record_id IS NULL ";
         } else {
-            $where = " WHERE CE.record_id IN (:ids)";
+            $where = " WHERE T.$pkey_field IN (:ids)";
             $args[':ids'] = $ids;
         }
 
