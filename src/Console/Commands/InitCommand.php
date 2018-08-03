@@ -66,6 +66,7 @@ class InitCommand extends BaseCommand
             'ExampleTest.php' => 'tests/ExampleTest.php',
             'UsersTableSeeder.php' => 'tests/DatabaseSeeders/UsersTableSeeder.php',
             'DataFactory.php' => 'tests/DataFactory.php',
+            'DevSeedSeeder.php' => 'tests/DatabaseSeeders/DevSeedSeeder.php',
         ]);
 
         try {
