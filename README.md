@@ -19,7 +19,7 @@ with data for use in testing).
   	- [Using Database Seeders](#using-database-seeders)
   	- [Running Seeders](#running-seeders)
   	- [Retrieving Seeder Data](#retrieving-seeder-data)
-  	- [Using DevSeed for Quick Biological Data Seeding]()
+  	- [Using DevSeed for Quick Biological Data Seeding](#using-devseed-for-quick-biological-data-seeding)
   - [Data Factories](#factories)
   	- [Defining Factories](#defining-factories)
   	- [Using Factories](#using-factories)
@@ -241,20 +241,18 @@ annotations and InterProScan annotations. The data in the default seeder is obta
 from [Tripal DevSeed](https://github.com/statonlab/tripal_dev_seed), which is a developer
 mini-set of biological data.
 
-**NOTE:** DevSeedSeeder.php becomes available after running `tripaltest init`. If you do not have
-the seeder available, you can find it your `vendor/statonlab/tripal-test-suite/stubs/DevSeedSeeder.php`
-and make it available by copying it to `tests/DatabaseSeeders/DevSeedSeeder.php`. The `init` command will
-not override your files unless you specify the `--force` flag so it it's safe to run it to get only
+**NOTE:** DevSeedSeeder.php becomes available after running `tripaltest init`. The `init` command will
+not override existing files unless you specify the `--force` flag so it it's safe to run it to get only
 the DevSeeder.
 
-To run the dev seed seeder, you first have to configure it by uncommenting the type of data you
-want seeded. Then, you can run the seeder using `tripaltest db:seed DevSeedSeeder`.
+By default, the DevSeed comes with all sub-loaders disabled.  To run the DevSeed seeder, you first have to configure it by uncommenting the type of data you want seeded. Then, you can run the seeder using `tripaltest db:seed DevSeedSeeder`.
 
 1. Open `DatabaseSeeders/DevSeedSeeder.php`
 2. You'll notice a few commented properties in the top of the file.
-3. Uncomment and modify the properties to your need
-4. Next, run `tripaltest db:seed DevSeedSeeder`
-5. If the seeder runs successfully, you'll be able to see all the records in your Chado database.
+3. Uncomment and modify the properties to your need.
+4. Carefully follow the instructions in this section.  All loaders require an organism as well, but some are dependent on previous loaders. 
+5. Next, run `tripaltest db:seed DevSeedSeeder`
+6. If the seeder runs successfully, you'll be able to see all the records in your Chado database.
 
 The records provided by DevSeed are not published to your site as entities. You can do that
 by adding `$this->publish('CHADO_TABLE')` at the end of the `up()` method of the `DevSeedSeeder`.
