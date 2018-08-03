@@ -18,6 +18,8 @@ with data for use in testing).
   	- [Creating Database Seeders](#creating-database-seeders)
   	- [Using Database Seeders](#using-database-seeders)
   	- [Running Seeders](#running-seeders)
+  	- [Retrieving Seeder Data](#retrieving-seeder-data)
+  	- [Using DevSeed for Quick Biological Data Seeding]()
   - [Data Factories](#factories)
   	- [Defining Factories](#defining-factories)
   	- [Using Factories](#using-factories)
@@ -48,13 +50,14 @@ From your module's directory, execute:
 ```bash
 # You may specify the module name or leave it blank.
 # When left blank, the name of the current directory will be used as the module name.
-./vendor/bin/tripaltest init MODULE_NAME 
+./vendor/bin/tripaltest init [MODULE_NAME] 
 ```
 
 This will 
 - Set up the testing framework by creating the tests directory, phpunit.xml and tests/bootstrap.php
 - Create an example test in tests/ExampleTest.php
 - Create a DatabaseSeeders folder and an example seeder in tests/DatabaseSeeders/UsersTableSeeder.php
+- Create DevSeedSeeder.php in DatabaseSeers. See the [DevSeed section] to learn more about automatically populating the database with biological data.
 - Create an example `.env` file.
 - Create `.travis.yml` configured to use a tripal3 docker container to run your tests  
 
@@ -229,6 +232,34 @@ class MyTest extends TripalTestCase {
     }
 }
 ```
+
+#### Using DevSeed for Quick Biological Data Seeding
+
+Tripal Test Suite ships with a default seeder called `DevSeedSeeder`. This seeder provides a quick
+and automated way of seeding your database with biological data such as organisms, mRNAs, BLAST
+annotations and InterProScan annotations. The data in the default seeder is obtained
+from [Tripal DevSeed](https://github.com/statonlab/tripal_dev_seed), which is a developer
+mini-set of biological data.
+
+**NOTE:** DevSeedSeeder.php becomes available after running `tripaltest init`. If you do not have
+the seeder available, you can find it your `vendor/statonlab/tripal-test-suite/stubs/DevSeedSeeder.php`
+and make it available by copying it to `tests/DatabaseSeeders/DevSeedSeeder.php`. The `init` command will
+not override your files unless you specify the `--force` flag so it it's safe to run it to get only
+the DevSeeder.
+
+To run the dev seed seeder, you first have to configure it by uncommenting the type of data you
+want seeded. Then, you can run the seeder using `tripaltest db:seed DevSeedSeeder`.
+
+1. Open `DatabaseSeeders/DevSeedSeeder.php`
+2. You'll notice a few commented properties in the top of the file.
+3. Uncomment and modify the properties to your need
+4. Next, run `tripaltest db:seed DevSeedSeeder`
+5. If the seeder runs successfully, you'll be able to see all the records in your Chado database.
+
+The records provided by DevSeed are not published to your site as entities. You can do that
+by adding `$this->publish('CHADO_TABLE')` at the end of the `up()` method of the `DevSeedSeeder`.
+Replace `CHADO_TABLE` with the name of the table such as `feature` for mRNAs and `analysis` for analyses. 
+Or, if you prefer, you can use the Tripal admin interface to publish the records.
 
 ### Factories
 DB factories provide a method to populate the database with fake data. Using factories, you
