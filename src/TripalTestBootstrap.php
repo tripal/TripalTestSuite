@@ -30,6 +30,9 @@ class TripalTestBootstrap
             $this->loadDatabaseSeeders();
         }
 
+        // Set chado DB
+        chado_set_active('chado');
+
         // Add shutdown handler to revert database seeders
         $this->registerErrorHandler();
     }
