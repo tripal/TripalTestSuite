@@ -224,7 +224,7 @@ class DevSeedSeeder extends Seeder
             $run_args = [
                 'analysis_id' => $this->sequence_analysis->analysis_id,
                 //optional
-                'query_type' => mRNA,
+                'query_type' => 'mRNA',
                 'query_re' => $this->prot_regexp,
                 'query_uniquename' => null,
                 'parsego' => true,
