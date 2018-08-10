@@ -85,7 +85,7 @@ class SilentResponse extends BaseResponse
         $this->content = '';
 
         ob_start(function ($buffer) {
-            $this->content .= $buffer;
+            $this->content = $buffer;
         });
 
         putenv('TRIPAL_SUPPRESS_ERRORS=TRUE');

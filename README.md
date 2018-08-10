@@ -440,8 +440,7 @@ $output = ob_get_contents();
 // Clean the buffer and unset tripal errors suppression 
 ob_end_clean();
 putenv("TRIPAL_SUPPRESS_ERRORS");
-```
-**Note**: the above code will **not** work with large strings.
+``` 
 
 However, TripalTestSuite provides a `silent()` method that automates this process, provides helpful assertions
 and supports larger strings. Example usage:
@@ -452,6 +451,9 @@ $output = silent(function() {
 });
 $output->assertSee('testing'); // true!
 ```
+**WARNING:** This method has a maximum string size to avoid memory leaks. The size is set in PHP's ini file
+as `output_buffering`, which by default is set to 4KB. If you would like to collect larger strings, you must
+adjust your PHP settings.
 
 #### Assertions and Methods
 The silent method returns a SilentResponse which provides the following methods.
