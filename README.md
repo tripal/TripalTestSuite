@@ -241,6 +241,8 @@ annotations and InterProScan annotations. The data in the default seeder is obta
 from [Tripal DevSeed](https://github.com/statonlab/tripal_dev_seed), which is a developer
 mini-set of biological data.
 
+DevSeed uses factories and is therefore **only appropriate for testing and development** and should not be run on a production site.
+
 **NOTE:** DevSeedSeeder.php becomes available after running `tripaltest init`. The `init` command will
 not override existing files unless you specify the `--force` flag so it it's safe to run it to get only
 the DevSeeder.
@@ -269,6 +271,8 @@ Usage example:
 # @return an array of vocabularies
 $controlledVocabs = factory('chado.cv', 100)->create()
 ```
+
+Factories should **only be used for testing and development purposes**.
 
 #### Defining Factories
 Factories live in `tests/DataFactory.php`. If you don't have that file, create it. Note that this file
@@ -324,6 +328,9 @@ $cv_term = factory('chado.cvterm', 100)->create([
 ])
 ```
 The above example creates 100 cv terms that have the same cv_id.
+
+
+Factories should **only be used for testing and development purposes**.  This is because they are **recursive** and create the records linked via foreign key.  They do this **even if you override the default** for the linked record.
 
 ### Publishing Tripal Entities
 We provide an easy way to convert your chado records into entities. This is the equivalent of
