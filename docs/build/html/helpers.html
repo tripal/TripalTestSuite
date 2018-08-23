@@ -197,13 +197,43 @@ adjust your PHP settings.</p>
 <div class="section" id="assertions-and-methods">
 <h2>Assertions and Methods<a class="headerlink" href="#assertions-and-methods" title="Permalink to this headline">¶</a></h2>
 <p>The silent method returns a SilentResponse which provides the following methods.</p>
-<p><a href="#id1"><span class="problematic" id="id2">|Method|Arguments|Description|</span></a>
-<a href="#id3"><span class="problematic" id="id4">|------|</span></a>———<a href="#id5"><span class="problematic" id="id6">|-----------|</span></a>
-<a href="#id7"><span class="problematic" id="id8">|``assertSee()``|``$value`` mixed|Asserts that the given value is present in the suppressed printed output|</span></a>
-<a href="#id9"><span class="problematic" id="id10">|``assertReturnEquals()``|``$value`` mixed|</span></a> Asserts that the given value equals the returned value from the called function|
-<a href="#id11"><span class="problematic" id="id12">|``assertJsonStructure()``|``$strcture`` array&lt;br&gt;``$data`` array **Optional**|Asserts that the given stricture matches that of the suppressed printed output|</span></a>
-<a href="#id13"><span class="problematic" id="id14">|``getContent()``|None|Get the suppressed printed content as a string|</span></a>
-<a href="#id15"><span class="problematic" id="id16">|``getReturnValue()``|None|Get the returned value from the called function|</span></a></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="33%" />
+<col width="33%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Method</th>
+<th class="head">Arguments</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">assertSee()</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">$value</span></code> mixed</td>
+<td>Asserts that the given value is present in the suppressed printed output</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">assertReturnEquals()</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">$value</span></code> mixed</td>
+<td><blockquote class="first last">
+<div>Asserts that the given value equals the returned value from the called function</div></blockquote>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">assertJsonStructure()</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">$strcture</span></code> array&lt;br&gt;``$data`` array <strong>Optional</strong></td>
+<td>Asserts that the given stricture matches that of the suppressed printed output</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">getContent()</span></code></td>
+<td>None</td>
+<td>Get the suppressed printed content as a string</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">getReturnValue()</span></code></td>
+<td>None</td>
+<td>Get the returned value from the called function</td>
+</tr>
+</tbody>
+</table>
 <p><strong>Examples</strong></p>
 <div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">$output = silent(function() {</span>
 <span class="x">        drupal_json_output([&#39;key&#39; =&gt; &#39;value&#39;]);</span>

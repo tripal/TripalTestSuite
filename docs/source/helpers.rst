@@ -44,13 +44,15 @@ Assertions and Methods
 
 The silent method returns a SilentResponse which provides the following methods.
 
-|Method|Arguments|Description|
-|------|---------|-----------|
-|``assertSee()``|``$value`` mixed|Asserts that the given value is present in the suppressed printed output|
-|``assertReturnEquals()``|``$value`` mixed| Asserts that the given value equals the returned value from the called function|
-|``assertJsonStructure()``|``$strcture`` array<br>``$data`` array **Optional**|Asserts that the given stricture matches that of the suppressed printed output|
-|``getContent()``|None|Get the suppressed printed content as a string|
-|``getReturnValue()``|None|Get the returned value from the called function|
+.. csv-table::
+	:header: "Method", "Arguments", "Description"
+
+	"``assertSee()``", "``$value`` mixed", "Asserts that the given value is present in the suppressed printed output"
+	"``assertReturnEquals()``", "``$value`` mixed", " Asserts that the given value equals the returned value from the called function"
+	"``assertJsonStructure()``", "``$strcture`` array<br>``$data`` array **Optional**", "Asserts that the given stricture matches that of the suppressed printed output"
+	"``getContent()``", "None", "Get the suppressed printed content as a string"
+	"``getReturnValue()``", "None", "Get the returned value from the called function"
+
 
 **Examples**
 

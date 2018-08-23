@@ -193,11 +193,38 @@ is auto created with <code class="docutils literal notranslate"><span class="pre
 </div>
 <p>As shown in the example above, using <code class="docutils literal notranslate"><span class="pre">Factory::define()</span></code>, we can define new factories.
 The define method takes the following parameters:</p>
-<p><a href="#id1"><span class="problematic" id="id2">|Parameter|Type|Description|Example|</span></a>
-<a href="#id3"><span class="problematic" id="id4">|---------|</span></a>—-<a href="#id5"><span class="problematic" id="id6">|-----------|</span></a>——-|
-<a href="#id7"><span class="problematic" id="id8">|$table|``string``|The table name preceded with the schema name if the schema is not public|``chado.cv`` or ``node``|</span></a>
-<a href="#id9"><span class="problematic" id="id10">|$callback|``callable``|The function that generates the array. A ``Faker\Generator`` instance is automatically passed to the callable|see above for example|</span></a>
-<a href="#id11"><span class="problematic" id="id12">|$primary_key|``string``|**OPTIONAL** The primary key for the given table. Primary keys auto discovered for CHADO tables only. If the factory wasn't able to find the primary key, an ``Exception`` will be thrown|``nid`` or ``cv_id``|</span></a></p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+<th class="head">Example</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>$table</td>
+<td><code class="docutils literal notranslate"><span class="pre">string</span></code></td>
+<td>The table name preceded with the schema name if the schema is not public</td>
+<td><code class="docutils literal notranslate"><span class="pre">chado.cv</span></code> or <code class="docutils literal notranslate"><span class="pre">node</span></code></td>
+</tr>
+<tr class="row-odd"><td>$callback</td>
+<td><code class="docutils literal notranslate"><span class="pre">callable</span></code></td>
+<td>The function that generates the array. A <code class="docutils literal notranslate"><span class="pre">Faker\Generator</span></code> instance is automatically passed to the callable</td>
+<td>see above for example</td>
+</tr>
+<tr class="row-even"><td>$primary_key</td>
+<td><code class="docutils literal notranslate"><span class="pre">string</span></code></td>
+<td><strong>OPTIONAL</strong> The primary key for the given table. Primary keys auto discovered for CHADO tables only. If the factory wasn’t able to find the primary key, an <code class="docutils literal notranslate"><span class="pre">Exception</span></code> will be thrown</td>
+<td><code class="docutils literal notranslate"><span class="pre">nid</span></code> or <code class="docutils literal notranslate"><span class="pre">cv_id</span></code></td>
+</tr>
+</tbody>
+</table>
 </div>
 <div class="section" id="using-factories">
 <h2>Using Factories<a class="headerlink" href="#using-factories" title="Permalink to this headline">¶</a></h2>

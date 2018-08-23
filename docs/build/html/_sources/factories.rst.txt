@@ -40,11 +40,13 @@ Example DataFactory file:
 As shown in the example above, using ``Factory::define()``, we can define new factories.
 The define method takes the following parameters:
 
-|Parameter|Type|Description|Example|
-|---------|----|-----------|-------|
-|$table|``string``|The table name preceded with the schema name if the schema is not public|``chado.cv`` or ``node``|
-|$callback|``callable``|The function that generates the array. A ``Faker\Generator`` instance is automatically passed to the callable|see above for example|
-|$primary_key|``string``|**OPTIONAL** The primary key for the given table. Primary keys auto discovered for CHADO tables only. If the factory wasn't able to find the primary key, an ``Exception`` will be thrown|``nid`` or ``cv_id``|
+.. csv-table::
+	:header: "Parameter", "Type", "Description", "Example"
+
+	"$table", "``string``", "The table name preceded with the schema name if the schema is not public", "``chado.cv`` or ``node``"
+	"$callback", "``callable``", "The function that generates the array. A ``Faker\Generator`` instance is automatically passed to the callable", "see above for example"
+	"$primary_key", "``string``", "**OPTIONAL** The primary key for the given table. Primary keys auto discovered for CHADO tables only. If the factory wasn't able to find the primary key, an ``Exception`` will be thrown", "``nid`` or ``cv_id``"
+
 
 Using Factories
 ===============
