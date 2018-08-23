@@ -75,9 +75,12 @@ The other option is to run it using ``tripaltest`` as follows
 	tripaltest db:seed ExampleSeeder
 
 
-Note that running the seeder manually in a test function with ``DBTransaction`` enabled,
-means that the data is available only to that function and nothing else. However,
-running it using ``tripaltest`` makes it always available unless explicitly deleted.
+.. attention::
+
+	Running the seeder manually in a test function with ``DBTransaction`` enabled,
+	means that the data is available only to that function and nothing else. However,
+	running it using ``tripaltest`` makes it always available unless explicitly deleted.
+
 
 Retrieving Seeder Data
 ======================
@@ -116,14 +119,17 @@ Using DevSeed for Quick Biological Data Seeding
 Tripal Test Suite ships with a default seeder called ``DevSeedSeeder``. This seeder provides a quick
 and automated way of seeding your database with biological data such as organisms, mRNAs, BLAST
 annotations and InterProScan annotations. The data in the default seeder is obtained
-from [Tripal DevSeed](https://github.com/statonlab/tripal_dev_seed), which is a developer
+from `Tripal DevSeed <https://github.com/statonlab/tripal_dev_seed>`_, which is a developer
 mini-set of biological data.
 
 DevSeed uses factories and is therefore **only appropriate for testing and development** and should not be run on a production site.
 
-**NOTE:** DevSeedSeeder.php becomes available after running ``tripaltest init``. The ``init`` command will
-not override existing files unless you specify the ``--force`` flag so it it's safe to run it to get only
-the DevSeeder.
+.. attention::
+
+	DevSeedSeeder.php becomes available after running ``tripaltest init``. The ``init`` command will
+	not override existing files unless you specify the ``--force`` flag so it it's safe to run it to get only
+	the DevSeeder.
+
 
 By default, the DevSeed comes with all sub-loaders disabled.  To run the DevSeed seeder, you first have to configure it by uncommenting the type of data you want seeded. Then, you can run the seeder using ``tripaltest db:seed DevSeedSeeder``.
 

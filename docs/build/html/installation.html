@@ -82,6 +82,7 @@
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#automatic-set-up">Automatic Set Up</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#forcing-initialization">Forcing initialization</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="creating-tests.html">Creating Tests</a></li>
@@ -185,9 +186,11 @@ get you started.</p>
 - Create an example <code class="docutils literal notranslate"><span class="pre">.env</span></code> file.
 - Create <code class="docutils literal notranslate"><span class="pre">.travis.yml</span></code> configured to use a tripal3 docker container to run your tests</p>
 <p>You can now write tests in your <code class="docutils literal notranslate"><span class="pre">tests</span></code> folder.  To enable continuous
-integration testing, push your module to github and [enable Travis CI](<a class="reference external" href="https://travis-ci.org/">https://travis-ci.org/</a>).</p>
-<p><strong>Forcing initialization</strong>
-To force replacing files that tripaltest have perviously generated, you can use the
+integration testing, push your module to github and <a class="reference external" href="https://travis-ci.org/">enable Travis CI</a>.</p>
+</div>
+<div class="section" id="forcing-initialization">
+<h2>Forcing initialization<a class="headerlink" href="#forcing-initialization" title="Permalink to this headline">¶</a></h2>
+<p>To force replacing files that tripaltest have perviously generated, you can use the
 <code class="docutils literal notranslate"><span class="pre">--force</span></code> flag. You will need to confirm this flag by typing <code class="docutils literal notranslate"><span class="pre">y</span></code> and hitting <code class="docutils literal notranslate"><span class="pre">enter</span></code>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./vendor/bin/tripaltest init --force
 </pre></div>

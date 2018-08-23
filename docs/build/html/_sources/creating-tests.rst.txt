@@ -15,6 +15,11 @@ To create a new test, run the following command from your module's root director
 
 
 
-**Note:** You should not include ``tests/`` in your path, nor should you specify a file extension.
+.. warning::
 
-**Note:** Test names should end with ``Test`` for phpunit to recognize them.
+	You should not include ``tests/`` in your path, nor should you specify a file extension.
+
+
+.. warning::
+
+	Test names should end with ``Test`` for phpunit to recognize them.

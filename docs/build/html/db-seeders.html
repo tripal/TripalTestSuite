@@ -227,9 +227,12 @@ tripaltest db:seed
 tripaltest db:seed ExampleSeeder
 </pre></div>
 </div>
-<p>Note that running the seeder manually in a test function with <code class="docutils literal notranslate"><span class="pre">DBTransaction</span></code> enabled,
+<div class="admonition attention">
+<p class="first admonition-title">Attention</p>
+<p class="last">Running the seeder manually in a test function with <code class="docutils literal notranslate"><span class="pre">DBTransaction</span></code> enabled,
 means that the data is available only to that function and nothing else. However,
 running it using <code class="docutils literal notranslate"><span class="pre">tripaltest</span></code> makes it always available unless explicitly deleted.</p>
+</div>
 </div>
 <div class="section" id="retrieving-seeder-data">
 <h2>Retrieving Seeder Data<a class="headerlink" href="#retrieving-seeder-data" title="Permalink to this headline">¶</a></h2>
@@ -264,12 +267,15 @@ the seeder in your test. See below for an example:</p>
 <p>Tripal Test Suite ships with a default seeder called <code class="docutils literal notranslate"><span class="pre">DevSeedSeeder</span></code>. This seeder provides a quick
 and automated way of seeding your database with biological data such as organisms, mRNAs, BLAST
 annotations and InterProScan annotations. The data in the default seeder is obtained
-from [Tripal DevSeed](<a class="reference external" href="https://github.com/statonlab/tripal_dev_seed">https://github.com/statonlab/tripal_dev_seed</a>), which is a developer
+from <a class="reference external" href="https://github.com/statonlab/tripal_dev_seed">Tripal DevSeed</a>, which is a developer
 mini-set of biological data.</p>
 <p>DevSeed uses factories and is therefore <strong>only appropriate for testing and development</strong> and should not be run on a production site.</p>
-<p><strong>NOTE:</strong> DevSeedSeeder.php becomes available after running <code class="docutils literal notranslate"><span class="pre">tripaltest</span> <span class="pre">init</span></code>. The <code class="docutils literal notranslate"><span class="pre">init</span></code> command will
+<div class="admonition attention">
+<p class="first admonition-title">Attention</p>
+<p class="last">DevSeedSeeder.php becomes available after running <code class="docutils literal notranslate"><span class="pre">tripaltest</span> <span class="pre">init</span></code>. The <code class="docutils literal notranslate"><span class="pre">init</span></code> command will
 not override existing files unless you specify the <code class="docutils literal notranslate"><span class="pre">--force</span></code> flag so it it’s safe to run it to get only
 the DevSeeder.</p>
+</div>
 <p>By default, the DevSeed comes with all sub-loaders disabled.  To run the DevSeed seeder, you first have to configure it by uncommenting the type of data you want seeded. Then, you can run the seeder using <code class="docutils literal notranslate"><span class="pre">tripaltest</span> <span class="pre">db:seed</span> <span class="pre">DevSeedSeeder</span></code>.</p>
 <ol class="arabic simple">
 <li>Open <code class="docutils literal notranslate"><span class="pre">DatabaseSeeders/DevSeedSeeder.php</span></code></li>

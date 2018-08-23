@@ -35,9 +35,12 @@ and supports larger strings. Example usage:
 	$output->assertSee('testing'); // true!
 
 
-**WARNING:** This method has a maximum string size to avoid memory leaks. The size is set in PHP's ini file
-as ``output_buffering``, which by default is set to 4KB. If you would like to collect larger strings, you must
-adjust your PHP settings.
+.. warning::
+
+	This method has a maximum string size to avoid memory leaks. The size is set in PHP's ini file
+	as ``output_buffering``, which by default is set to 4KB. If you would like to collect larger strings, you must
+	adjust your PHP settings.
+
 
 Assertions and Methods
 ======================
@@ -53,10 +56,6 @@ The silent method returns a SilentResponse which provides the following methods.
 	"``getContent()``", "None", "Get the suppressed printed content as a string"
 	"``getReturnValue()``", "None", "Get the returned value from the called function"
 
-
-.. DANGER::
-
-  	Note
 
 **Examples**
 
@@ -124,7 +123,8 @@ Because of the functions and properties of the class are private or protected, w
 normally would not be able to access any of them. However, we can force access
 using the reflect helper. See below for an examples.
 
-**Accessing Methods**
+Accessing Private and Protected Methods
+=======================================
 
 .. code-block:: php
 
@@ -141,7 +141,8 @@ using the reflect helper. See below for an examples.
 	$this->assertEquals('one two', $value);
 
 
-**Accessing Properties**
+Accessing Properties
+====================
 
 .. code-block:: php
 

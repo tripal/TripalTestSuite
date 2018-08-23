@@ -33,9 +33,11 @@ This will
 - Create ``.travis.yml`` configured to use a tripal3 docker container to run your tests
 
 You can now write tests in your ``tests`` folder.  To enable continuous
-integration testing, push your module to github and [enable Travis CI](https://travis-ci.org/).
+integration testing, push your module to github and `enable Travis CI <https://travis-ci.org/>`_.
 
-**Forcing initialization**
+Forcing initialization
+======================
+
 To force replacing files that tripaltest have perviously generated, you can use the
 ``--force`` flag. You will need to confirm this flag by typing ``y`` and hitting ``enter``.
 

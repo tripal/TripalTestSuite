@@ -94,6 +94,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#silently-testing-printed-output">Silently Testing Printed Output</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#assertions-and-methods">Assertions and Methods</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#access-private-and-protected-properties-and-methods-of-objects">Access Private and Protected Properties and Methods of Objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#accessing-private-and-protected-methods">Accessing Private and Protected Methods</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#accessing-properties">Accessing Properties</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="environment.html">Environment Variables</a></li>
@@ -190,9 +192,12 @@ and supports larger strings. Example usage:</p>
 <span class="x">$output-&gt;assertSee(&#39;testing&#39;); // true!</span>
 </pre></div>
 </div>
-<p><strong>WARNING:</strong> This method has a maximum string size to avoid memory leaks. The size is set in PHP’s ini file
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">This method has a maximum string size to avoid memory leaks. The size is set in PHP’s ini file
 as <code class="docutils literal notranslate"><span class="pre">output_buffering</span></code>, which by default is set to 4KB. If you would like to collect larger strings, you must
 adjust your PHP settings.</p>
+</div>
 </div>
 <div class="section" id="assertions-and-methods">
 <h2>Assertions and Methods<a class="headerlink" href="#assertions-and-methods" title="Permalink to this headline">¶</a></h2>
@@ -290,7 +295,9 @@ for testing. Assume we have the following class:</p>
 <p>Because of the functions and properties of the class are private or protected, we
 normally would not be able to access any of them. However, we can force access
 using the reflect helper. See below for an examples.</p>
-<p><strong>Accessing Methods</strong></p>
+</div>
+<div class="section" id="accessing-private-and-protected-methods">
+<h2>Accessing Private and Protected Methods<a class="headerlink" href="#accessing-private-and-protected-methods" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">// Pass an initialized class to the reflect method</span>
 <span class="x">$myObject = new PrivateClass();</span>
 <span class="x">$privateClass = reflect($myObject);</span>
@@ -304,7 +311,9 @@ using the reflect helper. See below for an examples.</p>
 <span class="x">$this-&gt;assertEquals(&#39;one two&#39;, $value);</span>
 </pre></div>
 </div>
-<p><strong>Accessing Properties</strong></p>
+</div>
+<div class="section" id="accessing-properties">
+<h2>Accessing Properties<a class="headerlink" href="#accessing-properties" title="Permalink to this headline">¶</a></h2>
 <div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">// Pass an initialized class to the reflect method</span>
 <span class="x">$myObject = new PrivateClass();</span>
 <span class="x">$privateClass = reflect($myObject);</span>

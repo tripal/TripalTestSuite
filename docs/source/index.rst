@@ -1,8 +1,3 @@
-.. Tripal Test Suite documentation master file, created by
-sphinx-quickstart on Thu Aug 23 12:23:06 2018.
-You can adapt this file completely to your liking, but it should at least
-contain the root ``toctree`` directive.
-
 Welcome to Tripal Test Suite's documentation!
 =============================================
 
@@ -12,8 +7,14 @@ before running the tests, creating test file, and creating
 and managing database seeders (files that seed the database
 with data for use in testing).
 
-## License
-TripalTestSuite is licensed under [GPLv3](LICENSE).
+Support
+-------
+Please visit our issues queue on `Github <https://github.com/statonlab/TripalTestSuite/issues>`_ for any questions, issues or contribution.
+
+License
+-------
+TripalTestSuite is licensed under `GPLv3 <https://github.com/statonlab/TripalTestSuite/blob/master/LICENSE>`_.
+
 
 .. toctree::
    :maxdepth: 2
@@ -32,11 +33,4 @@ TripalTestSuite is licensed under [GPLv3](LICENSE).
    helpers
    environment
    upgrading
-
-Indices and tables
-==================
-
-* :ref:``genindex``
-* :ref:``modindex``
-* :ref:``search``
 

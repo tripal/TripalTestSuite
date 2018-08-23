@@ -18,4 +18,6 @@ unless you specifically tell it otherwise.
 	}
 
 
-Note: The ``actingAs`` method can take a user id to authenticate or a Drupal user object.
+.. attention::
+
+	The ``actingAs`` method can take a user id to authenticate or a Drupal user object.

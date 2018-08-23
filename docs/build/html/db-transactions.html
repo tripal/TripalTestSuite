@@ -162,8 +162,8 @@
 <p>Using DB transactions cleans up the database after every test by rolling back
 the database to the original state before the test started. Therefore, anything
 added to the database in one test function will not be available for the next
-function. If you’d like data to be available for all of the tests, see [database
-seeders](<a class="reference external" href="https://github.com/statonlab/TripalTestSuite#database-seeders">https://github.com/statonlab/TripalTestSuite#database-seeders</a>) above.</p>
+function. If you’d like data to be available for all of the tests, see <a class="reference external" href="https://github.com/statonlab/TripalTestSuite#database-seeders">database
+seeders</a> above.</p>
 <p>To activate DB Transactions, simply add the DBTransaction trait to your test class:</p>
 <div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">namespace Tests;</span>
 
@@ -176,8 +176,11 @@ seeders](<a class="reference external" href="https://github.com/statonlab/Tripal
 </pre></div>
 </div>
 <p>The trait will automatically activate DB transactions and rollback the database when the test is finished.</p>
-<p><strong>NOTE</strong>: If the code you are testing requires a transaction, Postgres
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">If the code you are testing requires a transaction, Postgres
 will fail since it does not support nested transactions.</p>
+</div>
 </div>
 
 

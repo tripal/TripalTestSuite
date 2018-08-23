@@ -42,4 +42,6 @@ The following publishes only the given feature ids:
 
 The previous examples create mRNA entities.
 
-**NOTE** that an mRNA bundle must already be available before running this script.
+.. attention::
+
+	An mRNA bundle must already be available before running this script.

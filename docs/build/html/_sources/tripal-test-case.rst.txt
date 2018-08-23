@@ -14,4 +14,6 @@ Drupal and reading your ``.env`` file is done automatically when the first test 
 	}
 
 
-**Note:** If you define a ``setUp`` method within a test class, be sure to call ``parent::setUp``!
+.. attention::
+
+	If you define a ``setUp`` method within a test class, be sure to call ``parent::setUp``!
