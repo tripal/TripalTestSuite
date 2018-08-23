@@ -54,6 +54,10 @@ The silent method returns a SilentResponse which provides the following methods.
 	"``getReturnValue()``", "None", "Get the returned value from the called function"
 
 
+.. DANGER::
+
+  	Note
+
 **Examples**
 
 .. code-block:: php
