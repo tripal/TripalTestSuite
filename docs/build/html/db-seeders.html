@@ -1,0 +1,354 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Database Seeders &mdash; Tripal Test Suite 1.4.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Factories" href="factories.html" />
+    <link rel="prev" title="TripalTestCase" href="tripal-test-case.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Tripal Test Suite
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="creating-tests.html">Creating Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="running-tests.html">Running Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tripal-test-case.html">TripalTestCase</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Database Seeders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#creating-database-seeders">Creating Database Seeders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-database-seeders">Using Database Seeders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#running-seeders">Running Seeders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#retrieving-seeder-data">Retrieving Seeder Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-devseed-for-quick-biological-data-seeding">Using DevSeed for Quick Biological Data Seeding</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="factories.html">Factories</a></li>
+<li class="toctree-l1"><a class="reference internal" href="db-transactions.html">Using DB Transactions to Automatically Rollback Database Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="publishing.html">Publishing Tripal Entities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http-tests.html">Testing HTTP Requests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user-authentication.html">User Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="helpers.html">Helper Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment.html">Environment Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upgrading.html">Upgrading TripalTestSuite</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Tripal Test Suite</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Database Seeders</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/db-seeders.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="database-seeders">
+<h1>Database Seeders<a class="headerlink" href="#database-seeders" title="Permalink to this headline">¶</a></h1>
+<p>Database seeders are also supported in TripalTestSuite. They give you the ability
+to create reusable seeders that can be run using the <code class="docutils literal notranslate"><span class="pre">tripaltest</span></code> command line tool.</p>
+<div class="section" id="creating-database-seeders">
+<h2>Creating Database Seeders<a class="headerlink" href="#creating-database-seeders" title="Permalink to this headline">¶</a></h2>
+<p>DB seeders can also be created automatically using <code class="docutils literal notranslate"><span class="pre">tripaltest</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./vendor/bin/tripaltest make:seeder ExampleTableSeeder
+</pre></div>
+</div>
+<p>The above command will create <code class="docutils literal notranslate"><span class="pre">ExampleTableSeeder.php</span></code> in <code class="docutils literal notranslate"><span class="pre">tests/DatabaseSeeders/</span></code> pre-populated
+with the necessary namespace, methods and properties.</p>
+</div>
+<div class="section" id="using-database-seeders">
+<h2>Using Database Seeders<a class="headerlink" href="#using-database-seeders" title="Permalink to this headline">¶</a></h2>
+<p>DB seeders support two important methods, <code class="docutils literal notranslate"><span class="pre">up()</span></code> and <code class="docutils literal notranslate"><span class="pre">down()</span></code>. The <code class="docutils literal notranslate"><span class="pre">up()</span></code>
+method is used to insert data into the database while the <code class="docutils literal notranslate"><span class="pre">down()</span></code> method
+is used to clean up the inserted data. The following is an example of a Seeder class.</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="k">namespace</span> <span class="nx">Tests\DatabaseSeeders</span><span class="p">;</span>
+
+<span class="k">use</span> <span class="nx">StatonLab\TripalTestSuite\Database\Seeder</span><span class="p">;</span>
+
+<span class="k">class</span> <span class="nc">UsersTableSeeder</span> <span class="k">extends</span> <span class="nx">Seeder</span>
+<span class="p">{</span>
+        <span class="sd">/**</span>
+<span class="sd">         * Seeds the database with users.</span>
+<span class="sd">         */</span>
+        <span class="k">public</span> <span class="k">function</span> <span class="nf">up</span><span class="p">()</span>
+        <span class="p">{</span>
+                <span class="nv">$new_user</span> <span class="o">=</span> <span class="p">[</span>
+                        <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;test user&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;pass&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;secret&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;mail&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;test@example.com&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;status&#39;</span> <span class="o">=&gt;</span> <span class="mi">1</span><span class="p">,</span>
+                        <span class="s1">&#39;init&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;Email&#39;</span><span class="p">,</span>
+                        <span class="s1">&#39;roles&#39;</span> <span class="o">=&gt;</span> <span class="p">[</span>
+                                <span class="nx">DRUPAL_AUTHENTICATED_RID</span> <span class="o">=&gt;</span> <span class="s1">&#39;authenticated user&#39;</span><span class="p">,</span>
+                        <span class="p">],</span>
+                <span class="p">];</span>
+
+                <span class="c1">// The first parameter is sent blank so a new user is created.</span>
+                <span class="nx">user_save</span><span class="p">(</span><span class="k">new</span> <span class="nx">\stdClass</span><span class="p">(),</span> <span class="nv">$new_user</span><span class="p">);</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-seeders">
+<h2>Running Seeders<a class="headerlink" href="#running-seeders" title="Permalink to this headline">¶</a></h2>
+<p>You can also run the seeder manually by using the static <code class="docutils literal notranslate"><span class="pre">seed()</span></code> method. For example, within a test class,
+you can run <code class="docutils literal notranslate"><span class="pre">$seeder</span> <span class="pre">=</span> <span class="pre">UsersTableSeeder::seed()</span></code> which runs the <code class="docutils literal notranslate"><span class="pre">up()</span></code> method and returns an initialized seeder
+object. If you are using the <code class="docutils literal notranslate"><span class="pre">DBTransaction</span></code> trait, the data will be automatically rolled at the end of each test
+function.</p>
+<p>The other option is to run it using <code class="docutils literal notranslate"><span class="pre">tripaltest</span></code> as follows</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># run all available seeders</span>
+tripaltest db:seed
+
+<span class="c1"># Run a specific seeder by providing the class name</span>
+tripaltest db:seed ExampleSeeder
+</pre></div>
+</div>
+<p>Note that running the seeder manually in a test function with <code class="docutils literal notranslate"><span class="pre">DBTransaction</span></code> enabled,
+means that the data is available only to that function and nothing else. However,
+running it using <code class="docutils literal notranslate"><span class="pre">tripaltest</span></code> makes it always available unless explicitly deleted.</p>
+</div>
+<div class="section" id="retrieving-seeder-data">
+<h2>Retrieving Seeder Data<a class="headerlink" href="#retrieving-seeder-data" title="Permalink to this headline">¶</a></h2>
+<p>If your seeder returns any data, you can obtain the returned record by manually running
+the seeder in your test. See below for an example:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+<span class="c1">// Seeder Class</span>
+<span class="k">class</span> <span class="nc">MySeeder</span> <span class="k">extends</span> <span class="nx">Seeder</span> <span class="p">{</span>
+        <span class="k">public</span> <span class="k">function</span> <span class="nf">up</span><span class="p">()</span> <span class="p">{</span>
+                <span class="c1">// Generate some data.</span>
+                <span class="nv">$data</span> <span class="o">=</span> <span class="nx">db_query</span><span class="p">(</span><span class="o">...</span><span class="p">);</span>
+
+                <span class="k">return</span> <span class="nv">$data</span><span class="p">;</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="c1">// Test Class</span>
+<span class="k">class</span> <span class="nc">MyTest</span> <span class="k">extends</span> <span class="nx">TripalTestCase</span> <span class="p">{</span>
+        <span class="k">public</span> <span class="k">function</span> <span class="nf">testExample</span><span class="p">()</span> <span class="p">{</span>
+                <span class="nv">$seeder</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MySeeder</span><span class="p">();</span>
+                <span class="nv">$data</span> <span class="o">=</span> <span class="nv">$seeder</span><span class="o">-&gt;</span><span class="na">up</span><span class="p">();</span>
+
+                <span class="c1">// Run some tests using the generated data</span>
+                <span class="c1">// ...</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-devseed-for-quick-biological-data-seeding">
+<h2>Using DevSeed for Quick Biological Data Seeding<a class="headerlink" href="#using-devseed-for-quick-biological-data-seeding" title="Permalink to this headline">¶</a></h2>
+<p>Tripal Test Suite ships with a default seeder called <code class="docutils literal notranslate"><span class="pre">DevSeedSeeder</span></code>. This seeder provides a quick
+and automated way of seeding your database with biological data such as organisms, mRNAs, BLAST
+annotations and InterProScan annotations. The data in the default seeder is obtained
+from [Tripal DevSeed](<a class="reference external" href="https://github.com/statonlab/tripal_dev_seed">https://github.com/statonlab/tripal_dev_seed</a>), which is a developer
+mini-set of biological data.</p>
+<p>DevSeed uses factories and is therefore <strong>only appropriate for testing and development</strong> and should not be run on a production site.</p>
+<p><strong>NOTE:</strong> DevSeedSeeder.php becomes available after running <code class="docutils literal notranslate"><span class="pre">tripaltest</span> <span class="pre">init</span></code>. The <code class="docutils literal notranslate"><span class="pre">init</span></code> command will
+not override existing files unless you specify the <code class="docutils literal notranslate"><span class="pre">--force</span></code> flag so it it’s safe to run it to get only
+the DevSeeder.</p>
+<p>By default, the DevSeed comes with all sub-loaders disabled.  To run the DevSeed seeder, you first have to configure it by uncommenting the type of data you want seeded. Then, you can run the seeder using <code class="docutils literal notranslate"><span class="pre">tripaltest</span> <span class="pre">db:seed</span> <span class="pre">DevSeedSeeder</span></code>.</p>
+<ol class="arabic simple">
+<li>Open <code class="docutils literal notranslate"><span class="pre">DatabaseSeeders/DevSeedSeeder.php</span></code></li>
+<li>You’ll notice a few commented properties in the top of the file.</li>
+<li>Uncomment and modify the properties to your need.</li>
+<li>Carefully follow the instructions in this section.  All loaders require an organism as well, but some are dependent on previous loaders.</li>
+<li>Next, run <code class="docutils literal notranslate"><span class="pre">tripaltest</span> <span class="pre">db:seed</span> <span class="pre">DevSeedSeeder</span></code></li>
+<li>If the seeder runs successfully, you’ll be able to see all the records in your Chado database.</li>
+</ol>
+<p>The records provided by DevSeed are not published to your site as entities. You can do that
+by adding <code class="docutils literal notranslate"><span class="pre">$this-&gt;publish('CHADO_TABLE')</span></code> at the end of the <code class="docutils literal notranslate"><span class="pre">up()</span></code> method of the <code class="docutils literal notranslate"><span class="pre">DevSeedSeeder</span></code>.
+Replace <code class="docutils literal notranslate"><span class="pre">CHADO_TABLE</span></code> with the name of the table such as <code class="docutils literal notranslate"><span class="pre">feature</span></code> for mRNAs and <code class="docutils literal notranslate"><span class="pre">analysis</span></code> for analyses.
+Or, if you prefer, you can use the Tripal admin interface to publish the records.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="factories.html" class="btn btn-neutral float-right" title="Factories" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="tripal-test-case.html" class="btn btn-neutral" title="TripalTestCase" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Abdullah Almsaeed, Bradford Condon.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.4.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
