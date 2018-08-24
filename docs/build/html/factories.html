@@ -1,0 +1,327 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Factories &mdash; Tripal Test Suite 1.4.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Using DB Transactions to Automatically Rollback Database Changes" href="db-transactions.html" />
+    <link rel="prev" title="Database Seeders" href="db-seeders.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Tripal Test Suite
+          
+
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="creating-tests.html">Creating Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="running-tests.html">Running Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tripal-test-case.html">TripalTestCase</a></li>
+<li class="toctree-l1"><a class="reference internal" href="db-seeders.html">Database Seeders</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Factories</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#defining-factories">Defining Factories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-factories">Using Factories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#overriding-defaults">Overriding Defaults</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="db-transactions.html">Using DB Transactions to Automatically Rollback Database Changes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="publishing.html">Publishing Tripal Entities</a></li>
+<li class="toctree-l1"><a class="reference internal" href="http-tests.html">Testing HTTP Requests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user-authentication.html">User Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="helpers.html">Helper Methods</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment.html">Environment Variables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="upgrading.html">Upgrading TripalTestSuite</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Tripal Test Suite</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Factories</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/factories.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="factories">
+<h1>Factories<a class="headerlink" href="#factories" title="Permalink to this headline">¶</a></h1>
+<p>DB factories provide a method to populate the database with fake data. Using factories, you
+won’t have to run SQL queries to populate the Database in every test. Since they are reusable,
+you can define one factory for each table and use them across all tests.
+Usage example:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x"># Generates 100 controlled vocabularies.</span>
+<span class="x"># @return an array of vocabularies</span>
+<span class="x">$controlledVocabs = factory(&#39;chado.cv&#39;, 100)-&gt;create()</span>
+</pre></div>
+</div>
+<p>Factories should <strong>only be used for testing and development purposes</strong>.</p>
+<div class="section" id="defining-factories">
+<h2>Defining Factories<a class="headerlink" href="#defining-factories" title="Permalink to this headline">¶</a></h2>
+<p>Factories live in <code class="docutils literal notranslate"><span class="pre">tests/DataFactory.php</span></code>. If you don’t have that file, create it. Note that this file
+is auto created with <code class="docutils literal notranslate"><span class="pre">tripaltest</span> <span class="pre">init</span></code>.</p>
+<p>Example DataFactory file:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+
+<span class="k">use</span> <span class="nx">StatonLab\TripalTestSuite\Database\Factory</span><span class="p">;</span>
+
+<span class="nx">Factory</span><span class="o">::</span><span class="na">define</span><span class="p">(</span><span class="s1">&#39;chado.cv&#39;</span><span class="p">,</span> <span class="k">function</span> <span class="p">(</span><span class="nx">Faker\Generator</span> <span class="nv">$faker</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="p">[</span>
+                <span class="s1">&#39;name&#39;</span> <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">name</span><span class="p">,</span>
+                <span class="s1">&#39;definition&#39;</span> <span class="o">=&gt;</span> <span class="nv">$faker</span><span class="o">-&gt;</span><span class="na">text</span><span class="p">,</span>
+        <span class="p">];</span>
+<span class="p">});</span>
+</pre></div>
+</div>
+<p>As shown in the example above, using <code class="docutils literal notranslate"><span class="pre">Factory::define()</span></code>, we can define new factories.
+The define method takes the following parameters:</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameter</th>
+<th class="head">Type</th>
+<th class="head">Description</th>
+<th class="head">Example</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>$table</td>
+<td><code class="docutils literal notranslate"><span class="pre">string</span></code></td>
+<td>The table name preceded with the schema name if the schema is not public</td>
+<td><code class="docutils literal notranslate"><span class="pre">chado.cv</span></code> or <code class="docutils literal notranslate"><span class="pre">node</span></code></td>
+</tr>
+<tr class="row-odd"><td>$callback</td>
+<td><code class="docutils literal notranslate"><span class="pre">callable</span></code></td>
+<td>The function that generates the array. A <code class="docutils literal notranslate"><span class="pre">Faker\Generator</span></code> instance is automatically passed to the callable</td>
+<td>see above for example</td>
+</tr>
+<tr class="row-even"><td>$primary_key</td>
+<td><code class="docutils literal notranslate"><span class="pre">string</span></code></td>
+<td><strong>OPTIONAL</strong> The primary key for the given table. Primary keys auto discovered for CHADO tables only. If the factory wasn’t able to find the primary key, an <code class="docutils literal notranslate"><span class="pre">Exception</span></code> will be thrown</td>
+<td><code class="docutils literal notranslate"><span class="pre">nid</span></code> or <code class="docutils literal notranslate"><span class="pre">cv_id</span></code></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="section" id="using-factories">
+<h2>Using Factories<a class="headerlink" href="#using-factories" title="Permalink to this headline">¶</a></h2>
+<p>Once defined, factories can be used in test files directly or in database seeders.
+Usage:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x"># Create a single CV record</span>
+<span class="x">$cv = factory(&#39;chado.cv&#39;)-&gt;create();</span>
+<span class="x">echo &quot;$cv-&gt;name\n&quot;;</span>
+
+<span class="x"># Create 100 CV records</span>
+<span class="x">$cvs = factory(&#39;chado.cv&#39;, 100)-&gt;create();</span>
+
+<span class="x">foreach ($cvs as $cv) {</span>
+<span class="x">  echo &quot;$cv-&gt;name\n&quot;;</span>
+<span class="x">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="overriding-defaults">
+<h2>Overriding Defaults<a class="headerlink" href="#overriding-defaults" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes you need to override a column to be a static predictable value. The <code class="docutils literal notranslate"><span class="pre">create()</span></code> method accepts an array of values
+to override the faker data with. Example:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x"># Let&#39;s make sure the cvterm has a specific cv id</span>
+<span class="x">$cv = factory(&#39;chado.cv&#39;)-&gt;create();</span>
+<span class="x">$cv_term = factory(&#39;chado.cvterm&#39;, 100)-&gt;create([</span>
+<span class="x">        &#39;cv_id&#39; =&gt; $cv-&gt;cv_id,</span>
+<span class="x">])</span>
+</pre></div>
+</div>
+<p>The above example creates 100 cv terms that have the same cv_id.</p>
+<p>Factories should <strong>only be used for testing and development purposes</strong>.  This is because they are <strong>recursive</strong> and create the records linked via foreign key.  They do this <strong>even if you override the default</strong> for the linked record.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="db-transactions.html" class="btn btn-neutral float-right" title="Using DB Transactions to Automatically Rollback Database Changes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="db-seeders.html" class="btn btn-neutral" title="Database Seeders" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Abdullah Almsaeed, Bradford Condon.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.4.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
