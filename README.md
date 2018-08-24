@@ -6,6 +6,8 @@ before running the tests, creating test file, and creating
 and managing database seeders (files that seed the database
 with data for use in testing).
 
+## Documentation
+Please visit our [online documentation]() to learn about installation and usage.
 
 ## License
 TripalTestSuite is licensed under [GPLv3](LICENSE).
