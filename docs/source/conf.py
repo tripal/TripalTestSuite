@@ -20,7 +20,7 @@
 # -- Project information -----------------------------------------------------
 
 project = u'Tripal Test Suite'
-copyright = u'2018, Abdullah Almsaeed, Bradford Condon'
+copyright = u'2018, University of Tennessee'
 author = u'Abdullah Almsaeed, Bradford Condon'
 
 # The short X.Y version
