@@ -64,6 +64,11 @@ you can run ``$seeder = UsersTableSeeder::seed()`` which runs the ``up()`` metho
 object. If you are using the ``DBTransaction`` trait, the data will be automatically rolled at the end of each test
 function.
 
+.. attention::
+	Don't forget to import your seeder at the top of the test file:
+	``use  Tests\DatabaseSeeders\UsersTableSeeder;``
+
+
 The other option is to run it using ``tripaltest`` as follows
 
 .. code-block:: bash

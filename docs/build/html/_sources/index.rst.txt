@@ -9,7 +9,7 @@ with data for use in testing).
 
 Support
 -------
-Please visit our issues queue on `Github <https://github.com/statonlab/TripalTestSuite/issues>`_ for any questions, issues or contribution.
+Please visit our issues queue on `Github <https://github.com/statonlab/TripalTestSuite/issues>`_ for any questions, issues or contributions.
 
 License
 -------

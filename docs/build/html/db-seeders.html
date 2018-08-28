@@ -219,6 +219,11 @@ is used to clean up the inserted data. The following is an example of a Seeder c
 you can run <code class="docutils literal notranslate"><span class="pre">$seeder</span> <span class="pre">=</span> <span class="pre">UsersTableSeeder::seed()</span></code> which runs the <code class="docutils literal notranslate"><span class="pre">up()</span></code> method and returns an initialized seeder
 object. If you are using the <code class="docutils literal notranslate"><span class="pre">DBTransaction</span></code> trait, the data will be automatically rolled at the end of each test
 function.</p>
+<div class="admonition attention">
+<p class="first admonition-title">Attention</p>
+<p class="last">Don’t forget to import your seeder at the top of the test file:
+<code class="docutils literal notranslate"><span class="pre">use</span>&#160; <span class="pre">Tests\DatabaseSeeders\UsersTableSeeder;</span></code></p>
+</div>
 <p>The other option is to run it using <code class="docutils literal notranslate"><span class="pre">tripaltest</span></code> as follows</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># run all available seeders</span>
 tripaltest db:seed
@@ -312,7 +317,7 @@ Or, if you prefer, you can use the Tripal admin interface to publish the records
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Abdullah Almsaeed, Bradford Condon.
+        &copy; Copyright 2018, University of Tennessee.
 
     </p>
   </div>
