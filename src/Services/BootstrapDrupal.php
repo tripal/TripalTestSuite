@@ -130,12 +130,13 @@ class BootstrapDrupal
             $file = fopen($env_file_path, 'r');
             while ($line = fgets($file)) {
                 $line++;
+                $line = trim($line);
                 if (empty($line)) {
                     continue;
                 }
 
-                if (substr($line, 0, 1) === '#') {
-                    // Ignore comment lines
+                // Ignore comments
+                if(str_begins_with('//', $line) || str_begins_with('-', $line) || str_begins_with('#', $line)) {
                     continue;
                 }
 
