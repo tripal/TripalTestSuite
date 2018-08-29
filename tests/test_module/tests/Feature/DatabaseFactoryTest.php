@@ -84,4 +84,18 @@ class DatabaseFactoryTest extends TripalTestCase
 
         $this->assertEquals($cv->cv_id, $cvterm->cv_id, 'Factory defaults failed to get overridden using create()');
     }
+
+    /**
+     * Test that a defined factory exists and that non-defined one doesn't.
+     *
+     * @test
+     */
+    public function testFactoryExistsMethodReturnsBoolean() {
+        Factory::define('test_table', new CallableMock);
+        $exists = Factory::exists('test_table');
+        $this->assertTrue($exists);
+
+        $doesntExist = Factory::exists('not_in_a_million_years_table');
+        $this->assertFalse($doesntExist);
+    }
 }
