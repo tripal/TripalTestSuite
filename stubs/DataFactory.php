@@ -136,15 +136,20 @@ Factory::define('chado.featurepos', function (Faker\Generator $faker) {
 });
 
 
-//IMPORTANT!!!!
-//IF you use this factory, call 
-//  chado_set_active($featureloc->prev_db);
-//afterwards.
+// IMPORTANT!!!!
+// IF you use this factory, call 
+//
+//  $prev_db = chado_set_active('chado');
+//
+// beforehand, and 
+//
+//  chado_set_active($prev_db);
+//
+// afterwards.
 
 
 Factory::define('chado.featureloc', function (Faker\Generator $faker) {
   
-  $prev_db = chado_set_active('chado');
 
  $a = $faker->randomNumber;
  $b = $faker->randomNumber;
@@ -162,7 +167,6 @@ Factory::define('chado.featureloc', function (Faker\Generator $faker) {
    'residue_info' => $faker->word,
    'locgroup' => 0,
    'rank' => 0,
-   'prev_db' => $prev_db
   ];
   
 });
