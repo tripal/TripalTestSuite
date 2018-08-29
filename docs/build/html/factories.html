@@ -87,6 +87,7 @@
 <li class="toctree-l1"><a class="reference internal" href="db-seeders.html">Database Seeders</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Factories</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#defining-factories">Defining Factories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#checking-if-a-factory-exists">Checking if a Factory Exists</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#using-factories">Using Factories</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#overriding-defaults">Overriding Defaults</a></li>
 </ul>
@@ -225,6 +226,20 @@ The define method takes the following parameters:</p>
 </tr>
 </tbody>
 </table>
+</div>
+<div class="section" id="checking-if-a-factory-exists">
+<h2>Checking if a Factory Exists<a class="headerlink" href="#checking-if-a-factory-exists" title="Permalink to this headline">¶</a></h2>
+<p>To determine whether a factory exists, you can use the <code class="docutils literal notranslate"><span class="pre">Factory::exists($table)</span></code> method:</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+<span class="c1">// Import the Factory class</span>
+<span class="k">use</span> <span class="nx">StatonLab\TripalTestSuite\Database\Factory</span><span class="p">;</span>
+
+<span class="nx">Factory</span><span class="o">::</span><span class="na">exists</span><span class="p">(</span><span class="s1">&#39;user&#39;</span><span class="p">);</span> <span class="c1">// true</span>
+
+<span class="c1">// For chado tables always precede with `chado.`</span>
+<span class="nx">Factory</span><span class="o">::</span><span class="na">exists</span><span class="p">(</span><span class="s1">&#39;chado.feature&#39;</span><span class="p">);</span> <span class="c1">// true</span>
+</pre></div>
+</div>
 </div>
 <div class="section" id="using-factories">
 <h2>Using Factories<a class="headerlink" href="#using-factories" title="Permalink to this headline">¶</a></h2>

@@ -47,6 +47,22 @@ The define method takes the following parameters:
 	"$callback", "``callable``", "The function that generates the array. A ``Faker\Generator`` instance is automatically passed to the callable", "see above for example"
 	"$primary_key", "``string``", "**OPTIONAL** The primary key for the given table. Primary keys auto discovered for CHADO tables only. If the factory wasn't able to find the primary key, an ``Exception`` will be thrown", "``nid`` or ``cv_id``"
 
+Checking if a Factory Exists
+============================
+
+To determine whether a factory exists, you can use the ``Factory::exists($table)`` method:
+
+.. code-block:: php
+
+	<?php
+	// Import the Factory class
+	use StatonLab\TripalTestSuite\Database\Factory;
+
+	Factory::exists('user'); // true
+
+	// For chado tables always precede with `chado.`
+	Factory::exists('chado.feature'); // true
+
 
 Using Factories
 ===============

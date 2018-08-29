@@ -83,6 +83,17 @@ class Factory
     }
 
     /**
+     * Check if a table factory is defined.
+     *
+     * @param string $table Table name. For chado tables, precede with `chado.`
+     * @return bool
+     */
+    public static function exists($table)
+    {
+        return isset(static::$factories[$table]);
+    }
+
+    /**
      * Create the data.
      *
      * @param array $overrides
