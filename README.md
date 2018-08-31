@@ -21,5 +21,12 @@ This will install TripalTestSuite along with all of the dependencies.
 ## Usage Documentation
 Please visit our [online documentation](https://tripaltestsuite.readthedocs.io/en/latest) to learn about installation and usage.
 
+## Video Tutorials
+
+#### Creating and Running Basic Tests with Tripal Test Suite
+
+[![](http://img.youtube.com/vi/hxuiDzRqs9U/0.jpg)](http://www.youtube.com/watch?v=hxuiDzRqs9U "Creating and Running Basic Tests with Tripal Test Suite")
+
+
 ## License
 TripalTestSuite is licensed under [GPLv3](LICENSE).
