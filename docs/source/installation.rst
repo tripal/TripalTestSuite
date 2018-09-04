@@ -24,7 +24,8 @@ From your module's directory, execute:
 	./vendor/bin/tripaltest init [MODULE_NAME]
 
 
-This will
+This will:
+
 - Set up the testing framework by creating the tests directory, phpunit.xml and tests/bootstrap.php
 - Create an example test in tests/ExampleTest.php
 - Create a DatabaseSeeders folder and an example seeder in tests/DatabaseSeeders/UsersTableSeeder.php
