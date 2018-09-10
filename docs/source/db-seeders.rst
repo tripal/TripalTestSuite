@@ -20,9 +20,8 @@ with the necessary namespace, methods and properties.
 Using Database Seeders
 ======================
 
-DB seeders support two important methods, ``up()`` and ``down()``. The ``up()``
-method is used to insert data into the database while the ``down()`` method
-is used to clean up the inserted data. The following is an example of a Seeder class.
+DB seeders support an important method: ``up()``. The ``up()``
+method is used to insert data into the database when the test class is initialized, making it available to all tests within the class. The following is an example of a Seeder class.
 
 .. code-block:: php
 
