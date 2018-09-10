@@ -10,7 +10,12 @@ If Test Suite is already configured for a project (for example, if you clone Tri
 
 	composer install
 
-Before you can run tests, you'll first need to configure your :ref:`Environment Variables` in the ``.env`` file.
+.. warning::
+
+	Before you can run tests, you'll first need to configure your :ref:`Environment Variables` in the ``.env`` file.
+
+
+
 
 
 Adding Test Suite to a New Project
