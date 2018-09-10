@@ -28,7 +28,11 @@ extends TripalTestSuite:
 .. csv-table::
 	:header: "name", "parameters", "Description", "Return"
 
-	``$this->get()``, **$url** ``string`` The url to call\n**$params** ``array`` Query parameters.\n**$headers** ``array`` Additional HTTP headers, Sends a GET request, ``TestResponse``
+	"``$this->get()``", 
+	* **$url** ``string`` The url to call
+	* **$params** ``array`` Query parameters.
+	* **$headers** ``array``"Additional HTTP headers",
+	 "Sends a GET request", ``TestResponse``
 	``$this->post()``, **$url** ``string`` The url to call\n**$params** ``array`` Form request parameters.\n**$headers** ``array`` Additional HTTP headers, Sends a POST request, ``TestResponse``
 	``$this->put()``, **$url** ``string`` The url to call\n**$params** ``array`` Query parameters.\n**$headers** ``array`` Additional HTTP headers, Sends a PUT request, ``TestResponse``
 	``$this->patch()``, **$url** ``string`` The url to call\n**$params** ``array`` Query parameters.\n**$headers** ``array`` Additional HTTP headers, Sends a PATCH request, ``TestResponse``
