@@ -135,30 +135,41 @@ Factory::define('chado.featurepos', function (Faker\Generator $faker) {
   ];
 });
 
-//Coming soon.
-//TODO: requires db search_path configuration.
 
-//Factory::define('chado.featureloc', function (Faker\Generator $faker) {
+// IMPORTANT!!!!
+// IF you use this factory, call 
 //
-//  $a = $faker->randomNumber;
-//  $b = $faker->randomNumber;
+//  $prev_db = chado_set_active('chado');
 //
-//  return [
+// beforehand, and 
 //
-//    'feature_id' => factory('chado.feature')->create()->feature_id,
-//    'srcfeature_id' => factory('chado.feature')->create()->feature_id,
-//    'fmin' => min([$a, $b]),
-//    'is_fmin_partial' => 0,
-//    'fmax' => max([$a, $b]),
-//    'is_fmax_partial' => 0,
-//    'strand' => NULL,
-//    'phase' => NULL,
-//    'residue_info' => $faker->word,
-//    'locgroup' => 0,
-//    'rank' => 0,
-//  ];
+//  chado_set_active($prev_db);
 //
-//});
+// afterwards.
+
+
+Factory::define('chado.featureloc', function (Faker\Generator $faker) {
+  
+
+ $a = $faker->randomNumber;
+ $b = $faker->randomNumber;
+
+ return [
+
+   'feature_id' => factory('chado.feature')->create()->feature_id,
+   'srcfeature_id' => factory('chado.feature')->create()->feature_id,
+   'fmin' => min([$a, $b]),
+   'is_fmin_partial' => 0,
+   'fmax' => max([$a, $b]),
+   'is_fmax_partial' => 0,
+   'strand' => NULL,
+   'phase' => NULL,
+   'residue_info' => $faker->word,
+   'locgroup' => 0,
+   'rank' => 0,
+  ];
+  
+});
 
 Factory::define('chado.library', function (Faker\Generator $faker) {
   return [
