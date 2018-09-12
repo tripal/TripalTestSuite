@@ -33,3 +33,4 @@ TripalTestSuite is licensed under `GPLv3 <https://github.com/statonlab/TripalTes
    user-authentication
    helpers
    upgrading
+   tips-and-tricks
