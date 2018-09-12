@@ -368,13 +368,13 @@ class DevSeedSeeder extends Seeder
         }
 
         $count_query = $query;
-        $count_query->countQuery()->execute()->fetchField();
+        $count = (int) $count_query->countQuery()->execute()->fetchField();
 
-        if ($count_query === 0) {
+        if ($count === 0) {
             return factory($table)->create($factory_array);
         }
 
-        if ($count_query === 1) {
+        if ($count === 1) {
             return $query->execute()->fetchObject();
         }
 
