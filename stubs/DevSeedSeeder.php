@@ -17,29 +17,29 @@ class DevSeedSeeder extends Seeder
      * $sequence_analysis. Uncomment the array to create that chado record.
      */
 
-// protected $organism = [
-//         'common_name' => 'F. excelsior miniature',
-//         'genus' => 'Fraxinus',
-//         'species' => 'excelsior',
-//         'abbreviation' => 'F. excelsor',
-//         'comment' => 'Loaded with TripalDev Seed.',
-//       ];
-//
-// protected $sequence_analysis = [
-//       'name' => 'Fraxinus exclesior miniature dataset',
-//       'description' => 'Tripal Dev Seed',
-//     ];
-//
-//     protected $expression_analysis = [
-//
-//       'name' => 'Fraxinus exclesior miniature dataset Expression Analysis',
-//       'description' => 'Tripal Dev Seed',
-//     ];
-//
-//   protected $blastdb = [
-//     'name' => 'DevSeed Database: TREMBL',
-//     'description' => 'A dummy database created by DevSeed',
-//   ];
+protected $organism = [
+        'common_name' => 'F. excelsior miniature',
+        'genus' => 'Fraxinus',
+        'species' => 'excelsior',
+        'abbreviation' => 'F. excelsor',
+        'comment' => 'Loaded with TripalDev Seed.',
+      ];
+
+protected $sequence_analysis = [
+      'name' => 'Fraxinus exclesior miniature dataset',
+      'description' => 'Tripal Dev Seed',
+    ];
+
+    protected $expression_analysis = [
+
+      'name' => 'Fraxinus exclesior miniature dataset Expression Analysis',
+      'description' => 'Tripal Dev Seed',
+    ];
+
+  protected $blastdb = [
+    'name' => 'DevSeed Database: TREMBL',
+    'description' => 'A dummy database created by DevSeed',
+  ];
 
     /**
      * Part 2:
@@ -49,26 +49,26 @@ class DevSeedSeeder extends Seeder
      * located file_local => server path where the file is located.
      */
 
-    // protected $landmark_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/sequences/empty_landmarks.fasta'];
+    protected $landmark_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/sequences/empty_landmarks.fasta'];
 
-    protected $landmark_type = 'scaffold';
+    protected $landmark_type = 'supercontig';
 
-    // protected $mRNA_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/sequences/mrna_mini.fasta'];
+    protected $mRNA_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/sequences/mrna_mini.fasta'];
 
-    // protected $protein_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/sequences/polypeptide_mini.fasta'];
+    protected $protein_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/sequences/polypeptide_mini.fasta'];
 
-    // protected $gff_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/gff/filtered.gff'];
+    protected $gff_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/gff/filtered.gff'];
 
-    // protected $blast_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/gff/filtered.gff'];
+    protected $blast_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/gff/filtered.gff'];
 
-    // protected $biomaterial_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/biomaterials/biomaterials.xml'];
+    protected $biomaterial_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/biomaterials/biomaterials.xml'];
 
-    // protected $expression_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/expression/expression.tsv'];
+    protected $expression_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/expression/expression.tsv'];
 
-    // protected $interpro_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/ips/polypeptide_mini.fasta.xml'];
+    protected $interpro_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/ips/polypeptide_mini.fasta.xml'];
 
     // Regular expression that will link the protein name to the mRNA parent feature name.
-    // protected $prot_regexp = '/(FRA.*?)(?=:)/';
+   // protected $prot_regexp = '/(FRA.*?)(?=:)/';
 
     protected $prot_regexp = null;
 
