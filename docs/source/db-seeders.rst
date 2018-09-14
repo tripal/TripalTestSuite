@@ -125,7 +125,7 @@ the seeder in your test. See below for an example:
 Using DevSeed for Quick Biological Data Seeding
 ===============================================
 
-Tripal Test Suite ships with a default seeder called ``DevSeedSeeder``.  It is located at ``tests/DatabaseSeeders/examples/``: to use it, copy it to ``tests/DatabaseSeeders/``. This seeder provides a quick
+Tripal Test Suite ships with a default seeder called ``DevSeedSeeder``.  It is located at ``tests/DatabaseSeeders/``. This seeder provides a quick
 and automated way of seeding your database with biological data such as organisms, mRNAs, BLAST
 annotations and InterProScan annotations. The data in the default seeder is obtained
 from `Tripal DevSeed <https://github.com/statonlab/tripal_dev_seed>`_, which is a developer
