@@ -131,9 +131,6 @@ annotations and InterProScan annotations. The data in the default seeder is obta
 from `Tripal DevSeed <https://github.com/statonlab/tripal_dev_seed>`_, which is a developer
 mini-set of biological data.
 
-.. attention::
-
-	The DevSeed seeder must be copied from ``tests/DatabaseSeeders/examples/`` to ``tests/DatabaseSeeders/``.  Seeders in the examples folder will not run.
 
 DevSeed uses factories and is therefore **only appropriate for testing and development** and should not be run on a production site.
 
