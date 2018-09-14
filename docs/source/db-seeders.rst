@@ -125,15 +125,12 @@ the seeder in your test. See below for an example:
 Using DevSeed for Quick Biological Data Seeding
 ===============================================
 
-Tripal Test Suite ships with a default seeder called ``DevSeedSeeder``.  It is located at ``tests/DatabaseSeeders/examples/``: to use it, copy it to ``tests/DatabaseSeeders/``. This seeder provides a quick
+Tripal Test Suite ships with a default seeder called ``DevSeedSeeder``.  It is located at ``tests/DatabaseSeeders/``. This seeder provides a quick
 and automated way of seeding your database with biological data such as organisms, mRNAs, BLAST
 annotations and InterProScan annotations. The data in the default seeder is obtained
 from `Tripal DevSeed <https://github.com/statonlab/tripal_dev_seed>`_, which is a developer
 mini-set of biological data.
 
-.. attention::
-
-	The DevSeed seeder must be copied from ``tests/DatabaseSeeders/examples/`` to ``tests/DatabaseSeeders/``.  Seeders in the examples folder will not run.
 
 DevSeed uses factories and is therefore **only appropriate for testing and development** and should not be run on a production site.
 
@@ -144,7 +141,7 @@ DevSeed uses factories and is therefore **only appropriate for testing and devel
 	the DevSeeder.
 
 
-By default, the DevSeed comes with all sub-loaders enabled.  To configure the DevSeed seeder, comment out data types you don't need in the public static variables section. Then, you can run the seeder using ``tripaltest db:seed DevSeedSeeder``.
+By default, the DevSeed comes with all sub-loaders disabled.  To configure the DevSeed seeder, uncomment data types you need in the protected variables section. Then, you can run the seeder using ``tripaltest db:seed DevSeedSeeder``.
 
 1. If you haven't already, copy the seeder from ``tests/DatabaseSeeders/examples`` to ``tests/DatabaseSeeders/``.
 2. Open ``DatabaseSeeders/DevSeedSeeder.php``
