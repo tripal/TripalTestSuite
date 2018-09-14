@@ -141,7 +141,7 @@ DevSeed uses factories and is therefore **only appropriate for testing and devel
 	the DevSeeder.
 
 
-By default, the DevSeed comes with all sub-loaders enabled.  To configure the DevSeed seeder, comment out data types you don't need in the public static variables section. Then, you can run the seeder using ``tripaltest db:seed DevSeedSeeder``.
+By default, the DevSeed comes with all sub-loaders disabled.  To configure the DevSeed seeder, uncomment data types you need in the protected variables section. Then, you can run the seeder using ``tripaltest db:seed DevSeedSeeder``.
 
 1. If you haven't already, copy the seeder from ``tests/DatabaseSeeders/examples`` to ``tests/DatabaseSeeders/``.
 2. Open ``DatabaseSeeders/DevSeedSeeder.php``
