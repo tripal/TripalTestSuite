@@ -27,10 +27,13 @@ Please visit our [online documentation](https://tripaltestsuite.readthedocs.io/e
 
 [![](http://img.youtube.com/vi/hxuiDzRqs9U/0.jpg)](http://www.youtube.com/watch?v=hxuiDzRqs9U "Creating and Running Basic Tests with Tripal Test Suite")
 
-#### Tripal 3 - Factories and Database Transactions with Tripal Test Suite
+#### Factories and Database Transactions with Tripal Test Suite
 
 [![](http://img.youtube.com/vi/PTJ1Dv8QAag/0.jpg)](http://www.youtube.com/watch?v=PTJ1Dv8QAag "Tripal 3 - Factories and Database Transactions with Tripal Test Suite")
 
+#### Seeding and Publishing Data with Tripal Test Suite
+
+[![](http://img.youtube.com/vi/HE2B7YnWYfQ/0.jpg)](http://www.youtube.com/watch?v=HE2B7YnWYfQ "Tripal 3 - Seeding and Publishing Data with Tripal Test Suite")
 
 ## License
 TripalTestSuite is licensed under [GPLv3](LICENSE).
