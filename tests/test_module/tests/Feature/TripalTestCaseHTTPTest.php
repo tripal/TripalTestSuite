@@ -20,6 +20,8 @@ class TripalTestCaseHTTPTest extends TripalTestCase
     {
         $response = $this->get('/');
         $this->assertTrue($response instanceof TestResponse);
+        $response->assertSuccessful()
+        ->assertSee(variable_get('site_name'));
     }
 
     /** @test */
@@ -53,7 +55,7 @@ class TripalTestCaseHTTPTest extends TripalTestCase
     /** @test */
     public function testNotFoundRoute()
     {
-        $response = $this->get('/never-in-am-million-years');
+        $response = $this->get('/never-in-a-million-years-will-this-page-exist-'.uniqid());
 
         $response->assertStatus(404);
     }

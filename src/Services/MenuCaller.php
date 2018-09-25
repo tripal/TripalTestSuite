@@ -18,7 +18,7 @@ class MenuCaller
      *
      * @var array
      */
-    protected $params;
+    protected $params = [];
 
     /**
      * POST, GET, PUT, PATCH, DELETE.
@@ -48,7 +48,12 @@ class MenuCaller
      */
     public function setPath($path)
     {
-        $this->path = $path === '/' ? $path : trim($path, '/');
+        $this->path = trim($path, '/');
+
+        if(empty($this->path)) {
+            // Home page requested so let's use /node
+            $this->path = 'node';
+        }
 
         return $this;
     }
@@ -161,7 +166,7 @@ class MenuCaller
             drupal_access_denied();
             ob_end_clean();
         } elseif (empty($value)) {
-            $value = render($buffer);
+            $value = drupal_render_page($buffer);
         }
 
         return [
@@ -177,10 +182,7 @@ class MenuCaller
     protected function injectParams()
     {
         $_GET['q'] = $this->path;
-
-        if (! $this->params) {
-            return;
-        }
+        $_SERVER['REQUEST_URI'] = $this->path;
 
         if (in_array($this->method, ['GET', 'DELETE'])) {
             foreach ($this->params as $key => $param) {
