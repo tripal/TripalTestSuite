@@ -141,6 +141,11 @@ class MenuCaller
     {
         $this->resetHeaders();
         $this->resetStaticCache();
+
+        // Move to drupal root where the index.php is
+        $current_dir = getcwd();
+        chdir(DRUPAL_ROOT);
+
         $value = '';
         ob_start(function ($str) use (&$value) {
             $value .= $str;
@@ -168,6 +173,9 @@ class MenuCaller
         } elseif (empty($value)) {
             $value = drupal_render_page($buffer);
         }
+
+        // Go back to the test directory
+        chdir($current_dir);
 
         return [
             $status,
