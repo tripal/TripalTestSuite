@@ -48,7 +48,7 @@ class MenuCaller
      */
     public function setPath($path)
     {
-        $this->path = $path;
+        $this->path = $path === '/' ? $path : trim($path, '/');
 
         return $this;
     }
@@ -116,7 +116,7 @@ class MenuCaller
                     'Content-Language' => 'en',
                     'Content-Type' => 'text/html; charset=utf-8',
                     'Date' => gmdate('D, d M Y H:is e'),
-                    'Expires' => 'Sun, 19 Nov 1978 05:00:00 GMT',
+                    'Expires' => gmdate('D, d M Y H:is e'),
                     'Keep-Alive' => 'timeout=5, max=100',
                     'Server' => 'Apache/2.4.29 (Unix) PHP/'.phpversion(),
                     'Transfer-Encoding' => 'chunked',
@@ -127,24 +127,42 @@ class MenuCaller
         ]);
     }
 
+    /**
+     * Execute the menu handler and construct the response.
+     *
+     * @return array
+     */
     protected function execute()
     {
-        $buffer = '';
-        ob_start(function ($str) use (&$buffer) {
-            $buffer .= $str;
+        $this->resetHeaders();
+        $this->resetStaticCache();
+        $value = '';
+        ob_start(function ($str) use (&$value) {
+            $value .= $str;
         });
-        menu_execute_active_handler($this->path);
+        $buffer = menu_execute_active_handler($this->path, false);
         ob_end_clean();
 
         $status = 200;
-        $header = drupal_get_http_header('Status');
-        if ($header && strstr($header, '404') !== false) {
+        if ($buffer === MENU_NOT_FOUND) {
             $status = 404;
-        } elseif ($header && strstr($header, '403') !== false) {
+            $value = '';
+            ob_start(function ($str) use (&$value) {
+                $value .= $str;
+            });
+            drupal_not_found();
+            ob_end_clean();
+        } elseif ($buffer === MENU_ACCESS_DENIED) {
             $status = 403;
+            $value = '';
+            ob_start(function ($str) use (&$value) {
+                $value .= $str;
+            });
+            drupal_access_denied();
+            ob_end_clean();
+        } elseif (empty($value)) {
+            $value = render($buffer);
         }
-
-        $value = $buffer;
 
         return [
             $status,
@@ -158,6 +176,12 @@ class MenuCaller
      */
     protected function injectParams()
     {
+        $_GET['q'] = $this->path;
+
+        if (! $this->params) {
+            return;
+        }
+
         if (in_array($this->method, ['GET', 'DELETE'])) {
             foreach ($this->params as $key => $param) {
                 $_GET[$key] = $param;
@@ -171,5 +195,23 @@ class MenuCaller
         foreach ($this->params as $key => $param) {
             $_POST[$key] = $param;
         }
+    }
+
+    /**
+     * Remove any php and drupal headers.
+     */
+    protected function resetHeaders()
+    {
+        header_remove();
+        $headers = &drupal_static('drupal_http_headers', []);
+        $headers = [];
+    }
+
+    /**
+     *
+     */
+    protected function resetStaticCache()
+    {
+        drupal_static_reset();
     }
 }
