@@ -16,16 +16,12 @@ class TripalTestCaseHTTPTest extends TripalTestCase
     }
 
     /** @test */
-    public function testThatGetMethodExists()
-    {
-        $this->assertTrue(method_exists($this, 'get'));
-    }
-
-    /** @test */
     public function testThatGetMethodReturnsTestResponse()
     {
         $response = $this->get('/');
         $this->assertTrue($response instanceof TestResponse);
+        $response->assertSuccessful()
+        ->assertSee(variable_get('site_name'));
     }
 
     /** @test */
@@ -54,5 +50,44 @@ class TripalTestCaseHTTPTest extends TripalTestCase
     {
         $response = $this->patch('/');
         $this->assertTrue($response instanceof TestResponse);
+    }
+
+    /** @test */
+    public function testNotFoundRoute()
+    {
+        $response = $this->get('/never-in-a-million-years-will-this-page-exist-'.uniqid());
+
+        $response->assertStatus(404);
+    }
+
+    /** @test */
+    public function testUnauthorizedAccess()
+    {
+        $response = $this->get('/admin');
+        $response->assertStatus(403);
+    }
+
+    /** @test */
+    public function testAdminAccess()
+    {
+        $this->actingAs(1);
+        $response = $this->get('/admin');
+        $response->assertStatus(200);
+    }
+
+    /** @test */
+    public function testPublicRoute()
+    {
+        $response = $this->get('testing/test_module');
+
+        $response->assertSuccessful()->assertSee('testing html');
+    }
+
+    /** @test */
+    public function testRequestForm()
+    {
+        $response = $this->get('testing/test_module_form');
+
+        $response->assertSuccessful()->assertSee('Please enter your first name.');
     }
 }

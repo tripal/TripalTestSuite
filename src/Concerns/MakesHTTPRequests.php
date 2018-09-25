@@ -108,12 +108,11 @@ trait MakesHTTPRequests
      */
     private function _call($method, $uri, $params = [])
     {
-        //if (! str_begins_with('/', $uri) && ! str_begins_with('http', $uri)) {
-        //    var_dump('user is ' . ($GLOBALS['user'] ? $GLOBALS['user']->uid : ' not available'));
-        //    $client = new MenuCaller();
-        //
-        //    return $client->setPath($uri)->setMethod($method)->addParams($params)->send();
-        //}
+        if (! str_begins_with('http', $uri)) {
+            $client = new MenuCaller();
+
+            return $client->setPath($uri)->setMethod($method)->addParams($params)->send();
+        }
 
         try {
             $client = new Client();
