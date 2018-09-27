@@ -21,6 +21,7 @@ TripalTestSuite is licensed under `GPLv3 <https://github.com/statonlab/TripalTes
    :caption: Contents:
 
    installation
+   videos
    environment
    creating-tests
    running-tests
