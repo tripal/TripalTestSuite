@@ -23,6 +23,7 @@ TripalTestSuite is licensed under `GPLv3 <https://github.com/statonlab/TripalTes
    installation
    testing
    database-operations
+   videos
    helpers
    upgrading
    tips-and-tricks
