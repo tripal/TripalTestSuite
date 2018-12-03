@@ -81,19 +81,12 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="environment.html">Environment Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="creating-tests.html">Creating Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="running-tests.html">Running Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tripal-test-case.html">TripalTestCase</a></li>
-<li class="toctree-l1"><a class="reference internal" href="db-seeders.html">Database Seeders</a></li>
-<li class="toctree-l1"><a class="reference internal" href="factories.html">Factories</a></li>
-<li class="toctree-l1"><a class="reference internal" href="db-transactions.html">Using DB Transactions to Automatically Rollback Database Changes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="publishing.html">Publishing Tripal Entities</a></li>
-<li class="toctree-l1"><a class="reference internal" href="http-tests.html">Testing HTTP Requests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="user-authentication.html">User Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="database-operations.html">Database Operations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="helpers.html">Helper Methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="upgrading.html">Upgrading TripalTestSuite</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tips-and-tricks.html">Tips and Tricks for Writing Good Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collaborations.html">Contribution Guidelines</a></li>
 </ul>
 
             
@@ -176,39 +169,28 @@ with data for use in testing).</p>
 <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#joining-an-existing-project">Joining an Existing Project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation.html#adding-test-suite-to-a-new-project">Adding Test Suite to a New Project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation.html#automatic-set-up">Automatic Set Up</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#environment-variables">Environment Variables</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation.html#forcing-initialization">Forcing initialization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#joining-an-existing-project">Joining an Existing Project</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="environment.html">Environment Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="creating-tests.html">Creating Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="running-tests.html">Running Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tripal-test-case.html">TripalTestCase</a></li>
-<li class="toctree-l1"><a class="reference internal" href="db-seeders.html">Database Seeders</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="db-seeders.html#example-seeders">Example Seeders</a></li>
-<li class="toctree-l2"><a class="reference internal" href="db-seeders.html#creating-database-seeders">Creating Database Seeders</a></li>
-<li class="toctree-l2"><a class="reference internal" href="db-seeders.html#using-database-seeders">Using Database Seeders</a></li>
-<li class="toctree-l2"><a class="reference internal" href="db-seeders.html#running-seeders">Running Seeders</a></li>
-<li class="toctree-l2"><a class="reference internal" href="db-seeders.html#retrieving-seeder-data">Retrieving Seeder Data</a></li>
-<li class="toctree-l2"><a class="reference internal" href="db-seeders.html#using-devseed-for-quick-biological-data-seeding">Using DevSeed for Quick Biological Data Seeding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Testing</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="creating-tests.html">Creating Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running-tests.html">Running Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tripal-test-case.html">TripalTestCase</a></li>
+<li class="toctree-l2"><a class="reference internal" href="http-tests.html">Testing HTTP Requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="user-authentication.html">User Authentication</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="factories.html">Factories</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="factories.html#defining-factories">Defining Factories</a></li>
-<li class="toctree-l2"><a class="reference internal" href="factories.html#checking-if-a-factory-exists">Checking if a Factory Exists</a></li>
-<li class="toctree-l2"><a class="reference internal" href="factories.html#using-factories">Using Factories</a></li>
-<li class="toctree-l2"><a class="reference internal" href="factories.html#overriding-defaults">Overriding Defaults</a></li>
+<li class="toctree-l1"><a class="reference internal" href="database-operations.html">Database Operations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="db-seeders.html">Database Seeders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="factories.html">Factories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="db-transactions.html">Using DB Transactions to Automatically Rollback Database Changes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="publishing.html">Publishing Tripal Entities</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="db-transactions.html">Using DB Transactions to Automatically Rollback Database Changes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="publishing.html">Publishing Tripal Entities</a></li>
-<li class="toctree-l1"><a class="reference internal" href="http-tests.html">Testing HTTP Requests</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="http-tests.html#available-http-testing-methods">Available HTTP Testing Methods</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="user-authentication.html">User Authentication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="helpers.html">Helper Methods</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="helpers.html#silently-testing-printed-output">Silently Testing Printed Output</a></li>
 <li class="toctree-l2"><a class="reference internal" href="helpers.html#assertions-and-methods">Assertions and Methods</a></li>
@@ -221,6 +203,12 @@ with data for use in testing).</p>
 <li class="toctree-l1"><a class="reference internal" href="tips-and-tricks.html">Tips and Tricks for Writing Good Tests</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="tips-and-tricks.html#generating-fake-variables-faker">Generating Fake Variables: Faker</a></li>
 <li class="toctree-l2"><a class="reference internal" href="tips-and-tricks.html#test-guidelines">Test Guidelines</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="collaborations.html">Contribution Guidelines</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="collaborations.html#creating-a-development-environment">Creating a Development Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="collaborations.html#performing-tests">Performing Tests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="collaborations.html#code-style">Code Style</a></li>
 </ul>
 </li>
 </ul>

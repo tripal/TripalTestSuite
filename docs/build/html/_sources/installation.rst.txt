@@ -1,22 +1,6 @@
 Installation
 ************
 
-Joining an Existing Project
-===========================
-
-If Test Suite is already configured for a project (for example, if you clone Tripal and want to run tests), the ``composer.json`` file already specifies what version of Test Suite is in use.  To install it, execute the below command.
-
-.. code-block:: bash
-
-	composer install
-
-.. warning::
-
-	Before you can run tests, you'll first need to configure your :ref:`Environment Variables` in the ``.env`` file.
-
-
-
-
 
 Adding Test Suite to a New Project
 ===================================
@@ -56,6 +40,27 @@ This will:
 You can now write tests in your ``tests`` folder.  To enable continuous
 integration testing, push your module to github and `enable Travis CI <https://travis-ci.org/>`_.
 
+Environment Variables
+=====================
+
+When the ``init`` command is run (see: :ref:`Automatic Set Up`), an ``example.env`` file is created in ``tests/``.
+This file should be copied to ``tests/.env`` and modified to describe **your specific Drupal environment**.
+
+.. code-block:: bash
+
+	# tests/.env
+	BASE_URL=http://localhost
+	DRUPAL_ROOT=/var/www/html
+	FAKER_LOCALE=en_US
+
+* BASE_URL: The URL of your site.  This is where you point your browser to view your site.
+* DRUPAL_ROOT: The absolute path to your Drupal site.  On Unix machines, this is often ``/var/www/html``, but it may be different on your setup.
+* FAKER_LOCALE: Test Suite uses the `Faker package <https://github.com/fzaninotto/Faker>`_ to create fake data in factories.  You can change the locale setting for the fake words used.
+
+
+If the ``Drupal_ROOT`` variable is not set correctly, Drupal may not be bootstrapped correctly, and your tests may fail.
+
+
 Forcing initialization
 ======================
 
@@ -65,3 +70,17 @@ To force replacing files that tripaltest have perviously generated, you can use 
 .. code-block:: bash
 
 	./vendor/bin/tripaltest init --force
+
+Joining an Existing Project
+===========================
+
+If Test Suite is already configured for a project (for example, if you clone Tripal and want to run tests), the ``composer.json`` file already specifies what version of Test Suite is in use.  To install it, execute the below command.
+
+.. code-block:: bash
+
+	composer install
+
+.. warning::
+
+	Before you can run tests, you'll first need to configure your :ref:`Environment Variables` in the ``.env`` file.
+

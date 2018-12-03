@@ -29,7 +29,7 @@
   <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Environment Variables" href="environment.html" />
+    <link rel="next" title="Testing" href="testing.html" />
     <link rel="prev" title="Welcome to Tripal Test Suite’s documentation!" href="index.html" /> 
 
   
@@ -82,25 +82,19 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#joining-an-existing-project">Joining an Existing Project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#adding-test-suite-to-a-new-project">Adding Test Suite to a New Project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#automatic-set-up">Automatic Set Up</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#environment-variables">Environment Variables</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#forcing-initialization">Forcing initialization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#joining-an-existing-project">Joining an Existing Project</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="environment.html">Environment Variables</a></li>
-<li class="toctree-l1"><a class="reference internal" href="creating-tests.html">Creating Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="running-tests.html">Running Tests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="tripal-test-case.html">TripalTestCase</a></li>
-<li class="toctree-l1"><a class="reference internal" href="db-seeders.html">Database Seeders</a></li>
-<li class="toctree-l1"><a class="reference internal" href="factories.html">Factories</a></li>
-<li class="toctree-l1"><a class="reference internal" href="db-transactions.html">Using DB Transactions to Automatically Rollback Database Changes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="publishing.html">Publishing Tripal Entities</a></li>
-<li class="toctree-l1"><a class="reference internal" href="http-tests.html">Testing HTTP Requests</a></li>
-<li class="toctree-l1"><a class="reference internal" href="user-authentication.html">User Authentication</a></li>
+<li class="toctree-l1"><a class="reference internal" href="testing.html">Testing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="database-operations.html">Database Operations</a></li>
 <li class="toctree-l1"><a class="reference internal" href="helpers.html">Helper Methods</a></li>
 <li class="toctree-l1"><a class="reference internal" href="upgrading.html">Upgrading TripalTestSuite</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tips-and-tricks.html">Tips and Tricks for Writing Good Tests</a></li>
+<li class="toctree-l1"><a class="reference internal" href="collaborations.html">Contribution Guidelines</a></li>
 </ul>
 
             
@@ -167,17 +161,6 @@
             
   <div class="section" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="joining-an-existing-project">
-<h2>Joining an Existing Project<a class="headerlink" href="#joining-an-existing-project" title="Permalink to this headline">¶</a></h2>
-<p>If Test Suite is already configured for a project (for example, if you clone Tripal and want to run tests), the <code class="docutils literal notranslate"><span class="pre">composer.json</span></code> file already specifies what version of Test Suite is in use.  To install it, execute the below command.</p>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>composer install
-</pre></div>
-</div>
-<div class="admonition warning">
-<p class="first admonition-title">Warning</p>
-<p class="last">Before you can run tests, you’ll first need to configure your <a class="reference internal" href="environment.html#environment-variables"><span class="std std-ref">Environment Variables</span></a> in the <code class="docutils literal notranslate"><span class="pre">.env</span></code> file.</p>
-</div>
-</div>
 <div class="section" id="adding-test-suite-to-a-new-project">
 <h2>Adding Test Suite to a New Project<a class="headerlink" href="#adding-test-suite-to-a-new-project" title="Permalink to this headline">¶</a></h2>
 <p>Within your Drupal module path (e.g. <code class="docutils literal notranslate"><span class="pre">sites/all/modules/my_module</span></code>), run the following.</p>
@@ -208,12 +191,40 @@ get you started.</p>
 <p>You can now write tests in your <code class="docutils literal notranslate"><span class="pre">tests</span></code> folder.  To enable continuous
 integration testing, push your module to github and <a class="reference external" href="https://travis-ci.org/">enable Travis CI</a>.</p>
 </div>
+<div class="section" id="environment-variables">
+<h2>Environment Variables<a class="headerlink" href="#environment-variables" title="Permalink to this headline">¶</a></h2>
+<p>When the <code class="docutils literal notranslate"><span class="pre">init</span></code> command is run (see: <a class="reference internal" href="#automatic-set-up"><span class="std std-ref">Automatic Set Up</span></a>), an <code class="docutils literal notranslate"><span class="pre">example.env</span></code> file is created in <code class="docutils literal notranslate"><span class="pre">tests/</span></code>.
+This file should be copied to <code class="docutils literal notranslate"><span class="pre">tests/.env</span></code> and modified to describe <strong>your specific Drupal environment</strong>.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># tests/.env</span>
+<span class="nv">BASE_URL</span><span class="o">=</span>http://localhost
+<span class="nv">DRUPAL_ROOT</span><span class="o">=</span>/var/www/html
+<span class="nv">FAKER_LOCALE</span><span class="o">=</span>en_US
+</pre></div>
+</div>
+<ul class="simple">
+<li>BASE_URL: The URL of your site.  This is where you point your browser to view your site.</li>
+<li>DRUPAL_ROOT: The absolute path to your Drupal site.  On Unix machines, this is often <code class="docutils literal notranslate"><span class="pre">/var/www/html</span></code>, but it may be different on your setup.</li>
+<li>FAKER_LOCALE: Test Suite uses the <a class="reference external" href="https://github.com/fzaninotto/Faker">Faker package</a> to create fake data in factories.  You can change the locale setting for the fake words used.</li>
+</ul>
+<p>If the <code class="docutils literal notranslate"><span class="pre">Drupal_ROOT</span></code> variable is not set correctly, Drupal may not be bootstrapped correctly, and your tests may fail.</p>
+</div>
 <div class="section" id="forcing-initialization">
 <h2>Forcing initialization<a class="headerlink" href="#forcing-initialization" title="Permalink to this headline">¶</a></h2>
 <p>To force replacing files that tripaltest have perviously generated, you can use the
 <code class="docutils literal notranslate"><span class="pre">--force</span></code> flag. You will need to confirm this flag by typing <code class="docutils literal notranslate"><span class="pre">y</span></code> and hitting <code class="docutils literal notranslate"><span class="pre">enter</span></code>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>./vendor/bin/tripaltest init --force
 </pre></div>
+</div>
+</div>
+<div class="section" id="joining-an-existing-project">
+<h2>Joining an Existing Project<a class="headerlink" href="#joining-an-existing-project" title="Permalink to this headline">¶</a></h2>
+<p>If Test Suite is already configured for a project (for example, if you clone Tripal and want to run tests), the <code class="docutils literal notranslate"><span class="pre">composer.json</span></code> file already specifies what version of Test Suite is in use.  To install it, execute the below command.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>composer install
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Before you can run tests, you’ll first need to configure your <a class="reference internal" href="#environment-variables"><span class="std std-ref">Environment Variables</span></a> in the <code class="docutils literal notranslate"><span class="pre">.env</span></code> file.</p>
 </div>
 </div>
 </div>
@@ -226,7 +237,7 @@ integration testing, push your module to github and <a class="reference external
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="environment.html" class="btn btn-neutral float-right" title="Environment Variables" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="testing.html" class="btn btn-neutral float-right" title="Testing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="index.html" class="btn btn-neutral" title="Welcome to Tripal Test Suite’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
