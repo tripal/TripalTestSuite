@@ -1,7 +1,27 @@
 Installation
 ************
 
-Within your Drupal module path (e,g ``sites/all/modules/my_module``), run the following.
+Joining an Existing Project
+===========================
+
+If Test Suite is already configured for a project (for example, if you clone Tripal and want to run tests), the ``composer.json`` file already specifies what version of Test Suite is in use.  To install it, execute the below command.
+
+.. code-block:: bash
+
+	composer install
+
+.. warning::
+
+	Before you can run tests, you'll first need to configure your :ref:`Environment Variables` in the ``.env`` file.
+
+
+
+
+
+Adding Test Suite to a New Project
+===================================
+
+Within your Drupal module path (e.g. ``sites/all/modules/my_module``), run the following.
 
 .. code-block:: bash
 
@@ -11,7 +31,7 @@ Within your Drupal module path (e,g ``sites/all/modules/my_module``), run the fo
 Automatic Set Up
 ================
 
-This module will automatically configure your tests directory, PHPUnit bootstrap files, and travis
+TestSuite can automatically configure your tests directory, PHPUnit bootstrap files, and travis
 continuous integration file as well as provide an example test and an example database seeder to
 get you started.
 
@@ -24,11 +44,12 @@ From your module's directory, execute:
 	./vendor/bin/tripaltest init [MODULE_NAME]
 
 
-This will
-- Set up the testing framework by creating the tests directory, phpunit.xml and tests/bootstrap.php
-- Create an example test in tests/ExampleTest.php
-- Create a DatabaseSeeders folder and an example seeder in tests/DatabaseSeeders/UsersTableSeeder.php
-- Create DevSeedSeeder.php in DatabaseSeers. See the [DevSeed section] to learn more about automatically populating the database with biological data.
+This will:
+
+- Set up the testing framework by creating the tests directory, ``phpunit.xml`` and ``tests/bootstrap.php``
+- Create an example test in ``tests/ExampleTest.php``
+- Create a DatabaseSeeders folder and an example seeder in ``tests/DatabaseSeeders/UsersTableSeeder.php``
+- Create ``DevSeedSeeder.php`` in DatabaseSeers. See the :ref:`Database Seeders` section to learn more about automatically populating the database with biological data.
 - Create an example ``.env`` file.
 - Create ``.travis.yml`` configured to use a tripal3 docker container to run your tests
 
@@ -44,4 +65,3 @@ To force replacing files that tripaltest have perviously generated, you can use 
 .. code-block:: bash
 
 	./vendor/bin/tripaltest init --force
-

@@ -4,6 +4,11 @@ Database Seeders
 Database seeders are also supported in TripalTestSuite. They give you the ability
 to create reusable seeders that can be run using the ``tripaltest`` command line tool.
 
+Example Seeders
+================
+
+Several example database seeders are provided in ``tests/DatabaseSeeders/examples``.  These will not run unless they are copied to ``tests/DatabaseSeeders/``.
+
 Creating Database Seeders
 =========================
 
@@ -20,9 +25,8 @@ with the necessary namespace, methods and properties.
 Using Database Seeders
 ======================
 
-DB seeders support two important methods, ``up()`` and ``down()``. The ``up()``
-method is used to insert data into the database while the ``down()`` method
-is used to clean up the inserted data. The following is an example of a Seeder class.
+DB seeders support an important method: ``up()``. The ``up()``
+method is used to insert data into the database when the test class is initialized, making it available to all tests within the class. The following is an example of a Seeder class.
 
 .. code-block:: php
 
@@ -121,11 +125,15 @@ the seeder in your test. See below for an example:
 Using DevSeed for Quick Biological Data Seeding
 ===============================================
 
-Tripal Test Suite ships with a default seeder called ``DevSeedSeeder``. This seeder provides a quick
+Tripal Test Suite ships with a default seeder called ``DevSeedSeeder``.  It is located at ``tests/DatabaseSeeders/examples/``: to use it, copy it to ``tests/DatabaseSeeders/``. This seeder provides a quick
 and automated way of seeding your database with biological data such as organisms, mRNAs, BLAST
 annotations and InterProScan annotations. The data in the default seeder is obtained
 from `Tripal DevSeed <https://github.com/statonlab/tripal_dev_seed>`_, which is a developer
 mini-set of biological data.
+
+.. attention::
+
+	The DevSeed seeder must be copied from ``tests/DatabaseSeeders/examples/`` to ``tests/DatabaseSeeders/``.  Seeders in the examples folder will not run.
 
 DevSeed uses factories and is therefore **only appropriate for testing and development** and should not be run on a production site.
 
@@ -136,14 +144,15 @@ DevSeed uses factories and is therefore **only appropriate for testing and devel
 	the DevSeeder.
 
 
-By default, the DevSeed comes with all sub-loaders disabled.  To run the DevSeed seeder, you first have to configure it by uncommenting the type of data you want seeded. Then, you can run the seeder using ``tripaltest db:seed DevSeedSeeder``.
+By default, the DevSeed comes with all sub-loaders enabled.  To configure the DevSeed seeder, comment out data types you don't need in the public static variables section. Then, you can run the seeder using ``tripaltest db:seed DevSeedSeeder``.
 
-1. Open ``DatabaseSeeders/DevSeedSeeder.php``
-2. You'll notice a few commented properties in the top of the file.
-3. Uncomment and modify the properties to your need.
-4. Carefully follow the instructions in this section.  All loaders require an organism as well, but some are dependent on previous loaders.
-5. Next, run ``tripaltest db:seed DevSeedSeeder``
-6. If the seeder runs successfully, you'll be able to see all the records in your Chado database.
+1. If you haven't already, copy the seeder from ``tests/DatabaseSeeders/examples`` to ``tests/DatabaseSeeders/``.
+2. Open ``DatabaseSeeders/DevSeedSeeder.php``
+3. You'll notice a few commented properties in the top of the file.
+4. Uncomment and modify the properties to your need.
+5. Carefully follow the instructions in this section.  All loaders require an organism as well, but some are dependent on previous loaders.
+6. Next, run ``tripaltest db:seed DevSeedSeeder``
+7. If the seeder runs successfully, you'll be able to see all the records in your Chado database.
 
 The records provided by DevSeed are not published to your site as entities. You can do that
 by adding ``$this->publish('CHADO_TABLE')`` at the end of the ``up()`` method of the ``DevSeedSeeder``.

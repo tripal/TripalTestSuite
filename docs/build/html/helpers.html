@@ -26,9 +26,10 @@
 
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Environment Variables" href="environment.html" />
+    <link rel="next" title="Upgrading TripalTestSuite" href="upgrading.html" />
     <link rel="prev" title="User Authentication" href="user-authentication.html" /> 
 
   
@@ -81,6 +82,7 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment.html">Environment Variables</a></li>
 <li class="toctree-l1"><a class="reference internal" href="creating-tests.html">Creating Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="running-tests.html">Running Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tripal-test-case.html">TripalTestCase</a></li>
@@ -98,8 +100,8 @@
 <li class="toctree-l2"><a class="reference internal" href="#accessing-properties">Accessing Properties</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="environment.html">Environment Variables</a></li>
 <li class="toctree-l1"><a class="reference internal" href="upgrading.html">Upgrading TripalTestSuite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips-and-tricks.html">Tips and Tricks for Writing Good Tests</a></li>
 </ul>
 
             
@@ -171,25 +173,25 @@
 <h2>Silently Testing Printed Output<a class="headerlink" href="#silently-testing-printed-output" title="Permalink to this headline">¶</a></h2>
 <p>Since tests should run “silently”, i.e. without printing output to the screen, we’d have to create
 an output buffer to collect printed strings into a variable. In PHP, this can be done as such:</p>
-<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">// Supress tripal errors</span>
-<span class="x">putenv(&quot;TRIPAL_SUPPRESS_ERRORS=TRUE&quot;);</span>
-<span class="x">ob_start();</span>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Supress tripal errors</span>
+<span class="nb">putenv</span><span class="p">(</span><span class="s2">&quot;TRIPAL_SUPPRESS_ERRORS=TRUE&quot;</span><span class="p">);</span>
+<span class="nb">ob_start</span><span class="p">();</span>
 
-<span class="x">// Run the call</span>
-<span class="x">echo &quot;testing&quot;;</span>
-<span class="x">$output = ob_get_contents();</span>
+<span class="c1">// Run the call</span>
+<span class="k">echo</span> <span class="s2">&quot;testing&quot;</span><span class="p">;</span>
+<span class="nv">$output</span> <span class="o">=</span> <span class="nb">ob_get_contents</span><span class="p">();</span>
 
-<span class="x">// Clean the buffer and unset tripal errors suppression</span>
-<span class="x">ob_end_clean();</span>
-<span class="x">putenv(&quot;TRIPAL_SUPPRESS_ERRORS&quot;);</span>
+<span class="c1">// Clean the buffer and unset tripal errors suppression</span>
+<span class="nb">ob_end_clean</span><span class="p">();</span>
+<span class="nb">putenv</span><span class="p">(</span><span class="s2">&quot;TRIPAL_SUPPRESS_ERRORS&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>However, TripalTestSuite provides a <code class="docutils literal notranslate"><span class="pre">silent()</span></code> method that automates this process, provides helpful assertions
 and supports larger strings. Example usage:</p>
-<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">$output = silent(function() {</span>
-<span class="x">  echo &quot;testing&quot;;</span>
-<span class="x">});</span>
-<span class="x">$output-&gt;assertSee(&#39;testing&#39;); // true!</span>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="nv">$output</span> <span class="o">=</span> <span class="nx">silent</span><span class="p">(</span><span class="k">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="k">echo</span> <span class="s2">&quot;testing&quot;</span><span class="p">;</span>
+<span class="p">});</span>
+<span class="nv">$output</span><span class="o">-&gt;</span><span class="na">assertSee</span><span class="p">(</span><span class="s1">&#39;testing&#39;</span><span class="p">);</span> <span class="c1">// true!</span>
 </pre></div>
 </div>
 <div class="admonition warning">
@@ -240,29 +242,29 @@ adjust your PHP settings.</p>
 </tbody>
 </table>
 <p><strong>Examples</strong></p>
-<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">$output = silent(function() {</span>
-<span class="x">        drupal_json_output([&#39;key&#39; =&gt; &#39;value&#39;]);</span>
-<span class="x">        return true;</span>
-<span class="x">});</span>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="nv">$output</span> <span class="o">=</span> <span class="nx">silent</span><span class="p">(</span><span class="k">function</span><span class="p">()</span> <span class="p">{</span>
+        <span class="nx">drupal_json_output</span><span class="p">([</span><span class="s1">&#39;key&#39;</span> <span class="o">=&gt;</span> <span class="s1">&#39;value&#39;</span><span class="p">]);</span>
+        <span class="k">return</span> <span class="k">true</span><span class="p">;</span>
+<span class="p">});</span>
 
-<span class="x">$output-&gt;assertSee(&#39;value&#39;)</span>
-<span class="x">           -&gt;assertJsonStructure([&#39;key&#39;])</span>
-<span class="x">           -&gt;assertReturnEquals(true);</span>
+<span class="nv">$output</span><span class="o">-&gt;</span><span class="na">assertSee</span><span class="p">(</span><span class="s1">&#39;value&#39;</span><span class="p">)</span>
+           <span class="o">-&gt;</span><span class="na">assertJsonStructure</span><span class="p">([</span><span class="s1">&#39;key&#39;</span><span class="p">])</span>
+           <span class="o">-&gt;</span><span class="na">assertReturnEquals</span><span class="p">(</span><span class="k">true</span><span class="p">);</span>
 </pre></div>
 </div>
 <p>You can also call methods directly in the Callable function:</p>
-<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">// Assume we have the following function</span>
-<span class="x">function tripal_print_message($message) {</span>
-<span class="x">  echo $message;</span>
-<span class="x">}</span>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Assume we have the following function</span>
+<span class="k">function</span> <span class="nf">tripal_print_message</span><span class="p">(</span><span class="nv">$message</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">echo</span> <span class="nv">$message</span><span class="p">;</span>
+<span class="p">}</span>
 
-<span class="x">$output = silent(function() {</span>
-<span class="x">  tripal_print_message(&#39;tripal test suite&#39;);</span>
-<span class="x">});</span>
-<span class="x">$output-&gt;assertSee(&#39;test&#39;);</span>
+<span class="nv">$output</span> <span class="o">=</span> <span class="nx">silent</span><span class="p">(</span><span class="k">function</span><span class="p">()</span> <span class="p">{</span>
+  <span class="nx">tripal_print_message</span><span class="p">(</span><span class="s1">&#39;tripal test suite&#39;</span><span class="p">);</span>
+<span class="p">});</span>
+<span class="nv">$output</span><span class="o">-&gt;</span><span class="na">assertSee</span><span class="p">(</span><span class="s1">&#39;test&#39;</span><span class="p">);</span>
 
-<span class="x">// Get the output as a string</span>
-<span class="x">$rawOtput = $output-&gt;getContent();</span>
+<span class="c1">// Get the output as a string</span>
+<span class="nv">$rawOtput</span> <span class="o">=</span> <span class="nv">$output</span><span class="o">-&gt;</span><span class="na">getContent</span><span class="p">();</span>
 </pre></div>
 </div>
 </div>
@@ -271,25 +273,25 @@ adjust your PHP settings.</p>
 <p>TripalTestSuite provides a <code class="docutils literal notranslate"><span class="pre">reflect()</span></code> method that accepts an object
 and makes all of the properties and methods public and available
 for testing. Assume we have the following class:</p>
-<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">class PrivateClass</span>
-<span class="x">{</span>
-<span class="x">        private $private;</span>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">PrivateClass</span>
+<span class="p">{</span>
+        <span class="k">private</span> <span class="nv">$private</span><span class="p">;</span>
 
-<span class="x">        public function __construct($private = &#39;private&#39;)</span>
-<span class="x">        {</span>
-<span class="x">                $this-&gt;private = $private;</span>
-<span class="x">        }</span>
+        <span class="k">public</span> <span class="k">function</span> <span class="fm">__construct</span><span class="p">(</span><span class="nv">$private</span> <span class="o">=</span> <span class="s1">&#39;private&#39;</span><span class="p">)</span>
+        <span class="p">{</span>
+                <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">private</span> <span class="o">=</span> <span class="nv">$private</span><span class="p">;</span>
+        <span class="p">}</span>
 
-<span class="x">        protected function myProtected()</span>
-<span class="x">        {</span>
-<span class="x">                return &#39;protected&#39;;</span>
-<span class="x">        }</span>
+        <span class="k">protected</span> <span class="k">function</span> <span class="nf">myProtected</span><span class="p">()</span>
+        <span class="p">{</span>
+                <span class="k">return</span> <span class="s1">&#39;protected&#39;</span><span class="p">;</span>
+        <span class="p">}</span>
 
-<span class="x">        private function privateWithArgs($one, $two)</span>
-<span class="x">        {</span>
-<span class="x">                return $one.&#39; &#39;.$two;</span>
-<span class="x">        }</span>
-<span class="x">}</span>
+        <span class="k">private</span> <span class="k">function</span> <span class="nf">privateWithArgs</span><span class="p">(</span><span class="nv">$one</span><span class="p">,</span> <span class="nv">$two</span><span class="p">)</span>
+        <span class="p">{</span>
+                <span class="k">return</span> <span class="nv">$one</span><span class="o">.</span><span class="s1">&#39; &#39;</span><span class="o">.</span><span class="nv">$two</span><span class="p">;</span>
+        <span class="p">}</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <p>Because of the functions and properties of the class are private or protected, we
@@ -298,27 +300,27 @@ using the reflect helper. See below for an examples.</p>
 </div>
 <div class="section" id="accessing-private-and-protected-methods">
 <h2>Accessing Private and Protected Methods<a class="headerlink" href="#accessing-private-and-protected-methods" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">// Pass an initialized class to the reflect method</span>
-<span class="x">$myObject = new PrivateClass();</span>
-<span class="x">$privateClass = reflect($myObject);</span>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Pass an initialized class to the reflect method</span>
+<span class="nv">$myObject</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PrivateClass</span><span class="p">();</span>
+<span class="nv">$privateClass</span> <span class="o">=</span> <span class="nx">reflect</span><span class="p">(</span><span class="nv">$myObject</span><span class="p">);</span>
 
-<span class="x">// Accessing protected methods</span>
-<span class="x">$value = $privateClass-&gt;myProtected();</span>
-<span class="x">$this-&gt;assertEquals(&#39;protected&#39;, $value);</span>
+<span class="c1">// Accessing protected methods</span>
+<span class="nv">$value</span> <span class="o">=</span> <span class="nv">$privateClass</span><span class="o">-&gt;</span><span class="na">myProtected</span><span class="p">();</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEquals</span><span class="p">(</span><span class="s1">&#39;protected&#39;</span><span class="p">,</span> <span class="nv">$value</span><span class="p">);</span>
 
-<span class="x">// Accessing private methods with arguments</span>
-<span class="x">$value = $privateClass-&gt;privateWithArgs(&#39;one&#39;, &#39;two&#39;);</span>
-<span class="x">$this-&gt;assertEquals(&#39;one two&#39;, $value);</span>
+<span class="c1">// Accessing private methods with arguments</span>
+<span class="nv">$value</span> <span class="o">=</span> <span class="nv">$privateClass</span><span class="o">-&gt;</span><span class="na">privateWithArgs</span><span class="p">(</span><span class="s1">&#39;one&#39;</span><span class="p">,</span> <span class="s1">&#39;two&#39;</span><span class="p">);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEquals</span><span class="p">(</span><span class="s1">&#39;one two&#39;</span><span class="p">,</span> <span class="nv">$value</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
 <div class="section" id="accessing-properties">
 <h2>Accessing Properties<a class="headerlink" href="#accessing-properties" title="Permalink to this headline">¶</a></h2>
-<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">// Pass an initialized class to the reflect method</span>
-<span class="x">$myObject = new PrivateClass();</span>
-<span class="x">$privateClass = reflect($myObject);</span>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="c1">// Pass an initialized class to the reflect method</span>
+<span class="nv">$myObject</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">PrivateClass</span><span class="p">();</span>
+<span class="nv">$privateClass</span> <span class="o">=</span> <span class="nx">reflect</span><span class="p">(</span><span class="nv">$myObject</span><span class="p">);</span>
 
-<span class="x">$this-&gt;assertEquals(&#39;private&#39;, $privateClass-&gt;private);</span>
+<span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertEquals</span><span class="p">(</span><span class="s1">&#39;private&#39;</span><span class="p">,</span> <span class="nv">$privateClass</span><span class="o">-&gt;</span><span class="na">private</span><span class="p">);</span>
 </pre></div>
 </div>
 </div>
@@ -332,7 +334,7 @@ using the reflect helper. See below for an examples.</p>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="environment.html" class="btn btn-neutral float-right" title="Environment Variables" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="upgrading.html" class="btn btn-neutral float-right" title="Upgrading TripalTestSuite" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="user-authentication.html" class="btn btn-neutral" title="User Authentication" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -344,7 +346,7 @@ using the reflect helper. See below for an examples.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, University of Tennessee.
+        &copy; Copyright 2018, University of Tennessee
 
     </p>
   </div>
@@ -363,20 +365,23 @@ using the reflect helper. See below for an examples.</p>
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'1.4.0',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'1.4.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    
 
   
 

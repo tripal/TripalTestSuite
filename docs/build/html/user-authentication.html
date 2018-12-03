@@ -26,6 +26,7 @@
 
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Helper Methods" href="helpers.html" />
@@ -81,6 +82,7 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment.html">Environment Variables</a></li>
 <li class="toctree-l1"><a class="reference internal" href="creating-tests.html">Creating Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="running-tests.html">Running Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tripal-test-case.html">TripalTestCase</a></li>
@@ -91,8 +93,8 @@
 <li class="toctree-l1"><a class="reference internal" href="http-tests.html">Testing HTTP Requests</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">User Authentication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="helpers.html">Helper Methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="environment.html">Environment Variables</a></li>
 <li class="toctree-l1"><a class="reference internal" href="upgrading.html">Upgrading TripalTestSuite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips-and-tricks.html">Tips and Tricks for Writing Good Tests</a></li>
 </ul>
 
             
@@ -163,14 +165,14 @@
 authenticating a user with TripalTestSuite, the user is automatically signed out by the end
 of each test method, which guarantees that your other tests are using the anonymous user
 unless you specifically tell it otherwise.</p>
-<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x">public function testExample() {</span>
-<span class="x">  // Authenticate the superuser who has an id 1</span>
-<span class="x">  $this-&gt;actingAs(1);</span>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="k">public</span> <span class="k">function</span> <span class="nf">testExample</span><span class="p">()</span> <span class="p">{</span>
+  <span class="c1">// Authenticate the superuser who has an id 1</span>
+  <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">actingAs</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
 
-<span class="x">  // Verify that the user is the admin user</span>
-<span class="x">  global $user;</span>
-<span class="x">  $this-&gt;assertTrue(1 === $user-&gt;uid);</span>
-<span class="x">}</span>
+  <span class="c1">// Verify that the user is the admin user</span>
+  <span class="k">global</span> <span class="nv">$user</span><span class="p">;</span>
+  <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">assertTrue</span><span class="p">(</span><span class="mi">1</span> <span class="o">===</span> <span class="nv">$user</span><span class="o">-&gt;</span><span class="na">uid</span><span class="p">);</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 <div class="admonition attention">
@@ -199,7 +201,7 @@ unless you specifically tell it otherwise.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, University of Tennessee.
+        &copy; Copyright 2018, University of Tennessee
 
     </p>
   </div>
@@ -218,20 +220,23 @@ unless you specifically tell it otherwise.</p>
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'1.4.0',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'1.4.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    
 
   
 

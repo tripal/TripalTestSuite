@@ -26,9 +26,11 @@
 
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Environment Variables" href="environment.html" /> 
+    <link rel="next" title="Tips and Tricks for Writing Good Tests" href="tips-and-tricks.html" />
+    <link rel="prev" title="Helper Methods" href="helpers.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -80,6 +82,7 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment.html">Environment Variables</a></li>
 <li class="toctree-l1"><a class="reference internal" href="creating-tests.html">Creating Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="running-tests.html">Running Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tripal-test-case.html">TripalTestCase</a></li>
@@ -90,8 +93,8 @@
 <li class="toctree-l1"><a class="reference internal" href="http-tests.html">Testing HTTP Requests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="user-authentication.html">User Authentication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="helpers.html">Helper Methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="environment.html">Environment Variables</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Upgrading TripalTestSuite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips-and-tricks.html">Tips and Tricks for Writing Good Tests</a></li>
 </ul>
 
             
@@ -174,8 +177,10 @@ can be made automatic by specifying <code class="docutils literal notranslate"><
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="tips-and-tricks.html" class="btn btn-neutral float-right" title="Tips and Tricks for Writing Good Tests" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-        <a href="environment.html" class="btn btn-neutral" title="Environment Variables" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+        <a href="helpers.html" class="btn btn-neutral" title="Helper Methods" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -184,7 +189,7 @@ can be made automatic by specifying <code class="docutils literal notranslate"><
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, University of Tennessee.
+        &copy; Copyright 2018, University of Tennessee
 
     </p>
   </div>
@@ -203,20 +208,23 @@ can be made automatic by specifying <code class="docutils literal notranslate"><
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'1.4.0',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'1.4.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    
 
   
 

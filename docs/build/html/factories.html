@@ -26,6 +26,7 @@
 
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Using DB Transactions to Automatically Rollback Database Changes" href="db-transactions.html" />
@@ -81,6 +82,7 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment.html">Environment Variables</a></li>
 <li class="toctree-l1"><a class="reference internal" href="creating-tests.html">Creating Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="running-tests.html">Running Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tripal-test-case.html">TripalTestCase</a></li>
@@ -97,8 +99,8 @@
 <li class="toctree-l1"><a class="reference internal" href="http-tests.html">Testing HTTP Requests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="user-authentication.html">User Authentication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="helpers.html">Helper Methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="environment.html">Environment Variables</a></li>
 <li class="toctree-l1"><a class="reference internal" href="upgrading.html">Upgrading TripalTestSuite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips-and-tricks.html">Tips and Tricks for Writing Good Tests</a></li>
 </ul>
 
             
@@ -169,9 +171,9 @@
 won’t have to run SQL queries to populate the Database in every test. Since they are reusable,
 you can define one factory for each table and use them across all tests.
 Usage example:</p>
-<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x"># Generates 100 controlled vocabularies.</span>
-<span class="x"># @return an array of vocabularies</span>
-<span class="x">$controlledVocabs = factory(&#39;chado.cv&#39;, 100)-&gt;create()</span>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="c1"># Generates 100 controlled vocabularies.</span>
+<span class="c1"># @return an array of vocabularies</span>
+<span class="nv">$controlledVocabs</span> <span class="o">=</span> <span class="nx">factory</span><span class="p">(</span><span class="s1">&#39;chado.cv&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Factories should <strong>only be used for testing and development purposes</strong>.</p>
@@ -180,7 +182,7 @@ Usage example:</p>
 <p>Factories live in <code class="docutils literal notranslate"><span class="pre">tests/DataFactory.php</span></code>. If you don’t have that file, create it. Note that this file
 is auto created with <code class="docutils literal notranslate"><span class="pre">tripaltest</span> <span class="pre">init</span></code>.</p>
 <p>Example DataFactory file:</p>
-<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">use</span> <span class="nx">StatonLab\TripalTestSuite\Database\Factory</span><span class="p">;</span>
 
@@ -230,7 +232,7 @@ The define method takes the following parameters:</p>
 <div class="section" id="checking-if-a-factory-exists">
 <h2>Checking if a Factory Exists<a class="headerlink" href="#checking-if-a-factory-exists" title="Permalink to this headline">¶</a></h2>
 <p>To determine whether a factory exists, you can use the <code class="docutils literal notranslate"><span class="pre">Factory::exists($table)</span></code> method:</p>
-<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 <span class="c1">// Import the Factory class</span>
 <span class="k">use</span> <span class="nx">StatonLab\TripalTestSuite\Database\Factory</span><span class="p">;</span>
 
@@ -245,16 +247,16 @@ The define method takes the following parameters:</p>
 <h2>Using Factories<a class="headerlink" href="#using-factories" title="Permalink to this headline">¶</a></h2>
 <p>Once defined, factories can be used in test files directly or in database seeders.
 Usage:</p>
-<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x"># Create a single CV record</span>
-<span class="x">$cv = factory(&#39;chado.cv&#39;)-&gt;create();</span>
-<span class="x">echo &quot;$cv-&gt;name\n&quot;;</span>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="c1"># Create a single CV record</span>
+<span class="nv">$cv</span> <span class="o">=</span> <span class="nx">factory</span><span class="p">(</span><span class="s1">&#39;chado.cv&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">();</span>
+<span class="k">echo</span> <span class="s2">&quot;</span><span class="si">$cv-&gt;name\n</span><span class="s2">&quot;</span><span class="p">;</span>
 
-<span class="x"># Create 100 CV records</span>
-<span class="x">$cvs = factory(&#39;chado.cv&#39;, 100)-&gt;create();</span>
+<span class="c1"># Create 100 CV records</span>
+<span class="nv">$cvs</span> <span class="o">=</span> <span class="nx">factory</span><span class="p">(</span><span class="s1">&#39;chado.cv&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">();</span>
 
-<span class="x">foreach ($cvs as $cv) {</span>
-<span class="x">  echo &quot;$cv-&gt;name\n&quot;;</span>
-<span class="x">}</span>
+<span class="k">foreach</span> <span class="p">(</span><span class="nv">$cvs</span> <span class="k">as</span> <span class="nv">$cv</span><span class="p">)</span> <span class="p">{</span>
+  <span class="k">echo</span> <span class="s2">&quot;</span><span class="si">$cv-&gt;name\n</span><span class="s2">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
 </pre></div>
 </div>
 </div>
@@ -262,11 +264,11 @@ Usage:</p>
 <h2>Overriding Defaults<a class="headerlink" href="#overriding-defaults" title="Permalink to this headline">¶</a></h2>
 <p>Sometimes you need to override a column to be a static predictable value. The <code class="docutils literal notranslate"><span class="pre">create()</span></code> method accepts an array of values
 to override the faker data with. Example:</p>
-<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="x"># Let&#39;s make sure the cvterm has a specific cv id</span>
-<span class="x">$cv = factory(&#39;chado.cv&#39;)-&gt;create();</span>
-<span class="x">$cv_term = factory(&#39;chado.cvterm&#39;, 100)-&gt;create([</span>
-<span class="x">        &#39;cv_id&#39; =&gt; $cv-&gt;cv_id,</span>
-<span class="x">])</span>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="c1"># Let&#39;s make sure the cvterm has a specific cv id</span>
+<span class="nv">$cv</span> <span class="o">=</span> <span class="nx">factory</span><span class="p">(</span><span class="s1">&#39;chado.cv&#39;</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">();</span>
+<span class="nv">$cv_term</span> <span class="o">=</span> <span class="nx">factory</span><span class="p">(</span><span class="s1">&#39;chado.cvterm&#39;</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span><span class="o">-&gt;</span><span class="na">create</span><span class="p">([</span>
+        <span class="s1">&#39;cv_id&#39;</span> <span class="o">=&gt;</span> <span class="nv">$cv</span><span class="o">-&gt;</span><span class="na">cv_id</span><span class="p">,</span>
+<span class="p">])</span>
 </pre></div>
 </div>
 <p>The above example creates 100 cv terms that have the same cv_id.</p>
@@ -294,7 +296,7 @@ to override the faker data with. Example:</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, University of Tennessee.
+        &copy; Copyright 2018, University of Tennessee
 
     </p>
   </div>
@@ -313,20 +315,23 @@ to override the faker data with. Example:</p>
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'1.4.0',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'1.4.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    
 
   
 

@@ -26,9 +26,10 @@
 
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Creating Tests" href="creating-tests.html" />
+    <link rel="next" title="Environment Variables" href="environment.html" />
     <link rel="prev" title="Welcome to Tripal Test Suite’s documentation!" href="index.html" /> 
 
   
@@ -81,10 +82,13 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#joining-an-existing-project">Joining an Existing Project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#adding-test-suite-to-a-new-project">Adding Test Suite to a New Project</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#automatic-set-up">Automatic Set Up</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#forcing-initialization">Forcing initialization</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="environment.html">Environment Variables</a></li>
 <li class="toctree-l1"><a class="reference internal" href="creating-tests.html">Creating Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="running-tests.html">Running Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tripal-test-case.html">TripalTestCase</a></li>
@@ -95,8 +99,8 @@
 <li class="toctree-l1"><a class="reference internal" href="http-tests.html">Testing HTTP Requests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="user-authentication.html">User Authentication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="helpers.html">Helper Methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="environment.html">Environment Variables</a></li>
 <li class="toctree-l1"><a class="reference internal" href="upgrading.html">Upgrading TripalTestSuite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips-and-tricks.html">Tips and Tricks for Writing Good Tests</a></li>
 </ul>
 
             
@@ -163,13 +167,27 @@
             
   <div class="section" id="installation">
 <h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
-<p>Within your Drupal module path (e,g <code class="docutils literal notranslate"><span class="pre">sites/all/modules/my_module</span></code>), run the following.</p>
+<div class="section" id="joining-an-existing-project">
+<h2>Joining an Existing Project<a class="headerlink" href="#joining-an-existing-project" title="Permalink to this headline">¶</a></h2>
+<p>If Test Suite is already configured for a project (for example, if you clone Tripal and want to run tests), the <code class="docutils literal notranslate"><span class="pre">composer.json</span></code> file already specifies what version of Test Suite is in use.  To install it, execute the below command.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>composer install
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Before you can run tests, you’ll first need to configure your <a class="reference internal" href="environment.html#environment-variables"><span class="std std-ref">Environment Variables</span></a> in the <code class="docutils literal notranslate"><span class="pre">.env</span></code> file.</p>
+</div>
+</div>
+<div class="section" id="adding-test-suite-to-a-new-project">
+<h2>Adding Test Suite to a New Project<a class="headerlink" href="#adding-test-suite-to-a-new-project" title="Permalink to this headline">¶</a></h2>
+<p>Within your Drupal module path (e.g. <code class="docutils literal notranslate"><span class="pre">sites/all/modules/my_module</span></code>), run the following.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>composer require statonlab/tripal-test-suite --dev
 </pre></div>
 </div>
+</div>
 <div class="section" id="automatic-set-up">
 <h2>Automatic Set Up<a class="headerlink" href="#automatic-set-up" title="Permalink to this headline">¶</a></h2>
-<p>This module will automatically configure your tests directory, PHPUnit bootstrap files, and travis
+<p>TestSuite can automatically configure your tests directory, PHPUnit bootstrap files, and travis
 continuous integration file as well as provide an example test and an example database seeder to
 get you started.</p>
 <p>From your module’s directory, execute:</p>
@@ -178,13 +196,15 @@ get you started.</p>
 ./vendor/bin/tripaltest init <span class="o">[</span>MODULE_NAME<span class="o">]</span>
 </pre></div>
 </div>
-<p>This will
-- Set up the testing framework by creating the tests directory, phpunit.xml and tests/bootstrap.php
-- Create an example test in tests/ExampleTest.php
-- Create a DatabaseSeeders folder and an example seeder in tests/DatabaseSeeders/UsersTableSeeder.php
-- Create DevSeedSeeder.php in DatabaseSeers. See the [DevSeed section] to learn more about automatically populating the database with biological data.
-- Create an example <code class="docutils literal notranslate"><span class="pre">.env</span></code> file.
-- Create <code class="docutils literal notranslate"><span class="pre">.travis.yml</span></code> configured to use a tripal3 docker container to run your tests</p>
+<p>This will:</p>
+<ul class="simple">
+<li>Set up the testing framework by creating the tests directory, <code class="docutils literal notranslate"><span class="pre">phpunit.xml</span></code> and <code class="docutils literal notranslate"><span class="pre">tests/bootstrap.php</span></code></li>
+<li>Create an example test in <code class="docutils literal notranslate"><span class="pre">tests/ExampleTest.php</span></code></li>
+<li>Create a DatabaseSeeders folder and an example seeder in <code class="docutils literal notranslate"><span class="pre">tests/DatabaseSeeders/UsersTableSeeder.php</span></code></li>
+<li>Create <code class="docutils literal notranslate"><span class="pre">DevSeedSeeder.php</span></code> in DatabaseSeers. See the <a class="reference internal" href="db-seeders.html#database-seeders"><span class="std std-ref">Database Seeders</span></a> section to learn more about automatically populating the database with biological data.</li>
+<li>Create an example <code class="docutils literal notranslate"><span class="pre">.env</span></code> file.</li>
+<li>Create <code class="docutils literal notranslate"><span class="pre">.travis.yml</span></code> configured to use a tripal3 docker container to run your tests</li>
+</ul>
 <p>You can now write tests in your <code class="docutils literal notranslate"><span class="pre">tests</span></code> folder.  To enable continuous
 integration testing, push your module to github and <a class="reference external" href="https://travis-ci.org/">enable Travis CI</a>.</p>
 </div>
@@ -206,7 +226,7 @@ integration testing, push your module to github and <a class="reference external
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="creating-tests.html" class="btn btn-neutral float-right" title="Creating Tests" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="environment.html" class="btn btn-neutral float-right" title="Environment Variables" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="index.html" class="btn btn-neutral" title="Welcome to Tripal Test Suite’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
@@ -218,7 +238,7 @@ integration testing, push your module to github and <a class="reference external
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, University of Tennessee.
+        &copy; Copyright 2018, University of Tennessee
 
     </p>
   </div>
@@ -237,20 +257,23 @@ integration testing, push your module to github and <a class="reference external
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'1.4.0',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'1.4.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    
 
   
 

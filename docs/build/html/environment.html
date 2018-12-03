@@ -26,10 +26,11 @@
 
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Upgrading TripalTestSuite" href="upgrading.html" />
-    <link rel="prev" title="Helper Methods" href="helpers.html" /> 
+    <link rel="next" title="Creating Tests" href="creating-tests.html" />
+    <link rel="prev" title="Installation" href="installation.html" /> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -81,6 +82,7 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Environment Variables</a></li>
 <li class="toctree-l1"><a class="reference internal" href="creating-tests.html">Creating Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="running-tests.html">Running Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tripal-test-case.html">TripalTestCase</a></li>
@@ -91,8 +93,8 @@
 <li class="toctree-l1"><a class="reference internal" href="http-tests.html">Testing HTTP Requests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="user-authentication.html">User Authentication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="helpers.html">Helper Methods</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Environment Variables</a></li>
 <li class="toctree-l1"><a class="reference internal" href="upgrading.html">Upgrading TripalTestSuite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips-and-tricks.html">Tips and Tricks for Writing Good Tests</a></li>
 </ul>
 
             
@@ -159,14 +161,20 @@
             
   <div class="section" id="environment-variables">
 <h1>Environment Variables<a class="headerlink" href="#environment-variables" title="Permalink to this headline">¶</a></h1>
-<p>You can specify the Drupal web root path in <code class="docutils literal notranslate"><span class="pre">tests/.env</span></code>.</p>
+<p>When the <code class="docutils literal notranslate"><span class="pre">init</span></code> command is run (see: <a class="reference internal" href="installation.html#automatic-set-up"><span class="std std-ref">Automatic Set Up</span></a>), an <code class="docutils literal notranslate"><span class="pre">example.env</span></code> file is created in <code class="docutils literal notranslate"><span class="pre">tests/</span></code>.
+This file should be copied to <code class="docutils literal notranslate"><span class="pre">tests/.env</span></code> and modified to describe <strong>your specific Drupal environment</strong>.</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># tests/.env</span>
 <span class="nv">BASE_URL</span><span class="o">=</span>http://localhost
 <span class="nv">DRUPAL_ROOT</span><span class="o">=</span>/var/www/html
 <span class="nv">FAKER_LOCALE</span><span class="o">=</span>en_US
 </pre></div>
 </div>
-<p>This allows TripalTestSuite to bootstrap the entire Drupal framework and make it available in your tests.</p>
+<ul class="simple">
+<li>BASE_URL: The URL of your site.  This is where you point your browser to view your site.</li>
+<li>DRUPAL_ROOT: The absolute path to your Drupal site.  On Unix machines, this is often <code class="docutils literal notranslate"><span class="pre">/var/www/html</span></code>, but it may be different on your setup.</li>
+<li>FAKER_LOCALE: Test Suite uses the <a class="reference external" href="https://github.com/fzaninotto/Faker">Faker package</a> to create fake data in factories.  You can change the locale setting for the fake words used.</li>
+</ul>
+<p>If the <code class="docutils literal notranslate"><span class="pre">Drupal_ROOT</span></code> variable is not set correctly, Drupal may not be bootstrapped correctly, and your tests may fail.</p>
 </div>
 
 
@@ -177,10 +185,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="upgrading.html" class="btn btn-neutral float-right" title="Upgrading TripalTestSuite" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="creating-tests.html" class="btn btn-neutral float-right" title="Creating Tests" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="helpers.html" class="btn btn-neutral" title="Helper Methods" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="installation.html" class="btn btn-neutral" title="Installation" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
@@ -189,7 +197,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, University of Tennessee.
+        &copy; Copyright 2018, University of Tennessee
 
     </p>
   </div>
@@ -208,20 +216,23 @@
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'1.4.0',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'1.4.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    
 
   
 

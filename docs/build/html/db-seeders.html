@@ -26,6 +26,7 @@
 
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Factories" href="factories.html" />
@@ -81,10 +82,12 @@
               <p class="caption"><span class="caption-text">Contents:</span></p>
 <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment.html">Environment Variables</a></li>
 <li class="toctree-l1"><a class="reference internal" href="creating-tests.html">Creating Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="running-tests.html">Running Tests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="tripal-test-case.html">TripalTestCase</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Database Seeders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#example-seeders">Example Seeders</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#creating-database-seeders">Creating Database Seeders</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#using-database-seeders">Using Database Seeders</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#running-seeders">Running Seeders</a></li>
@@ -98,8 +101,8 @@
 <li class="toctree-l1"><a class="reference internal" href="http-tests.html">Testing HTTP Requests</a></li>
 <li class="toctree-l1"><a class="reference internal" href="user-authentication.html">User Authentication</a></li>
 <li class="toctree-l1"><a class="reference internal" href="helpers.html">Helper Methods</a></li>
-<li class="toctree-l1"><a class="reference internal" href="environment.html">Environment Variables</a></li>
 <li class="toctree-l1"><a class="reference internal" href="upgrading.html">Upgrading TripalTestSuite</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tips-and-tricks.html">Tips and Tricks for Writing Good Tests</a></li>
 </ul>
 
             
@@ -168,6 +171,10 @@
 <h1>Database Seeders<a class="headerlink" href="#database-seeders" title="Permalink to this headline">¶</a></h1>
 <p>Database seeders are also supported in TripalTestSuite. They give you the ability
 to create reusable seeders that can be run using the <code class="docutils literal notranslate"><span class="pre">tripaltest</span></code> command line tool.</p>
+<div class="section" id="example-seeders">
+<h2>Example Seeders<a class="headerlink" href="#example-seeders" title="Permalink to this headline">¶</a></h2>
+<p>Several example database seeders are provided in <code class="docutils literal notranslate"><span class="pre">tests/DatabaseSeeders/examples</span></code>.  These will not run unless they are copied to <code class="docutils literal notranslate"><span class="pre">tests/DatabaseSeeders/</span></code>.</p>
+</div>
 <div class="section" id="creating-database-seeders">
 <h2>Creating Database Seeders<a class="headerlink" href="#creating-database-seeders" title="Permalink to this headline">¶</a></h2>
 <p>DB seeders can also be created automatically using <code class="docutils literal notranslate"><span class="pre">tripaltest</span></code>:</p>
@@ -179,10 +186,9 @@ with the necessary namespace, methods and properties.</p>
 </div>
 <div class="section" id="using-database-seeders">
 <h2>Using Database Seeders<a class="headerlink" href="#using-database-seeders" title="Permalink to this headline">¶</a></h2>
-<p>DB seeders support two important methods, <code class="docutils literal notranslate"><span class="pre">up()</span></code> and <code class="docutils literal notranslate"><span class="pre">down()</span></code>. The <code class="docutils literal notranslate"><span class="pre">up()</span></code>
-method is used to insert data into the database while the <code class="docutils literal notranslate"><span class="pre">down()</span></code> method
-is used to clean up the inserted data. The following is an example of a Seeder class.</p>
-<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+<p>DB seeders support an important method: <code class="docutils literal notranslate"><span class="pre">up()</span></code>. The <code class="docutils literal notranslate"><span class="pre">up()</span></code>
+method is used to insert data into the database when the test class is initialized, making it available to all tests within the class. The following is an example of a Seeder class.</p>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 
 <span class="k">namespace</span> <span class="nx">Tests\DatabaseSeeders</span><span class="p">;</span>
 
@@ -243,7 +249,7 @@ running it using <code class="docutils literal notranslate"><span class="pre">tr
 <h2>Retrieving Seeder Data<a class="headerlink" href="#retrieving-seeder-data" title="Permalink to this headline">¶</a></h2>
 <p>If your seeder returns any data, you can obtain the returned record by manually running
 the seeder in your test. See below for an example:</p>
-<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="cp">&lt;?php</span>
+<div class="highlight-php notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;?</span><span class="nx">php</span>
 <span class="c1">// Seeder Class</span>
 <span class="k">class</span> <span class="nc">MySeeder</span> <span class="k">extends</span> <span class="nx">Seeder</span> <span class="p">{</span>
         <span class="k">public</span> <span class="k">function</span> <span class="nf">up</span><span class="p">()</span> <span class="p">{</span>
@@ -269,11 +275,15 @@ the seeder in your test. See below for an example:</p>
 </div>
 <div class="section" id="using-devseed-for-quick-biological-data-seeding">
 <h2>Using DevSeed for Quick Biological Data Seeding<a class="headerlink" href="#using-devseed-for-quick-biological-data-seeding" title="Permalink to this headline">¶</a></h2>
-<p>Tripal Test Suite ships with a default seeder called <code class="docutils literal notranslate"><span class="pre">DevSeedSeeder</span></code>. This seeder provides a quick
+<p>Tripal Test Suite ships with a default seeder called <code class="docutils literal notranslate"><span class="pre">DevSeedSeeder</span></code>.  It is located at <code class="docutils literal notranslate"><span class="pre">tests/DatabaseSeeders/examples/</span></code>: to use it, copy it to <code class="docutils literal notranslate"><span class="pre">tests/DatabaseSeeders/</span></code>. This seeder provides a quick
 and automated way of seeding your database with biological data such as organisms, mRNAs, BLAST
 annotations and InterProScan annotations. The data in the default seeder is obtained
 from <a class="reference external" href="https://github.com/statonlab/tripal_dev_seed">Tripal DevSeed</a>, which is a developer
 mini-set of biological data.</p>
+<div class="admonition attention">
+<p class="first admonition-title">Attention</p>
+<p class="last">The DevSeed seeder must be copied from <code class="docutils literal notranslate"><span class="pre">tests/DatabaseSeeders/examples/</span></code> to <code class="docutils literal notranslate"><span class="pre">tests/DatabaseSeeders/</span></code>.  Seeders in the examples folder will not run.</p>
+</div>
 <p>DevSeed uses factories and is therefore <strong>only appropriate for testing and development</strong> and should not be run on a production site.</p>
 <div class="admonition attention">
 <p class="first admonition-title">Attention</p>
@@ -281,8 +291,9 @@ mini-set of biological data.</p>
 not override existing files unless you specify the <code class="docutils literal notranslate"><span class="pre">--force</span></code> flag so it it’s safe to run it to get only
 the DevSeeder.</p>
 </div>
-<p>By default, the DevSeed comes with all sub-loaders disabled.  To run the DevSeed seeder, you first have to configure it by uncommenting the type of data you want seeded. Then, you can run the seeder using <code class="docutils literal notranslate"><span class="pre">tripaltest</span> <span class="pre">db:seed</span> <span class="pre">DevSeedSeeder</span></code>.</p>
+<p>By default, the DevSeed comes with all sub-loaders enabled.  To configure the DevSeed seeder, comment out data types you don’t need in the public static variables section. Then, you can run the seeder using <code class="docutils literal notranslate"><span class="pre">tripaltest</span> <span class="pre">db:seed</span> <span class="pre">DevSeedSeeder</span></code>.</p>
 <ol class="arabic simple">
+<li>If you haven’t already, copy the seeder from <code class="docutils literal notranslate"><span class="pre">tests/DatabaseSeeders/examples</span></code> to <code class="docutils literal notranslate"><span class="pre">tests/DatabaseSeeders/</span></code>.</li>
 <li>Open <code class="docutils literal notranslate"><span class="pre">DatabaseSeeders/DevSeedSeeder.php</span></code></li>
 <li>You’ll notice a few commented properties in the top of the file.</li>
 <li>Uncomment and modify the properties to your need.</li>
@@ -317,7 +328,7 @@ Or, if you prefer, you can use the Tripal admin interface to publish the records
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, University of Tennessee.
+        &copy; Copyright 2018, University of Tennessee
 
     </p>
   </div>
@@ -336,20 +347,23 @@ Or, if you prefer, you can use the Tripal admin interface to publish the records
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'1.4.0',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'1.4.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    
 
   
 
