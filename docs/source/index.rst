@@ -27,4 +27,4 @@ TripalTestSuite is licensed under `GPLv3 <https://github.com/statonlab/TripalTes
    upgrading
    videos
    tips-and-tricks
-   collaborations
+   contributing
