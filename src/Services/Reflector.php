@@ -22,17 +22,17 @@ class Reflector
      */
     public function __construct($class)
     {
-        $this->reflection = new \ReflectionClass($class);
-
         $this->object = $class;
+
+        $this->reflection = new \ReflectionClass($this->object);
     }
 
     /**
-     * @param $name
-     * @param $arguments
+     * @param string $name
+     * @param array $arguments
      * @return mixed
      */
-    public function __call($name, $arguments)
+    public function __call($name, array $arguments)
     {
         $method = $this->reflection->getMethod($name);
         $method->setAccessible(true);
@@ -41,7 +41,7 @@ class Reflector
     }
 
     /**
-     * @param $name
+     * @param string $name
      * @return mixed
      */
     public function __get($name)
@@ -53,14 +53,15 @@ class Reflector
     }
 
     /**
-     * @param $name
-     * @param $value
+     * @param string $name
+     * @param mixed $value
+     *
+     * @return void
      */
     public function __set($name, $value)
     {
         $property = $this->reflection->getProperty($name);
         $property->setAccessible(true);
-
-        return $property->setValue($value);
+        $property->setValue($this->object, $value);
     }
 }
