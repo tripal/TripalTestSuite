@@ -11,8 +11,8 @@ class ReflectorTest extends TestCase
      */
     public function testMakingPrivateMethodsAccessible()
     {
-        $privateClass = reflect(new PrivateClass());
-        $this->assertEquals('private', $privateClass->myPrivate());
+        $private = reflect(new PrivateClass());
+        $this->assertEquals('private', $private->myPrivate());
     }
 
     /**
@@ -20,8 +20,8 @@ class ReflectorTest extends TestCase
      */
     public function testMakingProtectedMethodsAccessible()
     {
-        $privateClass = reflect(new PrivateClass());
-        $this->assertEquals('protected', $privateClass->myProtected());
+        $private = reflect(new PrivateClass());
+        $this->assertEquals('protected', $private->myProtected());
     }
 
     /**
@@ -29,8 +29,8 @@ class ReflectorTest extends TestCase
      */
     public function testMakingPublicMethodsAccessible()
     {
-        $privateClass = reflect(new PrivateClass());
-        $this->assertEquals('public', $privateClass->myPublic());
+        $private = reflect(new PrivateClass());
+        $this->assertEquals('public', $private->myPublic());
     }
 
     /**
@@ -38,32 +38,43 @@ class ReflectorTest extends TestCase
      */
     public function testMakingPrivateMethodsWithArgsAccessible()
     {
-        $privateClass = reflect(new PrivateClass());
-        $this->assertEquals('arg1 arg2', $privateClass->privateWithArgs('arg1', 'arg2'));
+        $private = reflect(new PrivateClass());
+        $this->assertEquals('arg1 arg2', $private->privateWithArgs('arg1', 'arg2'));
     }
 
     /**
      * @throws \Exception
      */
     public function testAccessingPrivateProperties() {
-        $privateClass = reflect(new PrivateClass());
-        $this->assertEquals('private', $privateClass->private);
+        $private = reflect(new PrivateClass());
+        $this->assertEquals('private', $private->private);
     }
 
     /**
      * @throws \Exception
      */
     public function testAccessingProtectedProperties() {
-        $privateClass = reflect(new PrivateClass());
-        $this->assertEquals('protected', $privateClass->protected);
+        $private = reflect(new PrivateClass());
+        $this->assertEquals('protected', $private->protected);
     }
 
     /**
      * @throws \Exception
      */
     public function testAccessingPublicProperties() {
-        $privateClass = reflect(new PrivateClass());
-        $this->assertEquals('public', $privateClass->public);
+        $private = reflect(new PrivateClass());
+        $this->assertEquals('public', $private->public);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testManipulatingPrivateProperties() {
+        $private = reflect(new PrivateClass());
+        $this->assertEquals('private', $private->getPrivate());
+        $private->private = 'not private';
+        $this->assertEquals('not private', $private->getPrivate());
+        $this->assertEquals('not private', $private->private);
     }
 }
 
@@ -100,5 +111,9 @@ class PrivateClass
     private function privateWithArgs($one, $two)
     {
         return $one.' '.$two;
+    }
+
+    private function getPrivate() {
+        return $this->private;
     }
 }
