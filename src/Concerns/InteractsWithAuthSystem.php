@@ -16,7 +16,7 @@ trait InteractsWithAuthSystem
 
         // Load the new requested user
         if (is_object($uid)) {
-            if($user->uid === 0) {
+            if($uid->uid === 0) {
                 $user = drupal_anonymous_user();
             } else{
                 $user = user_load($uid->uid);
