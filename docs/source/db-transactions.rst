@@ -25,5 +25,11 @@ The trait will automatically activate DB transactions and rollback the database 
 
 .. warning::
 
+	Using ``@dataProvider`` does not honor database transactions.  This means records will persist even if the test class has ``use DBTransaction;``!
+	If your dataProvider creates database records, call it directly
+	in the test function instead of using ``@dataProvider`` in you doc block.
+
+.. warning::
+
 	If the code you are testing requires a transaction, Postgres
 	will fail since it does not support nested transactions.
