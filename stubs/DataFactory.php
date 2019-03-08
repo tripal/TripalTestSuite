@@ -56,7 +56,7 @@ Factory::define('chado.cvterm', function (Faker\Generator $faker) {
 Factory::define('chado.organism', function (Faker\Generator $faker) {
     $genus = $faker->word;
     $species = $faker->word;
-    $abbr = substr($genus, 0) . ". " . $species;
+    $abbr = substr($genus, 0, 1) . ". " . $species;
 
     return [
         'abbreviation' => $abbr,
