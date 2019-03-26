@@ -268,11 +268,11 @@ protected $sequence_analysis = [
                 'analysis_id' => $this->sequence_analysis->analysis_id,
                 //optional
                 'fileext' => null,
-                'feature_uniquenames' => 'uniq',
                 're_start' => null,
                 're_stop' => null,
                 'feature_uniquenames' => null,
                 'quantificationunits' => null,
+                'seqtype' => 'mRNA',
             ];
             $this->load_expression($run_args, $this->expression_file);
         }
