@@ -66,13 +66,13 @@ class CitrusSeeder extends Seeder
 
   protected $gff_file = ['file_remote' => 'http://tripal.info/sites/default/files/Citrus_sinensis-orange1.1g015632m.g.gff3'];
 //
-//  protected $blast_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/gff/filtered.gff'];
-//
+  protected $blast_file = ['file_remote' => 'http://www.gmod.org/mediawiki/images/e/e8/Blastx_citrus_sinensis-orange1.1g015632m.g.fasta.0_vs_uniprot_sprot.fasta.out'];
+  //
 //  protected $biomaterial_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/biomaterials/biomaterials.xml'];
 
 //  protected $expression_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/expression/expression.tsv'];
 //
-//  protected $interpro_file = ['file_remote' => 'https://raw.githubusercontent.com/statonlab/tripal_dev_seed/master/Fexcel_mini/ips/polypeptide_mini.fasta.xml'];
+  protected $interpro_file = ['file_remote' => 'http://www.gmod.org/mediawiki/images/0/0c/Citrus_sinensis-orange1.1g015632m.g.iprscan.xml'];
 
   // Regular expression that will link the protein name to the mRNA parent feature name.
   // protected $prot_regexp = '/(FRA.*?)(?=:)/';
