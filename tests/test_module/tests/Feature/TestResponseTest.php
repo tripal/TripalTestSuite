@@ -12,7 +12,7 @@ class TestResponseTest extends TripalTestCase
     /**
      * Creates a TestResponse instance pre-populated with a mock response.
      */
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

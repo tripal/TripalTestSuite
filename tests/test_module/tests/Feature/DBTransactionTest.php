@@ -15,7 +15,7 @@ class DBTransactionTest extends TestCase
      *
      * @throws \ReflectionException|\Exception
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         (new BootstrapDrupal())->run();
     }

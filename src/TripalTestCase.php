@@ -23,7 +23,7 @@ abstract class TripalTestCase extends TestCase
      *
      * @throws \StatonLab\TripalTestSuite\Exceptions\TripalTestSuiteException
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         $this->_includedTraits = array_reverse(class_uses_recursive(static::class));
 
@@ -35,7 +35,7 @@ abstract class TripalTestCase extends TestCase
     /**
      * Tear down the environment.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         if (isset($this->_includedTraits[DBTransaction::class])) {
             $this->DBTransactionTearDown();
