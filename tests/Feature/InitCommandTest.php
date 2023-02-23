@@ -41,7 +41,7 @@ class InitCommandTest extends TestCase
     /**
      * Create the command tester and a debug directory.
      */
-    protected function setUp()
+    protected function setUp(): void
     {
         // Since the command is supposed to create the tests scaffold in the
         // current working directory, we'll create a debug folder and run
@@ -64,7 +64,7 @@ class InitCommandTest extends TestCase
     /**
      * Return to the correct path and remove the debug directory.
      */
-    protected function tearDown()
+    protected function tearDown(): void
     {
         // Go back to where we were
         chdir($this->cwd);

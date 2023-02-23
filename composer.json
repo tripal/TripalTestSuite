@@ -11,10 +11,16 @@
             "email": "bcondon@utk.edu"
         }
     ],
+    "repositories" : [
+      {
+        "type" : "vcs",
+        "url": "https://github.com/fzaninotto/Faker.git"
+      }
+    ],
     "require": {
-        "phpunit/phpunit": "^5 || ^6 || ^7.0",
+        "phpunit/phpunit": "^5 || ^6 || ^7 || ^8 || ^9",
         "symfony/console": "^3 || ^4.0",
-        "fzaninotto/faker": "^1.7",
+        "fzaninotto/faker": "dev-master",
         "guzzlehttp/guzzle": "^6.3"
     },
     "autoload": {
