@@ -1,9 +1,15 @@
 {
+    "repositories" : [
+      {
+        "type" : "vcs",
+        "url": "https://github.com/fzaninotto/Faker.git"
+      }
+    ],
     "require": {
-        "phpunit/phpunit": "^6 || ^7.0",
+        "phpunit/phpunit": "^6 || ^7 || ^8 || ^9",
         "guzzlehttp/guzzle": "^6.3"
     },
     "require-dev": {
-        "fzaninotto/faker": "^1.7"
+        "fzaninotto/faker": "dev-master"
     }
 }
